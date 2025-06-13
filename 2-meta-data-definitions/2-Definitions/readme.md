@@ -1,0 +1,3 @@
+# readme
+The `2-Definitions`-folder is populated by the "meta-editor" (ms-access-frontend.accdb).  It can be done by hand, but due to dependencies this is not recommened. It would be good practice to "include" all the generated sql-files. However if this is not done the deployment will still work.
+> NOTE: when including file from this folder make sure all files are NOT in de build, *"build action"* is set to "*None*"!
