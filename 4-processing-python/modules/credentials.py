@@ -4,17 +4,17 @@
 #
 # The credentials for the "Secret"-database.
 secret_db = {
-    "server"   : "misset.synology.me,1433",
+    "server"   : "(localdb)\MSSQLLocalDB",
     "database" : "secrets",
-    "username" : r"sa",
+    "username" : r"np_meta",
     "password" : r"Bahar@2810"
 }
 
 # The credentials for the "target"-database.
 target_db = {
-    "server"   : "misset.synology.me,1433",
+    "server"   : "(localdb)\MSSQLLocalDB",
     "database" : "meta",
-    "username" : r"sa",
+    "username" : r"np_meta",
     "password" : r"Bahar@2810"
 }
 

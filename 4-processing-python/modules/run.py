@@ -31,7 +31,7 @@ def create_folder(folder_path):
         print(f"Error creating folder '{folder_path}': {e}")
 
 
-def update_dataset(ds_external_reference_id, id_dataset, is_ingestion, nm_procedure, nm_tsl_schema, nm_tsl_table, is_debugging):
+def update_dataset(id_model, ds_external_reference_id, id_dataset, is_ingestion, nm_procedure, nm_tsl_schema, nm_tsl_table, is_debugging):
     
     # Local Vairables
     result = False
@@ -42,10 +42,10 @@ def update_dataset(ds_external_reference_id, id_dataset, is_ingestion, nm_proced
         if is_ingestion == 1:
 
             # for "Ingestion" the run must be started, if "Transformation" the run is started in the "procedure" itself.
-            start(id_dataset, is_debugging, ds_external_reference_id)
+            start(id_model, id_dataset, is_debugging, ds_external_reference_id)
 
             # Get the parameters
-            params = get_parameters(id_dataset)
+            params = get_parameters(id_model, id_dataset)
             
             # Paramters
             cd_parameter_group = params.loc[0]['cd_parameter_group']
@@ -130,13 +130,14 @@ def update_dataset(ds_external_reference_id, id_dataset, is_ingestion, nm_proced
         # All is well
         return result
 
-def data_pipeline(nm_target_schema, nm_target_table, is_debugging):
+def data_pipeline(id_model, nm_target_schema, nm_target_table, is_debugging):
     
     # Build SQL for Query
     tx_query = f"SELECT ni_process_group, id_dataset, is_ingestion, nm_procedure, nm_tsl_schema, nm_tsl_table, nm_tgt_schema, nm_tgt_table "\
              + f"FROM dta.process_group "\
              + f"WHERE nm_tgt_schema = '{nm_target_schema}'"\
              + f"AND   nm_tgt_table  = '{nm_target_table}'"\
+             + f"AND   id_model      = '{id_model}' "\
              + f"ORDER BY ni_process_group ASC"
     
     # fetch all dataset tobe processed
@@ -156,6 +157,7 @@ def data_pipeline(nm_target_schema, nm_target_table, is_debugging):
 
     if (is_debugging == "1"): # Show what dataset is being processed
         print("--- " + ("Ingestion ----" if (is_ingestion == 1) else "Transformation ") + "--------------------------------------")
+        print(f"id_model                 : '{id_model}'")
         print(f"ds_external_reference_id : '{ds_external_reference_id}'")
         print(f"id_dataset               : '{id_dataset}'")
         print(f"nm_tgt_schema            : '{nm_tgt_schema}'")
@@ -174,7 +176,7 @@ def data_pipeline(nm_target_schema, nm_target_table, is_debugging):
             print(f"Attempt {attempt+1} to update dataset...")
         
         # Call the function to update the dataset
-        result = update_dataset(ds_external_reference_id, id_dataset, is_ingestion, nm_procedure, nm_tsl_schema, nm_tsl_table, is_debugging)    
+        result = update_dataset(id_model, ds_external_reference_id, id_dataset, is_ingestion, nm_procedure, nm_tsl_schema, nm_tsl_table, is_debugging)    
         
         # Add 1 to the attempt counter
         attempt += 1
@@ -246,10 +248,10 @@ def export_documentation(id_dataset, is_debugging):
     if is_debugging == "1":
         print(f"HTML file '{ds_filepath_blob}' uploaded to Azure Blob Storage container '{abs_3_nm_container}'.")
 
-def get_parameters(id_dataset):
+def get_parameters(id_model, id_dataset):
 
     # Define the query
-    tx_sql_statement  = f"SELECT * FROM rdp.tvf_get_parameters('{id_dataset}')\n"
+    tx_sql_statement  = f"SELECT * FROM rdp.tvf_get_parameters('{id_model}', '{id_dataset}')\n"
 
     # Load data into a pandas DataFrame
     return query(sa.target_db, tx_sql_statement)
@@ -272,10 +274,11 @@ def get_secret(nm_secret, is_debugging):
 def get_param_value(nm_parameter_value, params):
     return params.loc[params['nm_parameter_value'] == nm_parameter_value].values[0][3]
 
-def start(id_dataset, is_debugging, ds_external_reference_id):
+def start(id_model, id_dataset, is_debugging, ds_external_reference_id):
       
     # Execute "rdp.run_start"
     return execute_procedure(sa.target_db, 'rdp.run_start',\
+        ip_id_model                 = id_model,\
         ip_id_dataset_or_dq_control = id_dataset,\
         ip_ds_external_reference_id = ds_external_reference_id,\
         ip_is_debugging             = is_debugging\
