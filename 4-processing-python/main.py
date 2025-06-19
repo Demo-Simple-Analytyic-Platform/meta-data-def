@@ -9,13 +9,13 @@ import modules.run as run
 
 # Set Debugging to "1" => true
 is_debugging = "1"
-id_model     = "5f4a1942465c575a1f5a5a575d1e191c" # was id_model was updated by the initialization
+id_model     = "<id_model>" # was id_model was updated by the initialization
 
 # rebuild html documentation for main page (you must setup azure storage accoutn with static web option activated and store the secret in the "Secrets"-database)
 # run.export_documentation('-1', is_debugging) 
 
 # Process all datasets
-run.data_pipeline(id_model, 'psa_yahoo_dividends', 'o4q', is_debugging)
+run.data_pipeline(id_model, '<nm_target_schema>', '<nm_target+table>', is_debugging)
 
 
 print("all done")
