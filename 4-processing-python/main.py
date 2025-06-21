@@ -9,7 +9,7 @@ import modules.run as run
 
 # Set Debugging to "1" => true
 is_debugging = "1"
-id_model     = "5f4a1942465c575a1f5a5a575d1e191c" # was id_model was updated by the initialization
+id_model     = "<id_model>" # was id_model was updated by the initialization
 
 # rebuild html documentation for main pagepip
 # run.export_documentation('-1', is_debugging)
