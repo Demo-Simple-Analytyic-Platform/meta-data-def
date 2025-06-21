@@ -182,7 +182,7 @@ def data_pipeline(id_model, nm_target_schema, nm_target_table, is_debugging):
         attempt += 1
 
     # export documentation for dataset
-    documentation = export_documentation(id_dataset, is_debugging)
+    documentation = export_documentation(id_model, id_dataset, is_debugging)
     
     print("all done")
     
