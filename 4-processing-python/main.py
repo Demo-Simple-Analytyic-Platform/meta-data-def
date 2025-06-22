@@ -11,8 +11,8 @@ import modules.run as run
 is_debugging = "1"
 
 # Assumtions: stuff a overarching procedure shoudl extract, but for our example we will hardcode it
-id_model          = "5f5640501f5751571f564c505f435854" # was id_model was updated by the initialization
-id_dataset        = "000c0a0c060f0f01000e0c01090c1602" # was id_dataset was updated by the initialization
+id_model          = "<id_model>" # was id_model was updated by the initialization
+id_dataset        = "<id_dataset>" # was id_dataset was updated by the initialization
 ds_external_reference_id = "ds_external_reference_id" # was ds_external_reference_id was updated by the initialization
 nm_target_dataset = 'psa_yahoo_stocks'
 nm_target_table   = 'rf'    
