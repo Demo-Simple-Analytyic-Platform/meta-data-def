@@ -14,11 +14,11 @@ is_debugging = "1"
 id_model          = "<id_model>" # was id_model was updated by the initialization
 id_dataset        = "<id_dataset>" # was id_dataset was updated by the initialization
 ds_external_reference_id = "ds_external_reference_id" # was ds_external_reference_id was updated by the initialization
-nm_target_dataset = 'psa_yahoo_stocks'
-nm_target_table   = 'rf'    
+nm_target_scehme  = '<nm_target_schema>'
+nm_target_table   = '<nm_target_table>'    
 
 # Extraction of metadata for the desired model + dataset
-run.data_pipeline(id_model, nm_target_dataset, nm_target_table, is_debugging)
+run.data_pipeline(id_model, nm_target_scehme, nm_target_table, is_debugging)
 
 
 
