@@ -131,15 +131,18 @@ def update_dataset(id_model, ds_external_reference_id, id_dataset, is_ingestion,
 
             elif cd_parameter_group == 'sql_user_password':
 
+                # Get SQL Source Query from Dataset metadata
+                rs_source_query    = query(sa.target_db, f"SELECT tx_source_query FROM dta.dataset WHERE id_model = '{id_model}' AND id_dataset = '{id_dataset}'")
+            
                 # Get Ingestion specific parameters
                 sql_1_nm_server   = get_param_value('sql_1_nm_server', params)
                 sql_2_nm_username = get_param_value('sql_2_nm_username', params)
-                sql_3_nm_secret   = get_param_value('sql_3_nm_secret', params)
-                sql_4_nm_database = get_param_value('sql_4_nm_database', params)
-                sql_5_tx_query    = get_param_value('sql_5_tx_query', params)
+                sql_3_nm_database = get_param_value('sql_3_nm_database', params)
+                sql_6_nm_secret   = get_param_value('sql_6_nm_secret', params)              
+                sql_5_tx_query    = rs_source_query.loc[0]['tx_source_query']
 
                 # load source to dataframe
-                source_df = src.sql_user_password(sql_1_nm_server, sql_2_nm_username, sql_3_nm_secret, sql_4_nm_database, sql_5_tx_query, is_debugging)
+                source_df = src.sql_user_password(sql_1_nm_server, sql_2_nm_username, sql_6_nm_secret, sql_3_nm_database, sql_5_tx_query, is_debugging)
                 
             else:
                 raise ValueError(f"Unsupported cd_parameter_group: {cd_parameter_group}")
