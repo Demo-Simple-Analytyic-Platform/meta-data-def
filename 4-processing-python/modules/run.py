@@ -78,7 +78,7 @@ def update_dataset(id_model, ds_external_reference_id, id_dataset, is_ingestion,
         if is_ingestion == 1:
 
             # for "Ingestion" the run must be started, if "Transformation" the run is started in the "procedure" itself.
-            start(id_model, id_dataset, is_debugging, ds_external_reference_id)
+            start(id_model, id_dataset, ds_external_reference_id, is_debugging)
 
             # Get the parameters
             params = get_parameters(id_model, id_dataset)
@@ -131,15 +131,12 @@ def update_dataset(id_model, ds_external_reference_id, id_dataset, is_ingestion,
 
             elif cd_parameter_group == 'sql_user_password':
 
-                # Get SQL Source Query from Dataset metadata
-                rs_source_query    = query(sa.target_db, f"SELECT tx_source_query FROM dta.dataset WHERE id_model = '{id_model}' AND id_dataset = '{id_dataset}'")
-            
                 # Get Ingestion specific parameters
                 sql_1_nm_server   = get_param_value('sql_1_nm_server', params)
                 sql_2_nm_username = get_param_value('sql_2_nm_username', params)
                 sql_3_nm_database = get_param_value('sql_3_nm_database', params)
                 sql_6_nm_secret   = get_param_value('sql_6_nm_secret', params)              
-                sql_5_tx_query    = rs_source_query.loc[0]['tx_source_query']
+                sql_5_tx_query    = get_param_value('sql_7_tx_query', params)
 
                 # load source to dataframe
                 source_df = src.sql_user_password(sql_1_nm_server, sql_2_nm_username, sql_6_nm_secret, sql_3_nm_database, sql_5_tx_query, is_debugging)
@@ -284,14 +281,6 @@ def get_secret(nm_secret, is_debugging):
 def get_param_value(nm_parameter_value, params):
     return params.loc[params['nm_parameter_value'] == nm_parameter_value].values[0][3]
 
-def start(id_model, id_dataset, is_debugging, ds_external_reference_id):
-    
-    tx_sql = f"INSERT INTO rdp.sql_to_execute (id_model, id_dataset, tx_sql) " \
-            + f"VALUES ('{id_model}', '{id_dataset}', 'EXEC rdp.run_start @ip_id_model = ''{id_model}'', @ip_id_dataset_or_dq_control = ''{id_dataset}'', @ip_ds_external_reference_id = ''{ds_external_reference_id}'', @ip_is_debugging = ''1''')"
-      
-    # Add the SQL to be executed in Ingestion procedure
-    execute_sql(sa.target_db, tx_sql, is_debugging)
-
 def usp_dataset_ingestion(nm_procedure, is_debugging):
 
     # Build the stored procedure call with parameters
@@ -312,4 +301,131 @@ def usp_dataset_ingestion(nm_procedure, is_debugging):
 def usp_dataset_transformation(nm_procedure, ds_external_reference_id):
 
     return execute_procedure(sa.target_db, nm_procedure, ip_ds_external_reference_id = ds_external_reference_id)
+   
+def start(id_model, ip_id_dataset_or_dq_control, ds_external_reference_id, is_debugging = "0"):
+    
+    # /* Local Variables. */
+    dt_run_started = dt.now().strftime("%Y-%m-%d %H:%M:%S.%f")[:-3]
+    
+    # /* Local Varaibles for "Starting" run of "Dataset" or "DQ Control". */
+    id_run        = query(sa.target_db, f"SELECT id_run        = LOWER(CONVERT(CHAR(32),HASHBYTES('MD5',CONCAT(CONVERT(NVARCHAR(MAX),''), '|', '{id_model}', '|', '{ip_id_dataset_or_dq_control}', '|', '{dt_run_started}', '|')), 2))").iloc[0]['id_run']
+    id_dataset    = query(sa.target_db, f"SELECT id_dataset    = ISNULL((SELECT id_dataset    FROM dta.dataset    WHERE meta_is_active = 1 AND id_dataset    = '{ip_id_dataset_or_dq_control}'), 'n/a')").iloc[0]['id_dataset']
+    id_dq_control = query(sa.target_db, f"SELECT id_dq_control = ISNULL((SELECT id_dq_control FROM dqm.dq_control WHERE meta_is_active = 1 AND id_dq_control = '{ip_id_dataset_or_dq_control}'), 'n/a')").iloc[0]['id_dq_control']
+    
+    # /* Local Variables for "Extraction" or " Processing Infromation". */
+    nm_target_schema = query(sa.target_db, f"SELECT nm_target_schema FROM dta.dataset WHERE meta_is_active = 1 AND id_dataset = '{ip_id_dataset_or_dq_control}'").iloc[0]['nm_target_schema']
+    nm_target_table  = query(sa.target_db, f"SELECT nm_target_table  FROM dta.dataset WHERE meta_is_active = 1 AND id_dataset = '{ip_id_dataset_or_dq_control}'").iloc[0]['nm_target_table']
 
+	# /* Local Variables for "Previous Stand". */
+    dt_previous_stand = '1970-01-01 00:00:00.000'
+
+    # -------------------
+	# -- "Start" run. --
+    # -------------------
+	
+    if (1==1): # /* Finish "runs" that are NOT "finished". */
+        
+        # /* Build SQL Statement to "Update" "run" that are NOT "finished". */
+        tx_sql  = ""   + f"UPDATE rdp.run SET"
+        tx_sql += "\n" + f"  dt_run_finished      = dt_run_started,"
+        tx_sql += "\n" + f"  id_processing_status = gnc_commen.id_processing_status('{id_model}', 'Unfinished')"
+        tx_sql += "\n" + f"WHERE id_model         = '{id_model}'"
+        tx_sql += "\n" + f"AND   id_dataset       = '{id_dataset}'"
+        tx_sql += "\n" + f"AND   id_dq_control    = '{id_dq_control}'"
+        tx_sql += "\n" + f"AND   ISNULL(dt_run_finished, CONVERT(DATETIME, '9999-12-31')) >= CONVERT(DATETIME, '9999-12-31')"
+        
+        # /* Execute SQL Statement to "Insert" new "run". */
+        if (is_debugging == "1"):
+            print(f"SQL Statement: {tx_sql}")
+
+        # Execute the SQL statement
+        execute_sql(sa.target_db, tx_sql)
+    
+    # end if
+    
+    ni_run = query(sa.target_db, f"SELECT ni_run = COUNT(*) FROM rdp.run WHERE id_run = '{id_run}'").iloc[0]['ni_run']
+    while ni_run > 0: # /* Check if @id_run is Unique */
+        
+        # Show Info on invalid id_run
+        if (is_debugging == "1"):
+            print(f"The value of `id_run` `{id_run}` was not unique! Hashed value was `CONCAT(CONVERT(NVARCHAR(MAX),''),'|', '{id_model}', '|', '{ip_id_dataset_or_dq_control}', '|', '{dt_run_started}', '|')`.")
+            print(f"ip_id_dataset_or_dq_control : `{ip_id_dataset_or_dq_control}`")
+            print(f"dt_run_started              : `{dt_run_started}`")
+            
+        # Determine new dt_run_started, id_run and ni_run
+        dt_run_started = dt.now().strftime("%Y-%m-%d %H:%M:%S.%f")[:-3]
+        id_run = query(sa.target_db, f"SELECT id_run = LOWER(CONVERT(CHAR(32),HASHBYTES('MD5',CONCAT(CONVERT(NVARCHAR(MAX),''), '|', '{id_model}', '|', '{ip_id_dataset_or_dq_control}', '|', '{dt_run_started}', '|')), 2))").iloc[0]['id_run']
+        ni_run = query(sa.target_db, f"SELECT ni_run = COUNT(*) FROM rdp.run WHERE id_run = '{id_run}'").iloc[0]['ni_run']
+
+    # end while
+    
+    if (1==1): #/* Create ##dt to prevent "warning" in SQL parsing of project. */) BEGIN
+    
+        # /* Build and Execute SQL Statment to "Create" ##dt. */
+        tx_sql  = ""   + f"SELECT MAX(u.dt) AS dt_previous_stand FROM ("
+        tx_sql += "\n" + f"    SELECT MAX(meta_dt_valid_from)         AS dt FROM {nm_target_schema}.{nm_target_table} UNION"
+        tx_sql += "\n" + f"    SELECT MAX(meta_dt_valid_till)         AS dt FROM {nm_target_schema}.{nm_target_table} WHERE meta_dt_valid_till < CONVERT(DATE, '9999-12-31') UNION"
+        tx_sql += "\n" + f"    SELECT CONVERT(DATETIME, '1970-01-01') AS dt"
+        tx_sql += "\n" + f") AS u WHERE dt IS NOT NULL"
+        
+        # /* Fetch dt.previous_stand */
+        dt_previous_stand = query(sa.target_db, tx_sql).iloc[0]['dt_previous_stand']
+
+    # end if
+
+    if (1==1): # /* Insert new "run". */
+        
+        # /* Build SQL Statement to "Insert" new "run". */
+        tx_sql  = ""   + f"INSERT INTO rdp.run ("
+        tx_sql += "\n" + f"    id_run,"
+        tx_sql += "\n" + f"    id_model,"
+        tx_sql += "\n" + f"    id_dataset,"
+        tx_sql += "\n" + f"    id_dq_control,"
+        tx_sql += "\n" + f"    ds_external_reference_id,"
+        tx_sql += "\n" + f"    dt_previous_stand,"
+        tx_sql += "\n" + f"    dt_current_stand,"
+        tx_sql += "\n" + f"    ni_previous_epoch,"
+        tx_sql += "\n" + f"    ni_current_epoch,"
+        tx_sql += "\n" + f"    id_processing_status,"
+        tx_sql += "\n" + f"    dt_run_started,"
+        tx_sql += "\n" + f"    dt_run_finished"
+        tx_sql += "\n" + f")"
+        tx_sql += "\n" + f"SELECT"
+        tx_sql += "\n" + f"    id_run                   = '{id_run}',"
+        tx_sql += "\n" + f"    id_model                 = '{id_model}',"
+        tx_sql += "\n" + f"    id_dataset               = '{id_dataset}',"
+        tx_sql += "\n" + f"    id_dq_control            = '{id_dq_control}',"
+        tx_sql += "\n" + f"    ds_external_reference_id = '{ds_external_reference_id}',"
+        tx_sql += "\n" + f"    dt_previous_stand        = '{dt_previous_stand}',"
+        tx_sql += "\n" + f"    dt_current_stand         = '{dt_run_started}',"
+        tx_sql += "\n" + f"    ni_previous_epoch        = DATEDIFF(SECOND, CONVERT(DATETIME, '1970-01-01'), CONVERT(DATETIME, '{dt_previous_stand}')),"
+        tx_sql += "\n" + f"    ni_current_epoch         = DATEDIFF(SECOND, CONVERT(DATETIME, '1970-01-01'), CONVERT(DATETIME, '{dt_run_started}')),"
+        tx_sql += "\n" + f"    id_processing_status     = gnc_commen.id_processing_status('{id_model}', 'Started'),"
+        tx_sql += "\n" + f"    dt_run_started           = CONVERT(DATETIME, '{dt_run_started}'),"
+        tx_sql += "\n" + f"    dt_run_finished          = CONVERT(DATETIME, '9999-12-31')"
+        tx_sql += "\n" + f"FROM (" # /* make "recordset" of @dt_run_started to ensure there is a record in de SELECT. */
+        tx_sql += "\n" + f"    SELECT dt_current_stand  = CONVERT(DATETIME, '{dt_run_started}'),"
+        tx_sql += "\n" + f"           dt_previous_stand = CONVERT(DATETIME, '{dt_previous_stand}')"
+        tx_sql += "\n" + f") AS std LEFT JOIN rdp.run AS run"
+        tx_sql += "\n" + f"ON  run.id_dataset     = '{id_dataset}'"
+        tx_sql += "\n" + f"AND run.id_dq_control  = '{id_dq_control}'"
+        tx_sql += "\n" + f"AND run.dt_run_started = (" # /* Find the "Previous" run that NOT ended in "Failed"-status. */
+        tx_sql += "\n" + f"    SELECT MAX(dt_run_started) FROM rdp.run"
+        tx_sql += "\n" + f"    WHERE id_model             = '{id_model}'"
+        tx_sql += "\n" + f"    AND   id_dataset           = '{id_dataset}'"
+        tx_sql += "\n" + f"    AND   id_dq_control        = '{id_dq_control}'"
+        tx_sql += "\n" + f"    AND   id_processing_status = gnc_commen.id_processing_status('{id_model}', 'Finished')"
+        tx_sql += "\n" + f")"
+        
+        # /* Execute SQL Statement to "Insert" new "run". */
+        if (is_debugging == "1"):
+            print(f"SQL Statement: {tx_sql}")
+
+        # Execute the SQL statement
+        execute_sql(sa.target_db, tx_sql)
+        
+    # end if
+    
+    # /* All is Well, return "new" ID. */
+    if (is_debugging == "1"):
+        print(f"Run started with id_run: {id_run}")
