@@ -11,7 +11,7 @@ $nm_database   = "<nm_database>"                 # Replace with your database na
 # After setting the above variables, you can run this script to deploy the model. 
 # by : powershell -ExecutionPolicy Bypass -File "C:\git\Demo-Simple-Analytyic-Platform\meta-data-model\.attachments\scripts\deployment-of-model.ps1"
 # -----------------------------------------------------------------------------
-echo "powershell -ExecutionPolicy Bypass -File $ds_git_folder\$nm_model\2-meta-data-definitions\9-Publish\1-Scripts\deployment-of-model.ps1"
+echo "powershell -ExecutionPolicy Bypass -File ""$ds_git_folder\$nm_model\2-meta-data-definitions\9-Publish\1-Scripts\deployment-of-model.ps1"""
 
 # Determine filepath to Publich profile
 $fp_publish    = "$ds_git_folder\$nm_model\2-meta-data-definitions\9-Publish\2-Publish\$nm_profile" # Replace with your publish profile name
