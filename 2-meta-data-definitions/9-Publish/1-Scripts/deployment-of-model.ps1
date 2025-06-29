@@ -119,6 +119,12 @@ $sqlPackagePath = Get-ChildItem -Path "C:\" -Filter "SqlPackage.exe" -Recurse -E
     /TargetUser:"$([Runtime.InteropServices.Marshal]::PtrToStringAuto([Runtime.InteropServices.Marshal]::SecureStringToBSTR($nm_username)))" `
     /TargetPassword:"$([Runtime.InteropServices.Marshal]::PtrToStringAuto([Runtime.InteropServices.Marshal]::SecureStringToBSTR($cd_password)))"
       
+# All most done, ust have to delete "waiting" file so ms access frontend tool knows that the deployment is done.
+$fp_waiting = "C:\Temp\deployment_of_$nm_model.wait"
+
+# Delete the waiting file if it exists
+if ($fp_waiting -and (Test-Path $fp_waiting)) { Remove-Item $fp_waiting -Force}
+
 # Check if the deployment was successful
 if ($LASTEXITCODE -ne 0) {
     throw "Deployment failed with exit code $LASTEXITCODE. Please check the logs for more details."
