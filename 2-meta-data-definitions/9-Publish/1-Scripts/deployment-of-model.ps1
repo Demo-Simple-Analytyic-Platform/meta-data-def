@@ -4,10 +4,12 @@
 $nm_model           = "<nm_model>"                # Should be replace by ms-access-frontend tool.
 $fp_model           = "<tx_git_folder>\$nm_model" # Should be replace by ms-access-frontend tool.
 
-# -----------------------------------------------------------------------------
-# After setting the above variables, you can run this script to deploy the model. 
-# by : powershell -ExecutionPolicy Bypass -File "D:\git\meta-def-example\2-meta-data-definitions\9-Publish\1-Scripts\deployment-of-model.ps1"
-# -----------------------------------------------------------------------------
+# ---------------------------------------------------------------------------- #
+# Set these parameters to your needs.
+# ---------------------------------------------------------------------------- #
+$Encrypt                = "False"  # Set to "True" if you want to encrypt the connection.
+$TrustServerCertificate = "False"  # Set to "True" if you want to trust the server certificate.
+# ---------------------------------------------------------------------------- #
 
 # Ensure the secure folder exists
 $sfp_secure = "c:\users\$([System.Environment]::UserName)\secure"
@@ -60,22 +62,22 @@ $nm_username = Get-Content $sfp_username | ConvertTo-SecureString
 $cd_password = Get-Content $sfp_password | ConvertTo-SecureString
 
 # Ensure folder path to "9-Publish"-folder exists
-$fp_publish = "$tx_repo_folderpath\$nm_model\2-meta-data-definitions\9-Publish"
+$fp_publish = "$fp_model\2-meta-data-definitions\9-Publish"
 if (-Not (Test-Path -Path $fp_publish)) { New-Item -Path $fp_publish -ItemType Directory -Force }
 
 # Ensure folder path to "2_deployment"-folder exists
-$fp_deploment = "\2-Deployment"
-if (-Not (Test-Path -Path $fp_deploment)) { New-Item -Path $fp_deploment -ItemType Directory -Force }
+$fp_deployment = "$fp_publish\2-Deployment"
+if (-Not (Test-Path -Path $fp_deployment)) { New-Item -Path $fp_deployment -ItemType Directory -Force }
 
 # Ensure file path to "deployment-from-ms-access.publish.xml" exists
-$fp_profile = "$fp_deploment\$deployment-from-ms-access.publish.xml"
+$fp_profile = "$fp_deployment\deployment-from-ms-access.publish.xml"
 $xmlContent = @"
 <?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
     <PropertyGroup>
     <TargetDatabaseName>$([Runtime.InteropServices.Marshal]::PtrToStringAuto([Runtime.InteropServices.Marshal]::SecureStringToBSTR($nm_database)))</TargetDatabaseName>
-    <TargetConnectionString>Data Source=($([Runtime.InteropServices.Marshal]::PtrToStringAuto([Runtime.InteropServices.Marshal]::SecureStringToBSTR($nm_server))))\MSSQLLocalDB;Initial Catalog=$([Runtime.InteropServices.Marshal]::PtrToStringAuto([Runtime.InteropServices.Marshal]::SecureStringToBSTR($nm_database)));Integrated Security=True;</TargetConnectionString>
-    <DeployScriptFileName>demo.sql</DeployScriptFileName>
+    <TargetConnectionString>Data Source=($([Runtime.InteropServices.Marshal]::PtrToStringAuto([Runtime.InteropServices.Marshal]::SecureStringToBSTR($nm_server))));Initial Catalog=$([Runtime.InteropServices.Marshal]::PtrToStringAuto([Runtime.InteropServices.Marshal]::SecureStringToBSTR($nm_database)))Integrated Security=True;Encrypt=$Encrypt;TrustServerCertificate=$TrustServerCertificate;</TargetConnectionString>
+    <DeployScriptFileName>$nm_model.sql</DeployScriptFileName>
     <ProfileVersionNumber>1</ProfileVersionNumber>
     </PropertyGroup>
 </Project>
@@ -96,7 +98,7 @@ $msbuild = Get-ChildItem -Path "C:\Program Files\Microsoft Visual Studio" -Recur
 
 # cahnge directory
 #Set-Location -Path "$msbuild"
-& "$msbuild" "$tx_repo_folderpath\2-meta-data-definitions\$nm_model.sqlproj" `
+& "$msbuild" "$fp_model\2-meta-data-definitions\$nm_model.sqlproj" `
     /p:Configuration=Debug `
     /p:DeployOnBuild=true `
     /p:PublishProfile="$fp_profile"
@@ -110,7 +112,7 @@ $sqlPackagePath = Get-ChildItem -Path "C:\" -Filter "SqlPackage.exe" -Recurse -E
 
 # Run SqlPackage.exe to publish
 & "$sqlPackagePath" /Action:Publish `
-    /SourceFile:"$tx_repo_folderpath\2-meta-data-definitions\bin\Debug\_2_meta_data_definitions.dacpac" `
+    /SourceFile:"$fp_model\2-meta-data-definitions\bin\Debug\_2_meta_data_definitions.dacpac" `
     /Profile:"$fp_profile" `
     /TargetServerName:"$([Runtime.InteropServices.Marshal]::PtrToStringAuto([Runtime.InteropServices.Marshal]::SecureStringToBSTR($nm_server)))" `
     /TargetDatabaseName:"$([Runtime.InteropServices.Marshal]::PtrToStringAuto([Runtime.InteropServices.Marshal]::SecureStringToBSTR($nm_database)))" `
@@ -121,4 +123,4 @@ $sqlPackagePath = Get-ChildItem -Path "C:\" -Filter "SqlPackage.exe" -Recurse -E
 if ($LASTEXITCODE -ne 0) {
     throw "Deployment failed with exit code $LASTEXITCODE. Please check the logs for more details."
 }
-echo "Change Have been deployed to with profile '$nm_profile' to the database."
+echo "Change Have been deployed to with profile '$fp_profile' to the database."
