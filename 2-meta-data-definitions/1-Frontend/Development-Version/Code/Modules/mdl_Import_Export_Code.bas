@@ -98,6 +98,8 @@ Public Function ImportAllCodeModules() As Boolean
     Dim fil As file
     '
     ' Import Modules, Forms, Reports and Marcos
+    For Each fil In fso.GetFolder(fp_exported_tables).Files: ImportSingleTableDef Mid(fil.Name, 1, Len(fil.Name) - 4): Next fil
+    For Each fil In fso.GetFolder(fp_exported_queries).Files: ImportSingleQueryDef Mid(fil.Name, 1, Len(fil.Name) - 4): Next fil
     For Each fil In fso.GetFolder(fp_exported_modules).Files
         '
         ' Exclude the Import/Export Code module itself
@@ -109,8 +111,6 @@ Public Function ImportAllCodeModules() As Boolean
     For Each fil In fso.GetFolder(fp_exported_forms).Files: Application.LoadFromText acForm, Mid(fil.Name, 1, Len(fil.Name) - 4), fil.Path: Next fil
     For Each fil In fso.GetFolder(fp_exported_reports).Files: Application.LoadFromText acReport, Mid(fil.Name, 1, Len(fil.Name) - 4), fil.Path: Next fil
     For Each fil In fso.GetFolder(fp_exported_macros).Files: Application.LoadFromText acMacro, Mid(fil.Name, 1, Len(fil.Name) - 4), fil.Path: Next fil
-    For Each fil In fso.GetFolder(fp_exported_tables).Files: ImportSingleTableDef Mid(fil.Name, 1, Len(fil.Name) - 4): Next fil
-    For Each fil In fso.GetFolder(fp_exported_queries).Files: ImportSingleQueryDef Mid(fil.Name, 1, Len(fil.Name) - 4): Next fil
     '
     ' All Done
     Debug.Print "All code has been imported!"
