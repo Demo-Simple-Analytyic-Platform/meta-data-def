@@ -14,7 +14,18 @@ Private fp_exported_queries As String
 Sub set_folder_paths()
     '
     ' Local Variables
-    fp_exported_code = CurrentProject.Path & "\Code"
+    Dim fso As FileSystemObject: Set fso = New FileSystemObject
+    Dim fdr As folder: Set fdr = fso.GetFolder(CurrentProject.Path)
+    Dim dev As String: dev = IIf(fdr.Name = "Development-Version", "", IIf(fdr.Name = "1-Frontend", "\Development-Version", "<not-allowed>"))
+    '
+    ' Check if Tool is started from allowed location!
+    If dev = "<not-allowed>" Then
+        MsgBox "Tooling is only allowed to start from `Development-Version` or `1-Frontend`", vbCritical
+        Application.Quit
+    End If
+    '
+    ' Setting Folderpaths
+    fp_exported_code = CurrentProject.Path & dev & "\Code"
     fp_exported_modules = fp_exported_code & "\Modules\"
     fp_exported_forms = fp_exported_code & "\Forms\"
     fp_exported_reports = fp_exported_code & "\Reports\"
@@ -90,7 +101,9 @@ Public Function ImportAllCodeModules() As Boolean
     For Each fil In fso.GetFolder(fp_exported_modules).Files
         '
         ' Exclude the Import/Export Code module itself
-        If fil.name <> "mdl_Import_Export_Code" then Application.LoadFromText acModule, Mid(fil.Name, 1, Len(fil.Name) - 4), fil.Path
+        If fil.Name <> "mdl_Import_Export_Code" Then
+            Application.LoadFromText acModule, Mid(fil.Name, 1, Len(fil.Name) - 4), fil.Path
+        End If
         '
     Next fil
     For Each fil In fso.GetFolder(fp_exported_forms).Files: Application.LoadFromText acForm, Mid(fil.Name, 1, Len(fil.Name) - 4), fil.Path: Next fil
