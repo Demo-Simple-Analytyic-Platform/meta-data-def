@@ -1,0 +1,1 @@
+powershell -ExecutionPolicy Bypass -File "deployment-of-model.ps1"
