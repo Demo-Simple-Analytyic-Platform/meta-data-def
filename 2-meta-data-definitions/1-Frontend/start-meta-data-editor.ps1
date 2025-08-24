@@ -40,3 +40,6 @@ if ($null -eq $global:tx_error) { if ($global:is_debugging) { Write-Host $tx_mes
 # Raise an error if the code module fails to load
 if ($null -ne $global:tx_error) { throw "$($global:tx_error)" } else { Write-Host "Build of `Access` application completed!" }
 #
+# Optional: Prevent script from exiting immediately
+Read-Host "Press Enter to close the 'meta-data-editor'"
+#
