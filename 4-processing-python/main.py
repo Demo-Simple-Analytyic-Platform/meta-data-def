@@ -17,7 +17,13 @@ run.export_documentation('-1', is_debugging)
 
 # Assumtions: stuff a overarching procedure shoudl extract, but for our example we will hardcode it
 id_model = '5f4a1942465c575a1f5a5a575d1e191c' # was id_model was updated by the initialization
-id_development_status = '06030d080400090702000c0502001500' # --> Production
+id_development_status_ahc = '010408050302010500060b0207190003' # --> Ad-Hoc
+id_development_status_oos = '06010b090001080103040f070e011504' # --> Out-of-Scope
+id_development_status_dev = '06010b0900010908010d0e0404021503' # --> Development
+id_development_status_uat = '01040805030201000104090406190800' # --> User Acceptance Testing
+id_development_status_prd = '06030d080400090702000c0502001500' # --> Production
+
+id_development_status     = id_development_status_prd
 
 # Build SQL Statement to Extract list of Ingestions
 tx_query  = f"SELECT nm_target_schema\n"
@@ -63,5 +69,5 @@ while i < m:
     # Next Dataset
     i += 1
 
-# Process all datasets
+# Process all1 datasets
 print("all done")
