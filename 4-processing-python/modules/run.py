@@ -468,3 +468,74 @@ def start(id_model, ip_id_dataset_or_dq_control, ds_external_reference_id, is_de
     # /* All is Well, return "new" ID. */
     if (is_debugging == "1"):
         print(f"Run started with id_run: {id_run}")
+
+def process_todo_list_of_datasets(id_model, process_type, todo, is_debugging):
+    # Loop through the todo results and call run.data_pipeline for each
+    print("")
+    print("---------------------------------------------------------------------")
+    print(f"Processing {len(todo)} `{process_type}`-dataset(s) from todo list.")
+    print("---------------------------------------------------------------------")
+    print("")
+    i = 0
+    m = len(todo)
+    while i < m:
+
+        # Extract schema and table names
+        nm_target_schema = todo.iloc[i]['nm_target_schema']
+        nm_target_table  = todo.iloc[i]['nm_target_table']
+
+        # Show progress which dataset
+        print("---------------------------------------------------------------------")
+        print(f"Processing {i + 1}/{len(todo)}: {nm_target_schema}.{nm_target_table}")
+
+        try: # Execute Data Pipeline for dataset.
+            data_pipeline(id_model, nm_target_schema, nm_target_table, is_debugging)
+            print(f"   ✓ Successfully processed: {nm_target_schema}.{nm_target_table}")
+
+        except Exception as e: # Continue with next item even if one fails
+            print(f"   ✗ Error processing {nm_target_schema}.{nm_target_table}: {str(e)}")
+            continue
+        
+        # Empty line
+        print("")
+
+        # Next Dataset
+        i += 1    
+
+def process_ingestion_datasets(id_model, id_development_status, is_debugging):
+
+    # Build SQL Statement to Extract list of Ingestions
+    tx_query  = f"SELECT nm_target_schema\n"
+    tx_query += f"     , nm_target_table\n"
+    tx_query += f"FROM dta.dataset\n"
+    tx_query += f"WHERE 1=1" #id_development_status = '{id_development_status}'\n"
+    tx_query += f"AND   id_model              = '{id_model}'\n"
+    tx_query += f"AND   nm_target_schema     != 'mdm'\n"
+    tx_query += f"AND   meta_is_active        = 1\n"
+    tx_query += f"AND   is_ingestion          = 1"
+
+    # Execute the query and store result in todo
+    todo = query(sa.target_db(), tx_query)
+
+    # Process the todo list of "Ingestion"-dataset(s)
+    process_todo_list_of_datasets(id_model, 'Ingestion', todo, is_debugging)
+
+def process_transformation_datasets(id_model, is_debugging):
+
+    # Build SQL Statement to Extract list of Transforma
+    tx_query  = f"SELECT pgp.[id_model]		    AS [id_model]\n"
+    tx_query += f"     , pgp.[nm_tgt_schema]    AS [nm_target_schema]\n"
+    tx_query += f"     , pgp.[nm_tgt_table]	    AS [nm_target_table]\n"
+    tx_query += f"     , pgp.[ni_process_group] AS [ni_process_group]\n"
+    tx_query += f"FROM [dta].[process_group] AS pgp\n"
+    tx_query += f"WHERE pgp.[id_model]       = '{id_model}'\n"
+    tx_query += f"AND   pgp.[is_ingestion]   = 0\n"
+    tx_query += f"AND   pgp.[nm_tgt_schema] != 'mdm'\n"
+    tx_query += f"AND   pgp.[nm_tgt_table]  != 'meta_attributes'\n"
+    tx_query += f"ORDER By pgp.[ni_process_group] ASC"
+
+    # Execute the query and store result in todo
+    todo = query(sa.target_db(), tx_query)
+
+    # Process the todo list of "Transformation"-dataset(s)
+    process_todo_list_of_datasets(id_model, 'Transformation', todo, is_debugging)        
