@@ -2,13 +2,16 @@
 from modules import credentials as sa
 from modules import source      as src
 from modules.fso import folder_exists, create_folder
-from modules.sql import query, execute_procedure, engine, truncate_table, execute_sql
+from modules.sql import query, execute_procedure, engine, truncate_table, execute_sql, execute_procedure2, execute_stored_procedure
 from modules.secrets import read_secret
 
 # Import Libraries
 from azure.storage.blob import BlobServiceClient
 from datetime           import datetime as dt
+import pyodbc as pyodbc
 import pandas as pd
+
+from sqlalchemy import text
 
 from azure.storage.blob import ContentSettings
 
@@ -65,7 +68,7 @@ def data_pipeline(id_model, nm_target_schema, nm_target_table, is_debugging):
             print(f"Attempt {attempt+1} to update dataset...")
         
         # Call the function to update the dataset
-        result = update_dataset(id_model, ds_external_reference_id, id_dataset, is_ingestion, nm_procedure, nm_tsl_schema, nm_tsl_table, is_debugging)    
+        result = update_dataset(id_model, nm_target_schema, nm_target_table, ds_external_reference_id, id_dataset, is_ingestion, nm_procedure, nm_tsl_schema, nm_tsl_table, is_debugging)    
         
         # Add 1 to the attempt counter
         attempt += 1
@@ -75,7 +78,7 @@ def data_pipeline(id_model, nm_target_schema, nm_target_table, is_debugging):
     
     print("all done")
     
-def update_dataset(id_model, ds_external_reference_id, id_dataset, is_ingestion, nm_procedure, nm_tsl_schema, nm_tsl_table, is_debugging):
+def update_dataset(id_model, nm_target_schema, nm_target_table, ds_external_reference_id, id_dataset, is_ingestion, nm_procedure, nm_tsl_schema, nm_tsl_table, is_debugging):
     
     # Local Vairables
     result = False
@@ -156,22 +159,22 @@ def update_dataset(id_model, ds_external_reference_id, id_dataset, is_ingestion,
             load_tsl(source_df, nm_tsl_schema, nm_tsl_table, is_debugging)
             
             # Start sql procedure specific for the "Target"-dataset on database side.
-            usp_dataset_ingestion(nm_procedure, is_debugging)
+            usp_dataset_ingestion(nm_target_schema, nm_target_table, is_debugging)
         
         # If "Transformation" start the run and the procedure
         else:
-            usp_dataset_transformation(nm_procedure, ds_external_reference_id)
+            usp_dataset_transformation(nm_target_schema, nm_target_table, is_debugging)
     
         # If everything is done, return True
         result = True
 
     except Exception as e:
 
-        print(f"Error occurred: {e}")
+        print(f"Error occurred in update_dataset: {e}")
         result = False
     
-        # All is well
-        return result
+    # All is well
+    return result
 
 def load_tsl(
     
@@ -185,18 +188,30 @@ def load_tsl(
     
 ):
 
-    # Truncate Target Table
-    truncate_table(sa.target_db(), nm_tsl_schema, nm_tsl_table)
-    
-    # Load Source DataFrame to SQL Schema / Table
-    sql_engine = engine(sa.target_db())
-    result = df_source_dataset.to_sql(nm_tsl_table, con=sql_engine, schema=nm_tsl_schema, if_exists='replace', index=False)
+    try:
+        # Truncate Target Table
+        truncate_table(sa.target_db(), nm_tsl_schema, nm_tsl_table)
+        
+        # Load Source DataFrame to SQL Schema / Table with proper transaction handling
+        sql_engine = engine(sa.target_db())
+        with sql_engine.connect() as connection:
+            trans = connection.begin()
+            try:
+                result = df_source_dataset.to_sql(nm_tsl_table, con=connection, schema=nm_tsl_schema, if_exists='replace', index=False)
+                trans.commit()
+            except Exception as e:
+                trans.rollback()
+                raise e
 
-    # Show Input Parameter(s)
-    if (is_debugging == "1"):
-        print(f"nm_target_schema : '{nm_tsl_schema}'")
-        print(f"nm_target_table  : '{nm_tsl_table}'")
-        print(f"ni_ingested      : # {str(result)}")
+        # Show Input Parameter(s)
+        if (is_debugging == "1"):
+            print(f"nm_target_schema : '{nm_tsl_schema}'")
+            print(f"nm_target_table  : '{nm_tsl_table}'")
+            print(f"ni_ingested      : # {str(result)}")
+            
+    except Exception as e:
+        print(f"Error loading data to TSL table {nm_tsl_schema}.{nm_tsl_table}: {e}")
+        raise e
         
     # return the result
     return result
@@ -286,27 +301,46 @@ def get_secret(nm_secret, is_debugging):
 def get_param_value(nm_parameter_value, params):
     return params.loc[params['nm_parameter_value'] == nm_parameter_value].values[0][3]
 
-def usp_dataset_ingestion(nm_procedure, is_debugging):
+def usp_dataset_ingestion(nm_target_schema, nm_target_table, is_debugging):
+    
+    # Procedure
+    tx_procedure = "{CALL " + nm_target_schema + ".usp_" + nm_target_table + "}"
 
-    # Build the stored procedure call with parameters
-    stored_procedure = f"EXEC {nm_procedure}"
+    # Build SQL Connection String for pyodbc
+    tx_connections = f"DRIVER={{ODBC Driver 17 for SQL Server}};SERVER={sa.target_db()['server']};DATABASE={sa.target_db()['database']};UID={sa.target_db()['username']};PWD={sa.target_db()['password']};TrustServerCertificate=no;Encrypt=no;"
 
-    # Show excuted "procedure"
-    if (is_debugging == "1") :
-        print(f"Executing stored procedure: {nm_procedure}")
+    # Create a new connection
+    conn = pyodbc.connect(tx_connections,autocommit=True, )
+
+    # Create a new cursor
+    cursor = conn.cursor()
 
     # Execute the stored procedure
-    with engine(sa.target_db()).connect() as connection:
-        with connection.connection.cursor() as cursor:
-            result = cursor.execute(stored_procedure)
-            
-    # Done
-    return result
+    cursor.execute(tx_procedure)
 
-def usp_dataset_transformation(nm_procedure, ds_external_reference_id):
+    # Close the connection
+    conn.close()
+    
+def usp_dataset_transformation(nm_target_schema, nm_target_table, is_debugging):
+        
+    # Procedure
+    tx_procedure = "{CALL " + nm_target_schema + ".usp_" + nm_target_table + "}"
 
-    return execute_procedure(sa.target_db(), nm_procedure, ip_ds_external_reference_id = ds_external_reference_id)
-   
+    # Build SQL Connection String for pyodbc
+    tx_connections = f"DRIVER={{ODBC Driver 17 for SQL Server}};SERVER={sa.target_db()['server']};DATABASE={sa.target_db()['database']};UID={sa.target_db()['username']};PWD={sa.target_db()['password']};TrustServerCertificate=no;Encrypt=no;"
+
+    # Create a new connection
+    conn = pyodbc.connect(tx_connections,autocommit=True, )
+
+    # Create a new cursor
+    cursor = conn.cursor()
+
+    # Execute the stored procedure
+    cursor.execute(tx_procedure)
+
+    # Close the connection
+    conn.close()
+
 def start(id_model, ip_id_dataset_or_dq_control, ds_external_reference_id, is_debugging = "0"):
     
     # /* Local Variables. */
