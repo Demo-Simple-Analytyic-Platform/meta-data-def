@@ -6,14 +6,15 @@ from modules.sql import query, execute_procedure, engine, truncate_table, execut
 from modules.secrets import read_secret
 
 # Import Libraries
-from azure.storage.blob import BlobServiceClient
+ 
+from azure.storage.blob import BlobServiceClient, ContentSettings
 from datetime           import datetime as dt
+from sqlalchemy         import text
 import pyodbc as pyodbc
 import pandas as pd
+import os
+import re
 
-from sqlalchemy import text
-
-from azure.storage.blob import ContentSettings
 
 def data_pipeline(id_model, nm_target_schema, nm_target_table, is_debugging):
     
@@ -502,7 +503,16 @@ def process_todo_list_of_datasets(id_model, process_type, todo, is_debugging):
         # Next Dataset
         i += 1    
 
-def process_ingestion_datasets(id_model, id_development_status, is_debugging):
+def process_ingestion_datasets(id_model, cd_development_status, is_debugging):
+
+    development_status = {
+        'ahc': '010408050302010500060b0207190003',  # --> Ad-Hoc
+        'oos': '06010b090001080103040f070e011504',  # --> Out-of-Scope
+        'dev': '06010b0900010908010d0e0404021503',  # --> Development
+        'uat': '01040805030201000104090406190800',  # --> User Acceptance Testing
+        'prd': '06030d080400090702000c0502001500'   # --> Production
+    }
+    id_development_status = development_status.get(cd_development_status.lower(), development_status.get('dev')) # Default to 'dev' if not found
 
     # Build SQL Statement to Extract list of Ingestions
     tx_query  = f"SELECT nm_target_schema\n"
@@ -538,4 +548,50 @@ def process_transformation_datasets(id_model, is_debugging):
     todo = query(sa.target_db(), tx_query)
 
     # Process the todo list of "Transformation"-dataset(s)
-    process_todo_list_of_datasets(id_model, 'Transformation', todo, is_debugging)        
+    process_todo_list_of_datasets(id_model, 'Transformation', todo, is_debugging)
+
+def initialize_id_model_from_sql(is_debugging):
+    """
+    Initialize id_model by reading it from the SQL definition file.
+    This function parses the insert_definition_into_temp_tables.sql file 
+    to extract the id_model value from the mdm.current_model table insert.
+    
+    Returns:
+        str: The id_model value extracted from the SQL file
+    """
+    # Get current filepath
+    sql_file_path = os.path.abspath(__file__).replace('4-processing-python\\modules\\run.py', '')
+    sql_file_path = os.path.join(sql_file_path, '2-meta-data-definitions', '2-Definitions', 'insert_definition_into_temp_tables.sql')
+    if (is_debugging == "1"):
+        print(f"Looking for SQL file at: {sql_file_path}")
+
+    try:
+        with open(sql_file_path, 'r', encoding='utf-16-le') as file:
+            sql_content = file.read()
+        
+        # Look for the id_model pattern in the SQL file
+        # Pattern matches: convert(char(32), '5f4a1942465c575a1f5a5a575d1e191c')
+        pattern = r"id_model\s*=\s*convert\s*\(\s*char\s*\(\s*32\s*\)\s*,\s*'([a-f0-9]{32})'\s*\)"
+        match = re.search(pattern, sql_content, re.IGNORECASE)
+        
+        if match:
+            extracted_id_model = match.group(1)
+            if is_debugging == "1":
+                print(f"Successfully extracted id_model from SQL file: {extracted_id_model}")
+            return extracted_id_model
+        else:
+            if is_debugging == "1":
+                print("Warning: Could not find id_model in SQL file. Using hardcoded fallback.")
+            # Fallback to hardcoded value if not found
+            return None
+            
+    except FileNotFoundError:
+        if is_debugging == "1":
+            print(f"Warning: SQL file not found at {sql_file_path}. Using hardcoded fallback.")
+        # Fallback to hardcoded value if file not found
+        return None
+    except Exception as e:
+        if is_debugging == "1":
+            print(f"Error reading SQL file: {e}. Using hardcoded fallback.")
+        # Fallback to hardcoded value if any other error
+        return None
