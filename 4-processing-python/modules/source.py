@@ -3,11 +3,16 @@
 # - abs_sas_url_xls   : Load an Excel file from Azure Blob Storage into a Spark DataFrame using a SAS token.
 # - sql_user_password : Load data from a SQL Server database into a Spark DataFrame.
 # - web_table_anonymous_web : Load a table from a webpage into a Spark DataFrame.
+# - dropbox_access_token : Access token for Dropbox API.
 
 # Import Custom Modules
 from modules import run         as rn
 
+# Import for Blob Storage Account access in Azure
 from azure.storage.blob import BlobServiceClient
+
+# Import for Dropbox access vai Access Token
+import dropbox
 
 # Import for web_table_anonymous_web
 import pandas as pd
@@ -206,7 +211,7 @@ def web_table_anonymous_web(
     time.sleep(5)
 
     try: # Find and click the "Accept Cookies" button (adjust the selector as needed)
-        accept_button = driver.find_element(by.XPATH, '//button[text()="Alles accepteren"]')
+        accept_button = driver.find_element(by.XPATH, '//button[text()="Accept all"]')
         accept_button.click()
 
         # Wait for the page to load after accepting cookies
@@ -251,6 +256,59 @@ def web_table_anonymous_web(
 
     # Return the webtable as a DataFrame
     return df
+
+def dbx_acc_tkn_csv(
+
+    # Input Parameteres
+    dbx_1_csv_nm_secret,            # Secret           | Name of the Secret
+    dbx_2_csv_ds_folderpath,        # Folderpath       | Folderpath to the "CSV"-file in the Container.
+    dbx_3_csv_ds_filename,          # Has Header       | Filename of the "CSV"-file.
+    dbx_4_csv_nm_decode,            # Encoding         | Encoding of the file.
+    dbx_5_csv_is_1st_header,        # Has Header       | Is first record Header.
+    dbx_6_csv_cd_delimiter_value,   # Delimiter Value  | Character of the Delimiter for Values.
+    dbx_7_csv_cd_delimter_text,     # Delimter Text    | Character of the Delimiter for Text.
+
+    # Debugging
+    is_debugging
+
+):
+    # Show Parameters if in Debugging mode
+    if (is_debugging == "1"):
+        print("Debugging information:")
+        print(f"Secret Name     : {dbx_1_csv_nm_secret}")
+        print(f"Folder Path     : {dbx_2_csv_ds_folderpath}")
+        print(f"File Name       : {dbx_3_csv_ds_filename}")
+        print(f"Encoding        : {dbx_4_csv_nm_decode}")
+        print(f"Is First Header : {dbx_5_csv_is_1st_header}")
+        print(f"Delimiter Value : {dbx_6_csv_cd_delimiter_value}")
+        print(f"Delimiter Text  : {dbx_7_csv_cd_delimter_text}")
+    
+    # Extract Access Token from Secrets
+    tx_access_token = rn.get_secret(dbx_1_csv_nm_secret)
+
+    # Initialize Dropbox client
+    dbx = dropbox.Dropbox(tx_access_token)
+
+    # Construct full path
+    fp_dropbox = f"{dbx_3_csv_ds_filename}/{dbx_3_csv_ds_filename}"
+
+    try:
+        # Download file
+        metadata, res = dbx.files_download(fp_dropbox)
+        file_content = res.content.decode(dbx_4_csv_nm_decode)
+
+        # Load into pandas DataFrame
+        df = pd.read_csv(StringIO(file_content), delimiter=dbx_6_csv_cd_delimiter_value, quotechar=dbx_7_csv_cd_delimter_text, header=0 if dbx_5_csv_is_1st_header == "1" else None)
+
+        # Clean up the DataFrame (optional, depending on your needs)
+        df = cleanup_headers(df, is_debugging)
+
+        # All Done
+        return df
+
+    except dropbox.exceptions.ApiError as err:
+        print(f"Dropbox API error: {err}")
+        return None
 
 def cleanup_headers(df, is_debugging="0"):
     """

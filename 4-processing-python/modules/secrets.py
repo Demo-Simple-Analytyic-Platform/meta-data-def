@@ -53,7 +53,7 @@ def get_encryption_key():
     
     # If file doesn't exist or couldn't be read, prompt user for new key
     print("Encryption key file not found or corrupted.")
-    tx_encryption_key = getpass.getpass("Please enter your encryption key: ")
+    tx_encryption_key = input("Please enter your encryption key ")
     
     # Store the key in a secure format (base64 encoded for basic obfuscation)
     try:
@@ -146,7 +146,7 @@ def get_secure_information(ip_cd_information_type, ip_nm_database):
     # Prompt user for new information if file doesn't exist or couldn't be read
     if (ip_cd_information_type == "password"):
         # If the information type is password, prompt for secure input
-        tx_value = getpass.getpass(f"Please enter your {ip_cd_information_type}: ")
+        tx_value = input(f"Please enter your {ip_cd_information_type}: ")
     
     else:
         # For other types of information, prompt normally
