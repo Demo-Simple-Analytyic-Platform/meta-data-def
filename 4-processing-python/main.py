@@ -14,6 +14,8 @@ import modules.credentials as crd
 # Set Debugging to "1" => true
 is_debugging = "1"
 
+# run.data_pipeline(id_model, 'nm_target_schema', 'nm_target_table', is_debugging)
+
 # Initialize id_model from SQL definition file
 id_model = run.initialize_id_model_from_sql(is_debugging)
 

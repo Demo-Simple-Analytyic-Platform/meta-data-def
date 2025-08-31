@@ -156,13 +156,13 @@ def update_dataset(id_model, nm_target_schema, nm_target_table, ds_external_refe
             elif cd_parameter_group == 'dbx_acc_tkn_csv':
 
                 # Get Ingestion specific parameters
-                dbx_1_csv_nm_secret,          = get_param_value('dbx_1_csv_nm_secret', params)
-                dbx_2_csv_ds_folderpath,      = get_param_value('dbx_2_csv_ds_folderpath', params)
-                dbx_3_csv_ds_filename,        = get_param_value('dbx_3_csv_ds_filename', params)
-                dbx_4_csv_nm_encoding,        = get_param_value('dbx_4_csv_nm_encoding', params)
-                dbx_5_csv_is_1st_header,      = get_param_value('dbx_5_csv_is_1st_header', params)
-                dbx_6_csv_cd_delimiter_value, = get_param_value('dbx_6_csv_cd_delimiter_value', params)
-                dbx_7_csv_cd_delimter_text,   = get_param_value('dbx_7_csv_cd_delimter_text', params)
+                dbx_1_csv_nm_secret          = get_param_value('dbx_1_csv_nm_secret', params)
+                dbx_2_csv_ds_folderpath      = get_param_value('dbx_2_csv_ds_folderpath', params)
+                dbx_3_csv_ds_filename        = get_param_value('dbx_3_csv_ds_filename', params)
+                dbx_4_csv_nm_encoding        = get_param_value('dbx_4_csv_nm_encoding', params)
+                dbx_5_csv_is_1st_header      = get_param_value('dbx_5_csv_is_1st_header', params)
+                dbx_6_csv_cd_delimiter_value = get_param_value('dbx_6_csv_cd_delimiter_value', params)
+                dbx_7_csv_cd_delimter_text   = get_param_value('dbx_7_csv_cd_delimter_text', params)
 
                 # load source to dataframe
                 source_df = src.dbx_acc_tkn_csv(dbx_1_csv_nm_secret, dbx_2_csv_ds_folderpath, dbx_3_csv_ds_filename, dbx_4_csv_nm_encoding, dbx_5_csv_is_1st_header, dbx_6_csv_cd_delimiter_value, dbx_7_csv_cd_delimter_text, is_debugging)
