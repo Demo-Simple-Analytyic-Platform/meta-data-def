@@ -14,19 +14,19 @@ import modules.credentials as crd
 # Set Debugging to "1" => true
 is_debugging = "1"
 
-# run.data_pipeline(id_model, 'nm_target_schema', 'nm_target_table', is_debugging)
-
 # Initialize id_model from SQL definition file
 id_model = run.initialize_id_model_from_sql(is_debugging)
 
+run.data_pipeline(id_model, 'psa_revolut', 'account_statements', is_debugging)
+
 # rebuild html documentation for main pagepip
-run.export_documentation('-1', is_debugging)
+#run.export_documentation('-1', is_debugging)
 
 # Process Ingestion Datasets (currently the development status is still in development)
-run.process_ingestion_datasets(id_model, 'all', is_debugging)
+#run.process_ingestion_datasets(id_model, 'all', is_debugging)
 
 # Process Ingestion Datasets
-run.process_transformation_datasets(id_model, is_debugging)
+#run.process_transformation_datasets(id_model, is_debugging)
 
 # All Done
 print("All Done.")

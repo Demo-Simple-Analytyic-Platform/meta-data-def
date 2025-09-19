@@ -1,0 +1,1 @@
+powershell -ExecutionPolicy Bypass -File "main_parallel.ps1"

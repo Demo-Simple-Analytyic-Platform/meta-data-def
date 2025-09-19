@@ -38,6 +38,10 @@ def abs_sas_url_csv(
     # Debugging
     is_debugging
 ):
+    # Handling None values for top left and bottom right cells
+    abs_4_csv_ds_folderpath    = "" if abs_4_csv_ds_folderpath    is None else abs_4_csv_ds_folderpath
+    abs_9_csv_cd_delimter_text = "" if abs_9_csv_cd_delimter_text is None else abs_9_csv_cd_delimter_text
+
     # Show input Parameter(s)
     if (is_debugging == "1"):
         print("abs_1_csv_nm_account         : '" + abs_1_csv_nm_account + "'")
@@ -211,7 +215,7 @@ def web_table_anonymous_web(
     time.sleep(5)
 
     try: # Find and click the "Accept Cookies" button (adjust the selector as needed)
-        accept_button = driver.find_element(by.XPATH, '//button[text()="Accept all"]')
+        accept_button = driver.find_element(by.XPATH, '//button[text()="Alles accepteren"]')
         accept_button.click()
 
         # Wait for the page to load after accepting cookies
