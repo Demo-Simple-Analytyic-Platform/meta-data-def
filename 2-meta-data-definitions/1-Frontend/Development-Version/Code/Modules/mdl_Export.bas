@@ -20,7 +20,9 @@ Public Sub export_all()
     Call build_sql_file_dataset
     '
     ' Local Variables
-    Dim txt As TextStream: Set txt = fso.OpenTextFile(mdl_Folders.repos() & "insert_definition_into_temp_tables.sql", ForWriting, True, TristateTrue)
+    Dim l_id_model      AS String:      l_id_model = mdl_Folders.id_model(mdl_Folders.nm_repository())
+    Dim l_nm_repository AS String: l_nm_repository = mdl_Folders.nm_repository()
+    Dim txt            As TextStream:      Set txt = fso.OpenTextFile(mdl_Folders.repos() & "insert_definition_into_temp_tables.sql", ForWriting, True, TristateTrue)
     '
     '
     txt.WriteLine ""
@@ -54,9 +56,15 @@ Public Sub export_all()
     txt.WriteLine ""
     txt.WriteLine "BEGIN /* Name of Git Repository / Current Model */"
     txt.WriteLine "  "
-    txt.WriteLine "  DELETE FROM mdm.current_model; INSERT INTO mdm.current_model (id_model, nm_repository) SELECT  "
-    txt.WriteLine "    id_model      = convert(char(32),      '" & mdl_Folders.id_model(mdl_Folders.nm_repository()) & "'),"
-    txt.WriteLine "    nm_repository = CONVERT(NVARCHAR(128), '" & mdl_Folders.nm_repository() & "');"
+    txt.WriteLine "  DELETE FROM mdm.current_model;"
+    txt.WriteLine "  INSERT INTO mdm.current_model (id_model, nm_repository) SELECT"
+    txt.WriteLine "    id_model      = CONVERT(CHAR(32),      '" & l_id_model & "'),"
+    txt.WriteLine "    nm_repository = CONVERT(NVARCHAR(128), '" & l_nm_repository & "');"
+    txt.WriteLine "  "
+    txt.WriteLine "  DELETE FROM mdm.last_deployment;"
+    txt.WriteLine "  INSERT INTO mdm.last_deployment (id_model, dt_deployment) SELECT"
+    txt.WriteLine "    id_model       = CONVERT(CHAR(32),      '" & l_id_model & "'),"
+    txt.WriteLine "    dt_deployment  = (SELECT MAX(meta_dt_valid_from) FROM dta.dataset WHERE id_model = '" & l_id_model & "')" &
     txt.WriteLine "  "
     txt.WriteLine "END"
     txt.WriteLine "GO"
