@@ -1,3 +1,4 @@
+Attribute VB_Name = "mdl_Import_Export_Code"
 Option Compare Database
 Option Explicit
 '
@@ -94,10 +95,10 @@ Public Sub ImportAll() 'As Boolean
     '
     ' Import Modules, Forms, Reports and Marcos
     Dim fil As file: Dim fso As FileSystemObject: Set fso = New FileSystemObject
-    For Each fil In fso.GetFolder(fp_exported_tables).Files:  load_from_repo_file fil, acTable:  Next fil    
+    For Each fil In fso.GetFolder(fp_exported_tables).Files:  load_from_repo_file fil, acTable:  Next fil
     For Each fil In fso.GetFolder(fp_exported_queries).Files: load_from_repo_file fil, acQuery:  Next fil
     For Each fil In fso.GetFolder(fp_exported_modules).Files: load_from_repo_file fil, acModule: Next fil
-    for each fil In fso.GetFolder(fp_exported_forms).Files:   load_from_repo_file fil, acForm:   Next fil
+    For Each fil In fso.GetFolder(fp_exported_forms).Files:   load_from_repo_file fil, acForm:   Next fil
     'For Each fil In fso.GetFolder(fp_exported_reports).Files: load_from_repo_file fil, acReport: Next fil
     'For Each fil In fso.GetFolder(fp_exported_macros).Files:  load_from_repo_file fil, acMacro:  Next fil
     '
@@ -107,49 +108,49 @@ Public Sub ImportAll() 'As Boolean
      '
     ' Open form "StartUp" this form will ingest of de meta-data-defintions form the repository.
     DoCmd.OpenForm "StartUp"
-    '   
+    '
 End Sub
 
-Public Function load_from_repo_file(ip_object as file, ip_object_type as AcObjectType) As Boolean
+Public Function load_from_repo_file(ip_object As file, ip_object_type As AcObjectType) As Boolean
 On Error GoTo ErrHandle
     '
     ' Set Folder paths
     Call set_folder_paths
     '
     ' Build nm_object_type
-    Dim nm_object      as string: nm_object = Mid(ip_object.Name, 1, Len(ip_object.Name) - 4)
+    Dim nm_object      As String: nm_object = Mid(ip_object.Name, 1, Len(ip_object.Name) - 4)
     Dim ds_object_path As String: ds_object_path = ip_object.Path
-    Dim nm_object_type As String: nm_object_type = iif(ip_object_type = acTable, "table", _
-                                                   iif(ip_object_type = acQuery, "query", _
-                                                   iif(ip_object_type = acModule, "module", _
-                                                   iif(ip_object_type = acForm, "form", _
-                                                   iif(ip_object_type = acReport, "report", _
-                                                   iif(ip_object_type = acMacro, "macro", "<unknown>"))))))
-  ' 
+    Dim nm_object_type As String: nm_object_type = IIf(ip_object_type = acTable, "table", _
+                                                   IIf(ip_object_type = acQuery, "query", _
+                                                   IIf(ip_object_type = acModule, "module", _
+                                                   IIf(ip_object_type = acForm, "form", _
+                                                   IIf(ip_object_type = acReport, "report", _
+                                                   IIf(ip_object_type = acMacro, "macro", "<unknown>"))))))
+  '
     ' Local Variables for Logging
     Dim fso As FileSystemObject: Set fso = New FileSystemObject
     Dim log As TextStream: Set log = fso.OpenTextFile("C:\Temp\" & nm_object_type & ".txt", ForAppending, True, TristateTrue)
-    Dim msg_start  As string:  msg_start = " - Start importing `" & nm_object_type & "` from repo location: `" & ds_object_path & "`"
-    Dim msg_finish As string: msg_finish = " - Finish importing `" & nm_object & "`" 
+    Dim msg_start  As String:  msg_start = " - Start importing `" & nm_object_type & "` from repo location: `" & ds_object_path & "`"
+    Dim msg_finish As String: msg_finish = " - Finish importing `" & nm_object & "`"
     '
     ' Log Start Import
-    log.WriteLine format(Now(), "yyyy-mm-dd hh:nn:ss") & msg_start: Debug.Print msg_start
+    log.WriteLine Format(Now(), "yyyy-mm-dd hh:nn:ss") & msg_start: Debug.Print msg_start
     '
     'Load the object from the text into Access
-    if (ip_object_type = acModule AND nm_object = "mdl_Import_Export_Code") Then
+    If (ip_object_type = acModule And nm_object = "mdl_Import_Export_Code") Then
         log.WriteLine "Exclude from Importing the `mdl_Import_Export_Code` is running the `Import/export` functions."
-    else 
-        if (ip_object_type = acTable) Then ImportSingleTableDef nm_object
-        if (ip_object_type = acQuery) Then ImportSingleQueryDef nm_object
-        if (ip_object_type = acModule) Then Application.LoadFromText acModule, nm_object, ds_object_path
-        if (ip_object_type = acForm) Then Application.LoadFromText acForm, nm_object, ds_object_path
-        if (ip_object_type = acReport) Then Application.LoadFromText acReport, nm_object, ds_object_path    
-        if (ip_object_type = acMacro) Then Application.LoadFromText acMacro, nm_object, ds_object_path
-    end if
+    Else
+        If (ip_object_type = acTable) Then ImportSingleTableDef nm_object
+        If (ip_object_type = acQuery) Then ImportSingleQueryDef nm_object
+        If (ip_object_type = acModule) Then Application.LoadFromText acModule, nm_object, ds_object_path
+        If (ip_object_type = acForm) Then Application.LoadFromText acForm, nm_object, ds_object_path
+        If (ip_object_type = acReport) Then Application.LoadFromText acReport, nm_object, ds_object_path
+        If (ip_object_type = acMacro) Then Application.LoadFromText acMacro, nm_object, ds_object_path
+    End If
     DoEvents
     '
     ' Log Finish Import
-    log.WriteLine format(Now(), "yyyy-mm-dd hh:nn:ss") & msg_finish: Debug.Print msg_start
+    log.WriteLine Format(Now(), "yyyy-mm-dd hh:nn:ss") & msg_finish: Debug.Print msg_start
     '
     ' Save/Close Log
     log.Close: Set log = Nothing
@@ -256,7 +257,7 @@ Private Function GetAccessDataType(fld As DAO.Field) As String
         Case dbInteger
             strDataType = "SMALLINT"
         Case dbLong
-            If (fld.Attributes And dbAutoIncrField) Then
+            If (fld.attributes And dbAutoIncrField) Then
                 strDataType = "IDENTITY(1,1) INT"
             Else
                 strDataType = "INT"
@@ -564,7 +565,7 @@ Private Sub AddIndexesFromSQL(strTableName As String, strSQL As String)
     
     ' Process each line looking for index definitions
     For i = 0 To UBound(strLines)
-        strLine = Trim(strLines(i))
+        strLine = TRIM(strLines(i))
         
         ' Check for Primary Key
         If InStr(UCase(strLine), "PRIMARY KEY") > 0 Then
@@ -623,7 +624,7 @@ Private Sub CreateAccessIndex(tdf As DAO.TableDef, strName As String, strFields 
     
     ' Add fields to index
     For i = 0 To UBound(arrFields)
-        Set fld = idx.CreateField(Trim(arrFields(i)))
+        Set fld = idx.CreateField(TRIM(arrFields(i)))
         idx.fields.Append fld
     Next i
     
@@ -1018,7 +1019,7 @@ Private Function ExtractQuerySQL(strFileContent As String) As String
     
     ' Look for the SQL statement section
     For i = 0 To UBound(arrLines)
-        strLine = Trim(arrLines(i))
+        strLine = TRIM(arrLines(i))
         
         ' Check if we've reached the SQL statement section
         If InStr(UCase(strLine), "-- SQL STATEMENT:") > 0 Then
@@ -1033,7 +1034,7 @@ Private Function ExtractQuerySQL(strFileContent As String) As String
     Next i
     
     ' Clean up the SQL statement
-    strSQL = Trim(strSQL)
+    strSQL = TRIM(strSQL)
     If Right(strSQL, 2) = vbCrLf Then
         strSQL = Left(strSQL, Len(strSQL) - 2)
     End If
@@ -1059,10 +1060,10 @@ Private Sub SetQueryDescription(qdf As DAO.QueryDef, strFileContent As String)
     
     ' Look for description line
     For i = 0 To UBound(arrLines)
-        strLine = Trim(arrLines(i))
+        strLine = TRIM(arrLines(i))
         
         If InStr(UCase(strLine), "-- DESCRIPTION:") > 0 Then
-            strDescription = Trim(Mid(strLine, InStr(UCase(strLine), "-- DESCRIPTION:") + 15))
+            strDescription = TRIM(Mid(strLine, InStr(UCase(strLine), "-- DESCRIPTION:") + 15))
             If strDescription <> "No description" And strDescription <> "" Then
                 qdf.Properties("Description") = strDescription
             End If
@@ -1144,3 +1145,4 @@ ErrorHandler:
     Set fso = Nothing
     MsgBox "Error importing queries from folder: " & Err.Number & " - " & Err.Description, vbCritical
 End Sub
+

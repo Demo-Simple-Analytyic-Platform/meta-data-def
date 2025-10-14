@@ -129,7 +129,7 @@ function Import-Module-into-Access($ip_ob_access_appl) {
     }
     #
     # If no error occurred, return the Access application object
-    if ($null -eq $global:tx_error) { $return = $ip_ob_access_appl } else { $return = $null }
+    if ($null -eq $global:tx_error) { $return = $ob_access_appl } else { $return = $null }
     return $return
     #
 }
@@ -146,7 +146,7 @@ function Exec-Access-internal-Function-Import-All($ip_ob_access_appl) {
     catch { $global:tx_error = "Error 5: Failed to execute ImportAll function. Error: $_" }
     #
     # If no error occurred, return the Access application object
-    if ($null -eq $global:tx_error) { $return = $ip_ob_access_appl } else { $return = $null }
+    if ($null -eq $global:tx_error) { $return = $ob_access_appl } else { $return = $null }
     return $return
     #
 }

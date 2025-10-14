@@ -1,3 +1,4 @@
+Attribute VB_Name = "mdl_Import"
 Option Compare Database
 Option Explicit
 '
@@ -339,15 +340,15 @@ Public Sub process_sql_file(ByVal tx_path_sql_file As String, Optional fm As For
             ' Read " next"-line
             txl = txt.ReadLine: If (Not (fm Is Nothing)) Then Call fm.tx_loading_progress_add
             txl = Replace(txl, "<id_model>", id_model)
-            Do Until ((Left(txl, Len(ins)) = ins) Or (Left(txl, Len(gos)) = gos) Or (Left(txl, 3) = "end") Or (Len(Trim(txl)) = 0) Or txt.AtEndOfStream)
+            Do Until ((Left(txl, Len(ins)) = ins) Or (Left(txl, Len(gos)) = gos) Or (Left(txl, 3) = "end") Or (Len(TRIM(txl)) = 0) Or txt.AtEndOfStream)
                 sql = sql & Chr(10) & txl
                 txl = txt.ReadLine: Call fm.tx_loading_progress_add
                 txl = Replace(txl, "<id_model>", id_model)
             Loop
             '
             ' Execute "SQL"-statemen
-            sql = Trim(Replace(sql, "INSERT INTO tsa_", "INSERT INTO "))
-            sql = Trim(Replace(sql, ".tsa_", "_"))
+            sql = TRIM(Replace(sql, "INSERT INTO tsa_", "INSERT INTO "))
+            sql = TRIM(Replace(sql, ".tsa_", "_"))
             '
             ' Custom operatie per table
             If (InStr(1, sql, "dqm_dq_threshold") > 0) Then
@@ -427,8 +428,8 @@ Public Function execute_sql(tx_sql As String) As Boolean
     '
     ' Local Variables
     Dim shm As String:        shm = Mid(tx_sql, 13, 3)
-    Dim tbl As String:        tbl = Mid(tx_sql, 17, InStr(1, tx_sql, " (", vbTextCompare) - 16)
-    Dim sql As String:        sql = "SELECT COUNT(*) AS ni_records FROM " & shm & "_" & tbl
+    Dim Tbl As String:        Tbl = Mid(tx_sql, 17, InStr(1, tx_sql, " (", vbTextCompare) - 16)
+    Dim sql As String:        sql = "SELECT COUNT(*) AS ni_records FROM " & shm & "_" & Tbl
     Dim rst As Recordset: Set rst = CurrentDb.OpenRecordset(sql)
     Dim exp As Integer:       exp = rst.fields("ni_records") + 1: rst.Close
     Dim log As Recordset
@@ -450,13 +451,13 @@ Public Function execute_sql(tx_sql As String) As Boolean
             '  Add record and save schema/table en SQL
             .AddNew
             .fields("nm_schema") = shm
-            .fields("nm_table") = tbl
+            .fields("nm_table") = Tbl
             .fields("tx_sql") = tx_sql
             pky = .fields("id_log")
             .Update
             '
             ' remeber id_log to filter log-from
-            DoCmd.OpenForm "sql_insert_log", acNormal, , "id_log=" & str(pky), acFormReadOnly, acWindowNormal
+            DoCmd.OpenForm "sql_insert_log", acNormal, , "id_log=" & Str(pky), acFormReadOnly, acWindowNormal
             '
             ' Set to false to stop processing
             execute_sql = False
@@ -521,3 +522,4 @@ Public Sub load_dta_database(fm As Form)
     DoCmd.SetWarnings False: DoCmd.RunSQL sql: DoCmd.SetWarnings True
     '
 End Sub
+

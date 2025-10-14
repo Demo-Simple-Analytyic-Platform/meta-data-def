@@ -1,3 +1,4 @@
+Attribute VB_Name = "mdl_Folders"
 Option Compare Database
 Option Explicit
 '

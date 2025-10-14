@@ -1,3 +1,4 @@
+Attribute VB_Name = "mdl_Kernel32"
 Option Compare Database
 Option Explicit
 '
@@ -9,7 +10,6 @@ Public Declare PtrSafe Sub Sleep Lib "kernel32" (ByVal dwMilliseconds As LongPtr
 #Else
     Public Declare Function SetForegroundWindow Lib "user32" (ByVal hwnd As Long) As Long
 #End If
-
 
 Public Declare PtrSafe Function GetLocaleInfo Lib "kernel32" Alias "GetLocaleInfoA" (ByVal Locale As Long, ByVal LCType As Long, ByVal lpLCData As String, ByVal cchData As Long) As Long
 
@@ -29,6 +29,5 @@ Public Function CheckDecimalSeparator() As String
     '
     ' Set return value
     CheckDecimalSeparator = Left$(buffer, Length - 1)
-    
-    
+    '
 End Function

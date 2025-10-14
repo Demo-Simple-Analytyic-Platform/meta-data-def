@@ -1,3 +1,4 @@
+Attribute VB_Name = "mdl_Encryption"
 ''
 ' (c) Mehmet (P.R.M.) Misset
 '
@@ -40,7 +41,7 @@ Public Function decrypt(ip_encrypted_value As String) As String
     For ark_data = 1 To (Len(ip_encrypted_value) / 2)
         '
         ' The first value to be XOr-ed comes from the data to be encrypted
-        index_xor_value_1 = val("&H" & (Mid$(ip_encrypted_value, (2 * ark_data) - 1, 2)))
+        index_xor_value_1 = Val("&H" & (Mid$(ip_encrypted_value, (2 * ark_data) - 1, 2)))
         '
         ' The second value comes from the code key
         index_xor_value_2 = Asc(Mid$(encryption_key, ((ark_data Mod Len(encryption_key)) + 1), 1))
@@ -111,7 +112,7 @@ Public Function get_encryption_key() As String
     '
     ' Retrun "EncryptionKey" based on the serial number of the c-drive, any
     ' other value can chosen, also some input value that must be provided.
-    get_encryption_key = str(fso.GetDrive("C:\").SerialNumber)
+    get_encryption_key = Str(fso.GetDrive("C:\").SerialNumber)
     '
 End Function
 '
