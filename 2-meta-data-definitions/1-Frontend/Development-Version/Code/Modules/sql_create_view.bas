@@ -23,4 +23,3 @@ Sub CreateView(nm_view As String, tx_sql As String)
     Set db = Nothing
 
 End Sub
-

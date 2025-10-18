@@ -172,10 +172,3 @@ Public Sub TestHash()
     Debug.Print "SHA-512: " & vbTab & GetHashOfString(dataString, CALG_SHA_512) '-- ==> SHA512  (from String)"
 
 End Sub
-
-
-
-
-
-
-

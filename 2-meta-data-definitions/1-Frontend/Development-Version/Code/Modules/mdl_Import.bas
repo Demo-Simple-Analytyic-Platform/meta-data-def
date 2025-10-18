@@ -34,9 +34,6 @@ Public Sub process_all_sql_files(fm As Form_StartUp)
     Dim tx As String
     Dim is_setup_mode_detected As Boolean: is_setup_mode_detected = is_setup_mode
     '
-    ' Reset feedback
-    fm.tx_loading_feedback.Caption = ""
-    '
     ' Truncate all tables in Access DB
     Call truncate_all_meta_datasets
     '
@@ -302,14 +299,22 @@ Public Sub process_sql_file(ByVal tx_path_sql_file As String, Optional fm As For
     Dim txl As String:  txl = ""
     Dim ins As String:  ins = "  INSERT INTO "
     Dim gos As String:  gos = "GO"
-    Dim ms  As String:
+    Dim ms  As String:   ms = "Processing for Model `<nm_repository>`" & vbNewLine & "SQL-file : `<tx_sql_filepath>`"
+    Dim ix  As Integer:  ix = 0
     '
     ' In case this is "setup"-mode, the "<id_model>"-placeholder must be replaced with the id_model of this model.
     Dim id_model As String: id_model = id_model_default
     '
     ' set feedback message
     If (Not (fm Is Nothing)) Then
-        fm.tx_loading_feedback.Caption = Replace(Replace(ms, "<nm_repository>", mdl_Folders.nm_repository()), "<tx_sql_filepath>", relative_path(tx_path_sql_file))
+        If (Len(fm.tx_loading_feedback.Caption) > 512) Then
+            ix = InStrRev(fm.tx_loading_feedback.Caption, vbNewLine)
+            fm.tx_loading_feedback.Caption = Mid(fm.tx_loading_feedback.Caption, 1, 512)
+        End If
+        fm.tx_loading_feedback.Caption = Replace(Replace(ms, _
+                                         "<nm_repository>", mdl_Folders.nm_repository()), _
+                                         "<tx_sql_filepath>", relative_path(tx_path_sql_file)) _
+                                       & vbNewLine & fm.tx_loading_feedback.Caption
     End If
     '
     ' Check is file has "text"-lines.
@@ -340,15 +345,15 @@ Public Sub process_sql_file(ByVal tx_path_sql_file As String, Optional fm As For
             ' Read " next"-line
             txl = txt.ReadLine: If (Not (fm Is Nothing)) Then Call fm.tx_loading_progress_add
             txl = Replace(txl, "<id_model>", id_model)
-            Do Until ((Left(txl, Len(ins)) = ins) Or (Left(txl, Len(gos)) = gos) Or (Left(txl, 3) = "end") Or (Len(TRIM(txl)) = 0) Or txt.AtEndOfStream)
+            Do Until ((Left(txl, Len(ins)) = ins) Or (Left(txl, Len(gos)) = gos) Or (Left(txl, 3) = "end") Or (Len(Trim(txl)) = 0) Or txt.AtEndOfStream)
                 sql = sql & Chr(10) & txl
                 txl = txt.ReadLine: Call fm.tx_loading_progress_add
                 txl = Replace(txl, "<id_model>", id_model)
             Loop
             '
             ' Execute "SQL"-statemen
-            sql = TRIM(Replace(sql, "INSERT INTO tsa_", "INSERT INTO "))
-            sql = TRIM(Replace(sql, ".tsa_", "_"))
+            sql = Trim(Replace(sql, "INSERT INTO tsa_", "INSERT INTO "))
+            sql = Trim(Replace(sql, ".tsa_", "_"))
             '
             ' Custom operatie per table
             If (InStr(1, sql, "dqm_dq_threshold") > 0) Then
@@ -522,4 +527,3 @@ Public Sub load_dta_database(fm As Form)
     DoCmd.SetWarnings False: DoCmd.RunSQL sql: DoCmd.SetWarnings True
     '
 End Sub
-

@@ -10,6 +10,7 @@ Public Type typ_transformation_dataset
     id_source_dataset         As String
     cd_alias                  As String
     tx_join_criteria          As String
+    tx_join_criteria_with_ph  As String ' here we have placed the refereced attributes with 'placeholders' so if referenced attribute change name the source query can be re-build using the names.
 End Type
 
 Public Sub test_parse_transformation_dataset()
@@ -65,7 +66,7 @@ Public Sub parse_transformation_dataset(ip_id_model As String, ip_id_dataset As 
         ni_position_length = IIf(ni_position_end = 0, Len(tx_sql_statement), ni_position_end - ni_position_begin)
         '
         ' /* Extract only the "FROM/JOIN"-clause of the "Query". */
-        tx_sql_statement = TRIM(Mid(tx_sql_statement, ni_position_begin, ni_position_length))
+        tx_sql_statement = Trim(Mid(tx_sql_statement, ni_position_begin, ni_position_length))
         '
         ' /* Show extracted "FROM/JOIN"-clause. */
         If ip_is_debugging Then Debug.Print tx_sql_statement
@@ -78,7 +79,7 @@ Public Sub parse_transformation_dataset(ip_id_model As String, ip_id_dataset As 
         tx = Split(tx_sql_statement): ni_ordering = 0
         Set rs = db.OpenRecordset("SELECT * FROM tmp_transformation_dataset_tx WHERE 1=2")
         For Each vr_sql In tx
-            If Len(TRIM(vr_sql)) > 0 Then
+            If Len(Trim(vr_sql)) > 0 Then
                 ni_ordering = ni_ordering + 1
                 rs.AddNew
                 rs.fields("id_model") = ip_id_model
@@ -470,10 +471,14 @@ Public Sub parse_transformation_dataset(ip_id_model As String, ip_id_dataset As 
             DoCmd.SetWarnings False: DoCmd.RunSQL sql: DoCmd.SetWarnings True
             '
         End If
+        '
+        ' Determing Utilized Attribute per "Transformation Dataset", how ever you`ll need to process all the "Transformation Dataset(s)" !
+        Set rs = db.OpenRecordset("SELECT id_transformation_dataset FROM dta_transformation_dataset WHERE id_transformation_part = '" & ip_id_transformation_part & "'")
+        Do While Not rs.EOF
+            Call parse_transformation_dataset_attribute(ip_id_model, rs!id_transformation_dataset, ip_is_debugging, ip_is_testing)
+            rs.MoveNext
+        Loop
+        '
+        '
     End If
 End Sub
-
-
-
-
-

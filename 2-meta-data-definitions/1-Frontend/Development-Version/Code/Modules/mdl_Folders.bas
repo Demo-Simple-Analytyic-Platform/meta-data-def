@@ -60,7 +60,7 @@ Public Function nm_user_name() As String
     
 End Function
 Public Function tx_git_folder() As String
-    tx_git_folder = Mid(CurrentProject.Path, 1, InStr(1, CurrentProject.Path, "\" & nm_repository(), vbTextCompare))
+    tx_git_folder = Mid(CurrentProject.Path, 1, InStr(1, CurrentProject.Path, "\" & nm_repository() & "\", vbTextCompare))
 End Function
 Public Function tx_repo_folderpath(ip_nm_repository As String) As String
     '

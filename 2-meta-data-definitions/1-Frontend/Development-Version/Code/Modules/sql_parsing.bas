@@ -47,6 +47,8 @@ Function agg_list(ConcatColumn As String, Tbl As String, _
     agg_list = result
 
 End Function
+'
+
 
 Function AnalyzeSQL(sqlString As String) As SQLAnalysisResult
     ' Main function to analyze SQL string for subqueries and CTEs
@@ -91,7 +93,7 @@ Function DetectCTEs(sqlString As String, ByRef result As SQLAnalysisResult)
     Dim inQuotes As Boolean
     Dim quoteChar As String
     
-    upperSQL = UCase(TRIM(sqlString))
+    upperSQL = UCase(Trim(sqlString))
     
     ' Look for WITH keyword at the beginning or after whitespace
     currentPos = 1
@@ -257,6 +259,7 @@ Function CountCTEs(sqlString As String) As Integer
 End Function
 
 Function MinifySQL(ByVal inputText As String) As String
+
     Dim txMinified As String
     Dim cp As Long, np As Long, lp As Long
     Dim CC As String, nc As String
@@ -265,7 +268,7 @@ Function MinifySQL(ByVal inputText As String) As String
     Dim e As String
 
     ' Step 1: Strip comments (you must implement this separately)
-    txMinified = TRIM(StripSQLComments(inputText))
+    txMinified = Trim(StripSQLComments(inputText))
 
     ' Step 2: Replace newlines with spaces
     txMinified = Replace(txMinified, vbCrLf, " ")
@@ -290,25 +293,32 @@ Function MinifySQL(ByVal inputText As String) As String
         If Not pd And CC = " " And nc = " " Then
             pd = True
             txMinified = Left(txMinified, cp) & Mid(txMinified, np + 1)
+            
         ElseIf Not pd And CC = " " And nc = "[" Then
             pd = True
             cp = InStr(cp + 1, txMinified, "]") + 1
+            
         ElseIf Not pd And CC = " " And nc = "'" Then
             pd = True
             cp = InStr(cp + 1, txMinified, "'") + 1
+            
         ElseIf Not pd And CC <> " " And nc = "[" Then
             pd = True
             cp = InStr(cp + 1, txMinified, "]") + 1
+            
         ElseIf Not pd And CC <> " " And nc = "'" Then
             pd = True
             cp = InStr(cp + 1, txMinified, "'") + 1
+            
         ElseIf Not pd Then
             pd = True
             cp = cp + 1
+            
         End If
 
         lp = Len(txMinified)
         If cp = 0 Then cp = lp
+        
     Loop
 
     ' Step 5: Handle max iteration warning
@@ -322,6 +332,7 @@ Function MinifySQL(ByVal inputText As String) As String
 
     ' Step 6: Return result
     MinifySQL = txMinified
+    
 End Function
 
 Private Function CleanSQLString(sqlString As String) As String
@@ -352,7 +363,7 @@ Private Function CleanSQLString(sqlString As String) As String
         prevChar = char
     Next i
     
-    CleanSQLString = TRIM(result)
+    CleanSQLString = Trim(result)
 End Function
 
 Private Function IsWhitespace(char As String) As Boolean
@@ -398,4 +409,25 @@ Sub TestSQLAnalysis()
     Debug.Print GetSQLAnalysisReport(result)
 End Sub
 
+Public Sub test_minify_sql()
 
+    Dim n As String: n = vbNewLine
+    Dim s As String: s = ""
+    s = s & s & "SELECT [ed].[cd_dividend_symbol]        AS [cd_symbol]"
+    s = s & n & "     , [ed].[nr_dividend_amount_median] AS [nr_expected_dividend]"
+    s = s & n & "     , DATEADD("
+    s = s & n & "         DAY,"
+    s = s & n & "         [ls].[ni_index] * [ed].[ni_days_between_median],"
+    s = s & n & "         [ed].[dt_last_dividend]"
+    s = s & n & "        ) AS [dt_expected_dividend]"
+    s = s & n & "     "
+    s = s & n & "FROM  [dta_yahoo_stock].[dividend_median] AS [ed]"
+    s = s & n & ""
+    s = s & n & "LEFT JOIN [dta_generic_utilities].[list_1_till_10000] AS [ls] ON [ls].[meta_is_active] = 1 AND [ls].[ni_index] <= ((30 * 12) + 1)"
+    s = s & n & ""
+    s = s & n & "WHERE [ed].[meta_is_active] = 1"
+    s = s & n & "AND   DATEADD(DAY, ([ls].[ni_index] * [ed].[ni_days_between_median]), [ed].[dt_last_dividend]) <= DATEADD(YEAR, 30, GETDATE())"
+    s = MinifySQL(s)
+    Debug.Print s
+    
+End Sub

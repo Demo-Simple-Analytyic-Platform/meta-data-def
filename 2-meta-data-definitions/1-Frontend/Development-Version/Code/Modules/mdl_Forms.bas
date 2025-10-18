@@ -177,7 +177,11 @@ Public Sub set_attributes(ob_form As Form)
     End If
     '
     ' Loop through "Attributes"
-    For Each fld In rst.fields: ob_form.Controls(fld.Name).Locked = lck: Next fld
+    For Each fld In rst.fields
+        If (fld.Name <> "meta_created_at") Then
+            ob_form.Controls(fld.Name).Locked = lck
+        End If
+    Next fld
     '
     ' Loop through "Controls"
     For Each ctr In ob_form.Controls
@@ -294,4 +298,3 @@ Public Function is_referenced_dataset(ip_id_model As String, ip_id_dataset As St
     rst.Close
     '
 End Function
-

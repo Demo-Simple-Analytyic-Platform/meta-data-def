@@ -42,8 +42,12 @@ Public Sub ExportAllCodeModules()
     '
     ' Create FileSystemObject to handle folder creation
     Dim fso As FileSystemObject: Set fso = New FileSystemObject
+    Dim txt As TextStream
+    Dim tgt As TextStream
     Dim obj As Object
-    
+    Dim tmp As String: tmp = "C:\Temp\temp.txt"
+    '
+    If fso.FolderExists(fp_exported_code) = False Then fso.CreateFolder fp_exported_code
     If fso.FolderExists(fp_exported_code) = False Then fso.CreateFolder fp_exported_code
     If fso.FolderExists(fp_exported_modules) = False Then fso.CreateFolder fp_exported_modules
     If fso.FolderExists(fp_exported_forms) = False Then fso.CreateFolder fp_exported_forms
@@ -51,10 +55,17 @@ Public Sub ExportAllCodeModules()
     If fso.FolderExists(fp_exported_macros) = False Then fso.CreateFolder fp_exported_macros
     If fso.FolderExists(fp_exported_queries) = False Then fso.CreateFolder fp_exported_queries
     If fso.FolderExists(fp_exported_tables) = False Then fso.CreateFolder fp_exported_tables
-    
+    '
     For Each obj In Application.CurrentProject.AllModules
-        Application.SaveAsText acModule, obj.Name, fp_exported_modules & obj.Name & ".bas"
+        '
+        Application.SaveAsText acModule, obj.Name, tmp
+        Set txt = fso.OpenTextFile(tmp, ForReading, False, TristateMixed)
+        Set tgt = fso.OpenTextFile(fp_exported_modules & obj.Name & ".bas", ForWriting, True, TristateMixed)
+        tgt.Write "Attribute VB_Name = """ & obj.Name & """" & vbNewLine
+        tgt.Write txt.ReadAll: tgt.Close: Set tgt = Nothing
+        txt.Close: Set txt = Nothing: fso.DeleteFile tmp, True
         Debug.Print "Module/Class definition for '" & obj.Name & "' exported to: " & fp_exported_modules & obj.Name & ".bas"
+        '
     Next
 
     For Each obj In Application.CurrentProject.AllForms
@@ -105,7 +116,7 @@ Public Sub ImportAll() 'As Boolean
     ' All Done
     Debug.Print "All `Defintion`-file for `meta-data-editor`are loaded from repository!"
     '
-     '
+    '
     ' Open form "StartUp" this form will ingest of de meta-data-defintions form the repository.
     DoCmd.OpenForm "StartUp"
     '
@@ -187,28 +198,25 @@ Private Function GenerateCreateTableSQL(tdf As DAO.TableDef) As String
     ' Start building the CREATE TABLE statement
     strSQL = "-- Table: " & tdf.Name & vbCrLf
     strSQL = strSQL & "-- Created: " & Format(Now(), "yyyy-mm-dd hh:nn:ss") & vbCrLf
-    strSQL = strSQL & "-- Records: " & tdf.RecordCount & vbCrLf & vbCrLf
-    
+    strSQL = strSQL & "-- Records: " & tdf.RecordCount & vbCrLf
+    strSQL = strSQL & "-- SQL Statement:" & vbCrLf
     strSQL = strSQL & "CREATE TABLE [" & tdf.Name & "] (" & vbCrLf
     
     ' Loop through fields
     For Each fld In tdf.fields
-        If strFields <> "" Then strFields = strFields & "," & vbCrLf
-        
-        ' Get field data type
-        strDataType = GetAccessDataType(fld)
-        
-        strFields = strFields & "    [" & fld.Name & "] " & strDataType
-        
-        ' Add field properties
-        If fld.Required And Not fld.AllowZeroLength Then
-            strFields = strFields & " NOT NULL"
+        If (fld.Name <> "meta_created_at") Then
+            If (strFields <> "") Then strFields = strFields & "," & vbCrLf
+            
+            ' Get field data type
+            strDataType = GetAccessDataType(fld)
+            
+            strFields = strFields & "    [" & fld.Name & "] " & strDataType
+            
+            ' Add field properties
+            If fld.Required And Not fld.AllowZeroLength Then strFields = strFields & " NOT NULL"
+            If fld.DefaultValue <> "" Then strFields = strFields & " DEFAULT " & fld.DefaultValue
+            
         End If
-        
-        If fld.DefaultValue <> "" Then
-            strFields = strFields & " DEFAULT " & fld.DefaultValue
-        End If
-        
     Next fld
     
     strSQL = strSQL & strFields & vbCrLf & ");" & vbCrLf & vbCrLf
@@ -242,7 +250,7 @@ Private Function GenerateCreateTableSQL(tdf As DAO.TableDef) As String
 ErrorHandler:
     Debug.Print strSQL
     GenerateCreateTableSQL = "-- Error generating SQL for table: " & tdf.Name & vbCrLf & _
-                              "-- Error: " & Err.Number & " - " & Err.Description
+                             "-- Error: " & Err.Number & " - " & Err.Description
 End Function
 
 ' Function to convert Access data types to SQL data types
@@ -257,7 +265,7 @@ Private Function GetAccessDataType(fld As DAO.Field) As String
         Case dbInteger
             strDataType = "SMALLINT"
         Case dbLong
-            If (fld.attributes And dbAutoIncrField) Then
+            If (fld.Attributes And dbAutoIncrField) Then
                 strDataType = "IDENTITY(1,1) INT"
             Else
                 strDataType = "INT"
@@ -342,28 +350,54 @@ ErrorHandler:
 End Sub
 
 ' Function to export a single table definition
-Public Sub ExportSingleTableDef(ip_nm_table As String): On Error GoTo ErrorHandler
+Public Sub ExportSingleTableDef(strObjectName As String): On Error GoTo ErrorHandler
     '
-    ' Local Variables
-    Dim fso As FileSystemObject: Set fso = New FileSystemObject
-    Dim dbs As DAO.Database:     Set dbs = CurrentDb
-    Dim tdf As DAO.TableDef:     Set tdf = dbs.TableDefs(ip_nm_table)
-    Dim txt As TextStream:       Set txt = fso.CreateTextFile(fp_exported_tables & ip_nm_table & ".sql", True, True)
-    Dim sql As String:               sql = GenerateCreateTableSQL(tdf)
+    If fp_exported_tables = "" Then set_folder_paths
     '
-    ' Write SQL to TextStream
-    txt.Write sql
+    Dim strFileName   As String:       strFileName = fp_exported_tables & strObjectName & ".sql"
+    Dim fso           As FileSystemObject: Set fso = New FileSystemObject
+    Dim dbs           As DAO.Database:     Set dbs = CurrentDb()
+    Dim def           As DAO.TableDef:     Set def = dbs.TableDefs(strObjectName)
+    Dim CurTextWithDt As String:     CurTextWithDt = GenerateCreateTableSQL(def)
+    Dim CurText       As String:           CurText = CurTextWithDt
+    Dim txtRepo       As Object:       Set txtRepo = fso.OpenTextFile(strFileName, IOMode.ForReading, False, TristateTrue)
+    Dim GitText       As String:           GitText = txtRepo.ReadAll: txtRepo.Close: Set txtRepo = Nothing
     '
-    ' Save/Close File
-    txt.Close
+    If (1 = 1) Then ' GitText: Remove first 4 lines
+        If InStr(GitText, vbCrLf) > 0 Then GitText = Mid(GitText, InStr(GitText, vbCrLf) + 2)
+        If InStr(GitText, vbCrLf) > 0 Then GitText = Mid(GitText, InStr(GitText, vbCrLf) + 2)
+        If InStr(GitText, vbCrLf) > 0 Then GitText = Mid(GitText, InStr(GitText, vbCrLf) + 2)
+        If InStr(GitText, vbCrLf) > 0 Then GitText = Mid(GitText, InStr(GitText, vbCrLf) + 2)
+    End If
+    '
+    If (1 = 1) Then ' CurText: Remove first 4 lines
+        If InStr(CurText, vbCrLf) > 0 Then CurText = Mid(CurText, InStr(CurText, vbCrLf) + 2)
+        If InStr(CurText, vbCrLf) > 0 Then CurText = Mid(CurText, InStr(CurText, vbCrLf) + 2)
+        If InStr(CurText, vbCrLf) > 0 Then CurText = Mid(CurText, InStr(CurText, vbCrLf) + 2)
+        If InStr(CurText, vbCrLf) > 0 Then CurText = Mid(CurText, InStr(CurText, vbCrLf) + 2)
+    End If
+    '
+    ' Determine if update is needed
+    If (CurText <> GitText) Then ' Create and write to file using FileSystemObject
+        Dim txtFile As Object: Set txtFile = fso.CreateTextFile(strFileName, True, True)
+        txtFile.Write CurTextWithDt: txtFile.Close: Set txtFile = Nothing
+    End If
     '
     ' All Done
-    Debug.Print "Table definition for '" & ip_nm_table & "' exported to: " & fp_exported_tables
+    Set fso = Nothing
+    Set def = Nothing
+    Set dbs = Nothing
+    Debug.Print "Table definition for '" & strObjectName & "' exported to: " & strFileName
     '
 Exit Sub
-'
 ErrorHandler:
-    MsgBox "Error: " & Err.Number & " - " & Err.Description, vbCritical
+    If Not txtFile Is Nothing Then txtFile.Close: Set txtFile = Nothing
+    Set fso = Nothing
+    Set def = Nothing
+    Set dbs = Nothing
+    Debug.Print "Exporting table: '" & strObjectName & "' Error: " & Err.Number & " - " & Err.Description
+    Stop
+    Resume
     '
 End Sub
 '
@@ -378,11 +412,9 @@ On Error GoTo ErrorHandler
     Dim strSQL As String: strSQL = ReadSQLFile(fp_exported_tables & strTableName & ".sql")
     
     
-    Dim db As DAO.Database
-    Dim strCreateSQL As String
+    Dim dbs As DAO.Database: Set dbs = CurrentDb()
     Dim tdf As DAO.TableDef
-    
-    Set db = CurrentDb()
+    Dim strCreateSQL As String
     
     
     If strSQL = "" Then
@@ -392,39 +424,58 @@ On Error GoTo ErrorHandler
     End If
     
     ' Check if table already exists
-    If TableExists(strTableName) Then
-        db.TableDefs.Delete strTableName
-    End If
+    If TableExists(strTableName) Then dbs.TableDefs.Delete strTableName
     
     ' Parse and execute the CREATE TABLE statement
     strCreateSQL = ExtractCreateTableSQL(strSQL)
     
     If strCreateSQL <> "" Then
+    
         ' Convert SQL Server syntax to Access syntax
         strCreateSQL = ConvertSQLServerToAccess(strCreateSQL)
         
         ' Execute the CREATE TABLE statement
-        db.Execute strCreateSQL, dbFailOnError
+        dbs.Execute strCreateSQL, dbFailOnError
+        
+        ' Add Attribute "meta_created_at"
+        Call AddMetaCreatedAtWithDefault(strTableName)
         
         ' Add indexes separately (after table creation)
         AddIndexesFromSQL strTableName, strSQL
         
         ImportSingleTableDef = True
         'Debug.Print "Successfully created table: " & strTableName
+        
     Else
         Debug.Print "Error: Could not extract CREATE TABLE statement for " & strTableName
         ImportSingleTableDef = False
     End If
     
-    Set db = Nothing
+    Set dbs = Nothing
 
 Exit Function
-
 ErrorHandler:
-    Set db = Nothing
+    Set dbs = Nothing
     Debug.Print "Error creating table " & strTableName & ": " & Err.Number & " - " & Err.Description & vbNewLine & "SQL:" & vbNewLine & strCreateSQL
     ImportSingleTableDef = False
 End Function
+
+Sub AddMetaCreatedAtWithDefault(strTableName)
+    Dim db As DAO.Database
+    Dim tdf As DAO.TableDef
+    Dim fld As DAO.Field
+
+    Set db = CurrentDb
+    Set tdf = db.TableDefs(strTableName) ' Change to your table name
+
+    ' Add the field
+    Set fld = tdf.CreateField("meta_created_at", dbDate)
+    fld.DefaultValue = "=Now()"
+    tdf.fields.Append fld
+
+    'MsgBox "created_at field added with default Now()."
+End Sub
+
 
 ' Function to read SQL file content using FileSystemObject
 Private Function ReadSQLFile(strFilePath As String) As String
@@ -489,6 +540,7 @@ ErrorHandler:
 End Function
 
 ' Function to convert SQL Server syntax to Access syntax
+
 Private Function ConvertSQLServerToAccess(strSQL As String) As String
     On Error GoTo ErrorHandler
     
@@ -500,8 +552,8 @@ Private Function ConvertSQLServerToAccess(strSQL As String) As String
     strResult = Replace(strResult, "IDENTITY(1,1)", "AUTOINCREMENT")
     strResult = Replace(strResult, "BIT", "YESNO")
     strResult = Replace(strResult, "TINYINT", "BYTE")
-    strResult = Replace(strResult, "SMALLINT", "INTEGER")
-    strResult = Replace(strResult, "INT", "LONG")
+    strResult = Replace(strResult, " INT", " LONG")
+    strResult = Replace(strResult, " SMALLINT", " INTEGER")
     strResult = Replace(strResult, "MONEY", "CURRENCY")
     strResult = Replace(strResult, "REAL", "SINGLE")
     strResult = Replace(strResult, "FLOAT", "DOUBLE")
@@ -542,6 +594,7 @@ ErrorHandler:
 End Function
 
 ' Function to add indexes from SQL content
+
 Private Sub AddIndexesFromSQL(strTableName As String, strSQL As String)
     On Error GoTo ErrorHandler
     
@@ -565,7 +618,7 @@ Private Sub AddIndexesFromSQL(strTableName As String, strSQL As String)
     
     ' Process each line looking for index definitions
     For i = 0 To UBound(strLines)
-        strLine = TRIM(strLines(i))
+        strLine = Trim(strLines(i))
         
         ' Check for Primary Key
         If InStr(UCase(strLine), "PRIMARY KEY") > 0 Then
@@ -624,7 +677,7 @@ Private Sub CreateAccessIndex(tdf As DAO.TableDef, strName As String, strFields 
     
     ' Add fields to index
     For i = 0 To UBound(arrFields)
-        Set fld = idx.CreateField(TRIM(arrFields(i)))
+        Set fld = idx.CreateField(Trim(arrFields(i)))
         idx.fields.Append fld
     Next i
     
@@ -649,13 +702,10 @@ Private Function ExtractIndexName(strLine As String) As String
     Dim intEnd As Integer
     
     ' Look for pattern like "CREATE INDEX [IndexName]" or "CREATE UNIQUE INDEX [IndexName]"
-    intStart = InStr(UCase(strLine), "INDEX [")
-    If intStart > 0 Then
-        intStart = intStart + 6 ' Move past "INDEX "
-        intEnd = InStr(intStart, strLine, "]")
-        If intEnd > 0 Then
-            ExtractIndexName = Mid(strLine, intStart + 1, intEnd - intStart - 1)
-        End If
+    intStart = InStr(strLine, "[")
+    intEnd = InStr(strLine, "]")
+    If intStart > 0 And intEnd > intStart Then
+        ExtractIndexName = Mid(strLine, intStart + 1, intEnd - intStart - 1)
     End If
     
     Exit Function
@@ -677,6 +727,8 @@ Private Function ExtractIndexFields(strLine As String) As String
     
     If intStart > 0 And intEnd > intStart Then
         ExtractIndexFields = Mid(strLine, intStart + 1, intEnd - intStart - 1)
+        ExtractIndexFields = Replace(ExtractIndexFields, "[", "")
+        ExtractIndexFields = Replace(ExtractIndexFields, "]", "")
     End If
     
     Exit Function
@@ -709,66 +761,7 @@ End Function
 ' =============================================================================
 ' QUERY DEFINITION EXPORT/IMPORT FUNCTIONS
 ' =============================================================================
-
-' Main subroutine to export all query definitions to SQL files
-Public Sub ExportAllQueryDefs()
-    On Error GoTo ErrorHandler
-    
-    Dim db As DAO.Database
-    Dim qdf As DAO.QueryDef
-    Dim fso As Object
-    Dim txtFile As Object
-    Dim strExportPath As String
-    Dim strFileName As String
-    Dim intCount As Integer
-    
-    ' Set the database reference
-    Set db = CurrentDb()
-    Set fso = CreateObject("Scripting.FileSystemObject")
-    
-    ' Set export path
-    strExportPath = CurrentProject.Path & "\QueryDefinitions\"
-    
-    ' Create directory if it doesn't exist
-    If Not fso.FolderExists(strExportPath) Then
-        fso.CreateFolder strExportPath
-    End If
-    
-    ' Loop through all query definitions
-    For Each qdf In db.QueryDefs
-        ' Skip system queries and temporary queries
-        If Left(qdf.Name, 1) <> "~" And Left(qdf.Name, 4) <> "MSys" Then
-            strFileName = strExportPath & qdf.Name & ".sql"
-            
-            ' Create and write to file using FileSystemObject
-            Set txtFile = fso.CreateTextFile(strFileName, True) ' True = overwrite if exists
-            txtFile.Write GenerateQuerySQL(qdf)
-            txtFile.Close
-            Set txtFile = Nothing
-            
-            intCount = intCount + 1
-            Debug.Print "Exported query: " & qdf.Name & " to " & strFileName
-        End If
-    Next qdf
-    
-    ' Clean up
-    Set txtFile = Nothing
-    Set fso = Nothing
-    Set qdf = Nothing
-    Set db = Nothing
-    
-    MsgBox "Successfully exported " & intCount & " query definitions to: " & strExportPath, vbInformation
-    Exit Sub
-
-ErrorHandler:
-    If Not txtFile Is Nothing Then txtFile.Close
-    Set txtFile = Nothing
-    Set fso = Nothing
-    Set qdf = Nothing
-    Set db = Nothing
-    MsgBox "Error exporting queries: " & Err.Number & " - " & Err.Description, vbCritical
-End Sub
-
+'
 ' Function to generate query SQL with metadata
 Private Function GenerateQuerySQL(qdf As DAO.QueryDef) As String
     On Error GoTo ErrorHandler
@@ -776,7 +769,7 @@ Private Function GenerateQuerySQL(qdf As DAO.QueryDef) As String
     Dim strSQL As String
     Dim prm As DAO.Parameter
     Dim strParameters As String
-    
+
     ' Start building the query definition
     strSQL = "-- Query: " & qdf.Name & vbCrLf
     strSQL = strSQL & "-- Created: " & Format(Now(), "yyyy-mm-dd hh:nn:ss") & vbCrLf
@@ -862,39 +855,55 @@ Private Function GetParameterType(intType As Integer) As String
 End Function
 
 ' Function to export a single query definition
-Public Sub ExportSingleQueryDef(strQueryName As String)
-    On Error GoTo ErrorHandler
+Public Sub ExportSingleQueryDef(strObjectName As String): On Error GoTo ErrorHandler
+    '
     If fp_exported_queries = "" Then set_folder_paths
-    
-    Dim strExportPath As String: strExportPath = fp_exported_queries
-    Dim strFileName   As String: strFileName = strExportPath & strQueryName & ".sql"
-    Dim fso As FileSystemObject: Set fso = New FileSystemObject
-    Dim db  As DAO.Database:     Set db = CurrentDb()
-    Dim qdf As DAO.QueryDef:     Set qdf = db.QueryDefs(strQueryName)
-    Dim txtFile As Object:       Set txtFile = fso.CreateTextFile(strFileName, True, True)
     '
-    ' Write Generated SQL for Query to file
-    txtFile.Write GenerateQuerySQL(qdf)
+    Dim strExportPath As String:     strExportPath = fp_exported_queries
+    Dim strFileName   As String:       strFileName = strExportPath & strObjectName & ".sql"
+    Dim fso           As FileSystemObject: Set fso = New FileSystemObject
+    Dim dbs           As DAO.Database:     Set dbs = CurrentDb()
+    Dim def           As DAO.QueryDef:     Set def = dbs.QueryDefs(strObjectName)
+    Dim CurTextWithDt As String:     CurTextWithDt = GenerateQuerySQL(def)
+    Dim CurText       As String:           CurText = CurTextWithDt
+    Dim txtRepo       As Object:       Set txtRepo = fso.OpenTextFile(strFileName, IOMode.ForReading, False, TristateTrue)
+    Dim GitText       As String:           GitText = txtRepo.ReadAll: txtRepo.Close: Set txtRepo = Nothing
     '
-    ' Save/close
-    txtFile.Close
+    If (1 = 1) Then ' GitText: Remove first 4 lines
+        If InStr(GitText, vbCrLf) > 0 Then GitText = Mid(GitText, InStr(GitText, vbCrLf) + 2)
+        If InStr(GitText, vbCrLf) > 0 Then GitText = Mid(GitText, InStr(GitText, vbCrLf) + 2)
+        If InStr(GitText, vbCrLf) > 0 Then GitText = Mid(GitText, InStr(GitText, vbCrLf) + 2)
+        If InStr(GitText, vbCrLf) > 0 Then GitText = Mid(GitText, InStr(GitText, vbCrLf) + 2)
+    End If
+    '
+    If (1 = 1) Then ' CurText: Remove first 4 lines
+        If InStr(CurText, vbCrLf) > 0 Then CurText = Mid(CurText, InStr(CurText, vbCrLf) + 2)
+        If InStr(CurText, vbCrLf) > 0 Then CurText = Mid(CurText, InStr(CurText, vbCrLf) + 2)
+        If InStr(CurText, vbCrLf) > 0 Then CurText = Mid(CurText, InStr(CurText, vbCrLf) + 2)
+        If InStr(CurText, vbCrLf) > 0 Then CurText = Mid(CurText, InStr(CurText, vbCrLf) + 2)
+    End If
+    '
+    ' Determine if update is needed
+    If (CurText <> GitText) Then ' Create and write to file using FileSystemObject
+        Dim txtFile As Object: Set txtFile = fso.CreateTextFile(strFileName, True, True)
+        txtFile.Write CurTextWithDt: txtFile.Close: Set txtFile = Nothing
+    End If
     '
     ' All Done
-    Set txtFile = Nothing
     Set fso = Nothing
-    Set qdf = Nothing
-    Set db = Nothing
-    Debug.Print "Query definition for '" & strQueryName & "' exported to: " & strFileName
+    Set def = Nothing
+    Set dbs = Nothing
+    Debug.Print "Query definition for '" & strObjectName & "' exported to: " & strFileName
     '
 Exit Sub
-
 ErrorHandler:
-    If Not txtFile Is Nothing Then txtFile.Close
-    Set txtFile = Nothing
+    If Not txtFile Is Nothing Then txtFile.Close: Set txtFile = Nothing
     Set fso = Nothing
-    Set qdf = Nothing
-    Set db = Nothing
+    Set def = Nothing
+    Set dbs = Nothing
     MsgBox "Error exporting query: " & Err.Number & " - " & Err.Description, vbCritical
+    Stop
+    Resume
 End Sub
 
 ' =============================================================================
@@ -904,27 +913,27 @@ End Sub
 ' Main subroutine to import all query definitions from SQL files
 Public Sub ImportAllQueryDefs()
     On Error GoTo ErrorHandler
-    
-    Dim fso As Object
-    Dim folder As Object
-    Dim file As Object
+    '
+    Dim fso           As Object
+    Dim folder        As Object
+    Dim file          As Object
     Dim strImportPath As String
-    Dim strQueryName As String
-    Dim intCount As Integer
-    
+    Dim strQueryName  As String
+    Dim intCount      As Integer
+    '
     Set fso = CreateObject("Scripting.FileSystemObject")
-    
+    '
     ' Set import path
     strImportPath = CurrentProject.Path & "\QueryDefinitions\"
-    
+    '
     ' Check if directory exists
     If Not fso.FolderExists(strImportPath) Then
         MsgBox "QueryDefinitions folder not found at: " & strImportPath, vbCritical
         Exit Sub
     End If
-    
+    '
     Set folder = fso.GetFolder(strImportPath)
-    
+    '
     ' Loop through all SQL files in the folder
     For Each file In folder.Files
         If UCase(fso.GetExtensionName(file.Name)) = "SQL" Then
@@ -938,19 +947,21 @@ Public Sub ImportAllQueryDefs()
             End If
         End If
     Next file
-    
+    '
     Set file = Nothing
     Set folder = Nothing
     Set fso = Nothing
-    
+    '
     MsgBox "Successfully imported " & intCount & " query definitions from: " & strImportPath, vbInformation
     Exit Sub
-
+    '
 ErrorHandler:
     Set file = Nothing
     Set folder = Nothing
     Set fso = Nothing
-    MsgBox "Error importing queries: " & Err.Number & " - " & Err.Description, vbCritical
+    Debug.Print "Error importing queries: " & Err.Number & " - " & Err.Description
+    Stop
+    Resume
 End Sub
 
 ' Function to import a single query definition from SQL file
@@ -980,9 +991,7 @@ On Error GoTo ErrorHandler
     End If
     
     ' Check if query already exists
-    If QueryExists(strQueryName) Then
-        db.QueryDefs.Delete strQueryName
-    End If
+    If QueryExists(strQueryName) Then db.QueryDefs.Delete strQueryName
     
     ' Create the new query
     Set qdf = db.CreateQueryDef(strQueryName, strSQL)
@@ -1002,6 +1011,8 @@ ErrorHandler:
     Set db = Nothing
     Debug.Print "Error creating query " & strQueryName & ": " & Err.Number & " - " & Err.Description
     ImportSingleQueryDef = False
+    Stop
+    Resume
 End Function
 
 ' Function to extract SQL statement from file content
@@ -1019,7 +1030,7 @@ Private Function ExtractQuerySQL(strFileContent As String) As String
     
     ' Look for the SQL statement section
     For i = 0 To UBound(arrLines)
-        strLine = TRIM(arrLines(i))
+        strLine = Trim(arrLines(i))
         
         ' Check if we've reached the SQL statement section
         If InStr(UCase(strLine), "-- SQL STATEMENT:") > 0 Then
@@ -1034,16 +1045,16 @@ Private Function ExtractQuerySQL(strFileContent As String) As String
     Next i
     
     ' Clean up the SQL statement
-    strSQL = TRIM(strSQL)
-    If Right(strSQL, 2) = vbCrLf Then
-        strSQL = Left(strSQL, Len(strSQL) - 2)
-    End If
+    strSQL = Trim(strSQL)
+    If Right(strSQL, 2) = vbCrLf Then strSQL = Left(strSQL, Len(strSQL) - 2)
     
     ExtractQuerySQL = strSQL
     Exit Function
 
 ErrorHandler:
     ExtractQuerySQL = ""
+    Stop
+    Resume
 End Function
 
 ' Function to set query description from file content
@@ -1060,10 +1071,10 @@ Private Sub SetQueryDescription(qdf As DAO.QueryDef, strFileContent As String)
     
     ' Look for description line
     For i = 0 To UBound(arrLines)
-        strLine = TRIM(arrLines(i))
+        strLine = Trim(arrLines(i))
         
         If InStr(UCase(strLine), "-- DESCRIPTION:") > 0 Then
-            strDescription = TRIM(Mid(strLine, InStr(UCase(strLine), "-- DESCRIPTION:") + 15))
+            strDescription = Trim(Mid(strLine, InStr(UCase(strLine), "-- DESCRIPTION:") + 15))
             If strDescription <> "No description" And strDescription <> "" Then
                 qdf.Properties("Description") = strDescription
             End If
@@ -1075,6 +1086,8 @@ Private Sub SetQueryDescription(qdf As DAO.QueryDef, strFileContent As String)
 
 ErrorHandler:
     ' Description property might not exist, ignore errors
+    Stop
+    Resume
 End Sub
 
 ' Helper function to check if query exists
@@ -1144,5 +1157,6 @@ ErrorHandler:
     Set folder = Nothing
     Set fso = Nothing
     MsgBox "Error importing queries from folder: " & Err.Number & " - " & Err.Description, vbCritical
+    Stop
+    Resume
 End Sub
-

@@ -1,3 +1,4 @@
+Attribute VB_Name = "Dictionary"
 Attribute VB_GlobalNameSpace = False
 Attribute VB_Creatable = False
 Attribute VB_PredeclaredId = False
