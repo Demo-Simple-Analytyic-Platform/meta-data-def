@@ -1,3 +1,4 @@
+Attribute VB_Name = "mdl_Git"
 Option Compare Database
 Option Explicit
 '

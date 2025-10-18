@@ -1,0 +1,1 @@
+powershell -ExecutionPolicy Bypass -File "start-meta-data-editor.ps1"

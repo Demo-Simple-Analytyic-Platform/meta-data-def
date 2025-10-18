@@ -1,3 +1,4 @@
+Attribute VB_Name = "mdl_Forms"
 Option Compare Database
 Option Explicit
 '
@@ -14,12 +15,12 @@ Public Sub set_buttons(ByRef ip_form As Form)
     ip_form.btn_Deploy_to_Production.Enabled = False
     ip_form.btn_Move_to_Ad_Hoc.Enabled = False
     ip_form.btn_Move_to_Out_of_Scope.Enabled = False
-    ip_form.btn_delete.Enabled = False
+    ip_form.btn_Delete.Enabled = False
     '
     ' Open buttons on "Developemnt"-status
     If (cd = "DEV") Then
         ip_form.btn_Save.Enabled = nc
-        ip_form.btn_delete.Enabled = nc
+        ip_form.btn_Delete.Enabled = nc
         ip_form.btn_Move_to_Ad_Hoc.Enabled = nc
         ip_form.btn_Deploy_to_Acceptance.Enabled = nc
         ip_form.btn_Move_to_Out_of_Scope.Enabled = nc
@@ -49,7 +50,7 @@ Public Sub set_buttons(ByRef ip_form As Form)
             ip_form.btn_Deploy_to_Production.Enabled = False
             ip_form.btn_Move_to_Ad_Hoc.Enabled = False
             ip_form.btn_Move_to_Out_of_Scope.Enabled = False
-            ip_form.btn_delete.Enabled = True
+            ip_form.btn_Delete.Enabled = True
         End If
     End If
     '
@@ -160,8 +161,8 @@ Public Sub set_attributes(ob_form As Form)
     Dim nmf As String:        nmf = ob_form.Name
     Dim sts As String:        sts = get_cd_development_status(Nz(ob_form.id_development_status, ""))
     Dim shm As String:        shm = Left(nmf, 3)
-    Dim tbl As String:        tbl = Mid(Replace(nmf, "_from_dq_requirement", ""), 5)
-    Dim sql As String:        sql = "SELECT * FROM " & shm & "_" & tbl & " WHERE 1=2"
+    Dim Tbl As String:        Tbl = Mid(Replace(nmf, "_from_dq_requirement", ""), 5)
+    Dim sql As String:        sql = "SELECT * FROM " & shm & "_" & Tbl & " WHERE 1=2"
     Dim rst As Recordset: Set rst = CurrentDb.OpenRecordset(sql)
     Dim lck As Boolean:       lck = IIf(sts = "DEV", nc, True)
     Dim fld As Field
@@ -176,7 +177,11 @@ Public Sub set_attributes(ob_form As Form)
     End If
     '
     ' Loop through "Attributes"
-    For Each fld In rst.fields: ob_form.Controls(fld.Name).Locked = lck: Next fld
+    For Each fld In rst.fields
+        If (fld.Name <> "meta_created_at") Then
+            ob_form.Controls(fld.Name).Locked = lck
+        End If
+    Next fld
     '
     ' Loop through "Controls"
     For Each ctr In ob_form.Controls

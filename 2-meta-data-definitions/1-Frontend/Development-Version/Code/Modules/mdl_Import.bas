@@ -1,3 +1,4 @@
+Attribute VB_Name = "mdl_Import"
 Option Compare Database
 Option Explicit
 '
@@ -32,9 +33,6 @@ Public Sub process_all_sql_files(fm As Form_StartUp)
     Dim sp As Integer
     Dim tx As String
     Dim is_setup_mode_detected As Boolean: is_setup_mode_detected = is_setup_mode
-    '
-    ' Reset feedback
-    fm.tx_loading_feedback.Caption = ""
     '
     ' Truncate all tables in Access DB
     Call truncate_all_meta_datasets
@@ -301,14 +299,22 @@ Public Sub process_sql_file(ByVal tx_path_sql_file As String, Optional fm As For
     Dim txl As String:  txl = ""
     Dim ins As String:  ins = "  INSERT INTO "
     Dim gos As String:  gos = "GO"
-    Dim ms  As String:
+    Dim ms  As String:   ms = "Processing for Model `<nm_repository>`" & vbNewLine & "SQL-file : `<tx_sql_filepath>`"
+    Dim ix  As Integer:  ix = 0
     '
     ' In case this is "setup"-mode, the "<id_model>"-placeholder must be replaced with the id_model of this model.
     Dim id_model As String: id_model = id_model_default
     '
     ' set feedback message
     If (Not (fm Is Nothing)) Then
-        fm.tx_loading_feedback.Caption = Replace(Replace(ms, "<nm_repository>", mdl_Folders.nm_repository()), "<tx_sql_filepath>", relative_path(tx_path_sql_file))
+        If (Len(fm.tx_loading_feedback.Caption) > 512) Then
+            ix = InStrRev(fm.tx_loading_feedback.Caption, vbNewLine)
+            fm.tx_loading_feedback.Caption = Mid(fm.tx_loading_feedback.Caption, 1, 512)
+        End If
+        fm.tx_loading_feedback.Caption = Replace(Replace(ms, _
+                                         "<nm_repository>", mdl_Folders.nm_repository()), _
+                                         "<tx_sql_filepath>", relative_path(tx_path_sql_file)) _
+                                       & vbNewLine & fm.tx_loading_feedback.Caption
     End If
     '
     ' Check is file has "text"-lines.
@@ -427,8 +433,8 @@ Public Function execute_sql(tx_sql As String) As Boolean
     '
     ' Local Variables
     Dim shm As String:        shm = Mid(tx_sql, 13, 3)
-    Dim tbl As String:        tbl = Mid(tx_sql, 17, InStr(1, tx_sql, " (", vbTextCompare) - 16)
-    Dim sql As String:        sql = "SELECT COUNT(*) AS ni_records FROM " & shm & "_" & tbl
+    Dim Tbl As String:        Tbl = Mid(tx_sql, 17, InStr(1, tx_sql, " (", vbTextCompare) - 16)
+    Dim sql As String:        sql = "SELECT COUNT(*) AS ni_records FROM " & shm & "_" & Tbl
     Dim rst As Recordset: Set rst = CurrentDb.OpenRecordset(sql)
     Dim exp As Integer:       exp = rst.fields("ni_records") + 1: rst.Close
     Dim log As Recordset
@@ -450,13 +456,13 @@ Public Function execute_sql(tx_sql As String) As Boolean
             '  Add record and save schema/table en SQL
             .AddNew
             .fields("nm_schema") = shm
-            .fields("nm_table") = tbl
+            .fields("nm_table") = Tbl
             .fields("tx_sql") = tx_sql
             pky = .fields("id_log")
             .Update
             '
             ' remeber id_log to filter log-from
-            DoCmd.OpenForm "sql_insert_log", acNormal, , "id_log=" & str(pky), acFormReadOnly, acWindowNormal
+            DoCmd.OpenForm "sql_insert_log", acNormal, , "id_log=" & Str(pky), acFormReadOnly, acWindowNormal
             '
             ' Set to false to stop processing
             execute_sql = False
