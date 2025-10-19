@@ -46,6 +46,10 @@ Public Sub ExportAllCodeModules()
     Dim tgt As TextStream
     Dim obj As Object
     Dim tmp As String: tmp = "C:\Temp\temp.txt"
+    Dim frm As String
+    Dim srh As String: srh = "    NoSaveCTIWhenDisabled =1" & vbNewLine & "    NoSaveCTIWhenDisabled =1"
+    Dim rpl As String: rpl = "    NoSaveCTIWhenDisabled =1"
+    
     '
     If fso.FolderExists(fp_exported_code) = False Then fso.CreateFolder fp_exported_code
     If fso.FolderExists(fp_exported_code) = False Then fso.CreateFolder fp_exported_code
@@ -69,7 +73,12 @@ Public Sub ExportAllCodeModules()
     Next
 
     For Each obj In Application.CurrentProject.AllForms
-        Application.SaveAsText acForm, obj.Name, fp_exported_forms & obj.Name & ".frm"
+        Application.SaveAsText acForm, obj.Name, tmp
+        Set txt = fso.OpenTextFile(tmp, ForReading, False, TristateMixed)
+        Set tgt = fso.OpenTextFile(fp_exported_forms & obj.Name & ".frm", ForWriting, True, TristateMixed)
+        frm = txt.ReadAll: Do While InStr(1, frm, srh) > 0: frm = Replace(frm, srh, rpl): Loop
+        tgt.Write frm: tgt.Close: Set tgt = Nothing
+        txt.Close: Set txt = Nothing: fso.DeleteFile tmp, True
         Debug.Print "Form definition for '" & obj.Name & "' exported to: " & fp_exported_forms & obj.Name & ".frm"
     Next
 
@@ -1160,3 +1169,4 @@ ErrorHandler:
     Stop
     Resume
 End Sub
+

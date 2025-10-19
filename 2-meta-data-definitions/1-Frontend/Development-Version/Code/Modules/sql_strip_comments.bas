@@ -205,4 +205,3 @@ Function AnalyzeSQLWithoutComments(sqlString As String) As SQLAnalysisResult
     ' Then analyze the clean SQL
     AnalyzeSQLWithoutComments = AnalyzeSQL(cleanSQL)
 End Function
-

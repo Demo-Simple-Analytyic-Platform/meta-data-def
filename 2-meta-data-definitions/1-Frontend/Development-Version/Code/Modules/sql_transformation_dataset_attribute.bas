@@ -60,4 +60,3 @@ Public Sub parse_transformation_dataset_attribute( _
     rst.Close
     '
 End Sub
-

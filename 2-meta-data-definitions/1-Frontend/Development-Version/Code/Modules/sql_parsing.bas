@@ -487,4 +487,3 @@ Public Function placeholder_to_source_attributes(ip_tx_sql As String, ip_id_tran
     placeholder_to_source_attributes = out
     '
 End Function
-

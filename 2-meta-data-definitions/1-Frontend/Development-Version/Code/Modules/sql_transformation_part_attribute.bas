@@ -87,4 +87,3 @@ Public Sub parse_transformation_part_attribute( _
     rst.Close
     '
 End Sub
-
