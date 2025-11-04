@@ -124,15 +124,15 @@ Public Sub parse_transformation_dataset(ip_id_model As String, ip_id_dataset As 
             & vbNewLine & "SELECT" _
             & vbNewLine & "  txt.ni_ordering," _
             & vbNewLine & "  txt.id_model AS id_source_model," _
-            & vbNewLine & "  prv.tx_sql_prev," _
-            & vbNewLine & "  txt.tx_sql," _
-            & vbNewLine & "  nxt.tx_sql_next," _
+            & vbNewLine & "  IIf(IsNull([prv].[ni_ordering]),'',Nz([prv].[tx_sql_prev])) AS tx_sql_prev," _
+            & vbNewLine & "  Nz(txt.tx_sql, '')      AS tx_sql," _
+            & vbNewLine & "  IIf(IsNull([nxt].[ni_ordering]),'',Nz([nxt].[tx_sql_next])) AS tx_sql_next," _
             & vbNewLine & "  Nz([ds1].[id_dataset],       Nz([ds2].[id_dataset],       Nz([ds3].[id_dataset],       [ds4].[id_dataset])))       AS id_dataset," _
             & vbNewLine & "  Nz([ds1].[nm_target_schema], Nz([ds2].[nm_target_schema], Nz([ds3].[nm_target_schema], [ds4].[nm_target_schema]))) AS nm_target_schema," _
             & vbNewLine & "  Nz([ds1].[nm_target_table],  Nz([ds2].[nm_target_table],  Nz([ds3].[nm_target_table],  [ds4].[nm_target_table])))  AS nm_target_table," _
-            & vbNewLine & "  IIf([nxt].[tx_sql_next] = 'AS', True, False) AS is_next_word_alias_keyword," _
-            & vbNewLine & "  IIf([prv].[tx_sql_prev] IN ('FROM', 'JOIN'), True, False) AS is_prev_word_from_or_join_keyword," _
-            & vbNewLine & "  IIf([txt].[tx_sql] IN ('INNER', 'CROSS', 'LEFT', 'RIGHT', 'FULL', 'JOIN', 'ON', 'FROM', 'WHERE', 'WHEN'), 1, 0) AS is_keyword" _
+            & vbNewLine & "  IIf(IIf(IsNull([nxt].[ni_ordering]),'',Nz([nxt].[tx_sql_next])) IN ('AS'), True, False) AS is_next_word_alias_keyword," _
+            & vbNewLine & "  IIf(IIf(IsNull([prv].[ni_ordering]),'',Nz([prv].[tx_sql_prev])) IN ('FROM', 'JOIN'), True, False) AS is_prev_word_from_or_join_keyword," _
+            & vbNewLine & "  IIf(Nz([txt].[tx_sql],'')      IN ('INNER', 'CROSS', 'LEFT', 'RIGHT', 'FULL', 'JOIN', 'ON', 'FROM', 'WHERE', 'WHEN'), 1, 0) AS is_keyword" _
             & vbNewLine & "FROM (((((tmp_transformation_dataset_md_txt AS txt" _
             & vbNewLine & "LEFT JOIN tmp_transformation_dataset_md_nxt AS nxt ON (txt.ni_ordering = nxt.ni_ordering) AND (txt.id_model = nxt.id_model))" _
             & vbNewLine & "LEFT JOIN tmp_transformation_dataset_md_prv AS prv ON (txt.ni_ordering = prv.ni_ordering) AND (txt.id_model = prv.id_model))" _

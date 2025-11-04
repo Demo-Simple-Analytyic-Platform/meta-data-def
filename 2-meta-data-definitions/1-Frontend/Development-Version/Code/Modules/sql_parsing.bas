@@ -12,6 +12,26 @@ Public Type SQLAnalysisResult
     CTEPositions      As String
 End Type
 '
+Public Sub parse_sql_statement_all_transfromations()
+    '
+    ' Declare Local Variables
+    Dim sql As String:        sql = "SELECT id_model, id_dataset, fn_dataset FROM dta_dataset WHERE is_ingestion = False"
+    Dim rst As Recordset: Set rst = CurrentDb.OpenRecordset(sql)
+    '
+    ' Extract Transformation Parts
+    Do While Not rst.EOF
+        '
+        Debug.Print "ID Model : '" & rst!id_model & "' | ID Dataset : '" & rst!id_dataset & "'"
+        Debug.Print "FN Dataset : '" & rst!fn_dataset & "'"
+        Call parse_transformation_parts(rst!id_model, rst!id_dataset, False, False)
+        '
+    rst.MoveNext: Loop: rst.Close
+    '
+    ' Done
+    Debug.Print "All done"
+    '
+End Sub
+'
 Public Sub parse_sql_statement(ip_id_model As String, ip_id_dataset As String)
     '
     ' Example:
@@ -23,8 +43,8 @@ Public Sub parse_sql_statement(ip_id_model As String, ip_id_dataset As String)
 End Sub
 '
 Function agg_list(ConcatColumn As String, Tbl As String, _
-                 Optional Criteria As String = "", _
-                 Optional Delimiter As String = ", ") As String
+             Optional Criteria As String = "", _
+            Optional Delimiter As String = ", ") As String
                  
 ' ?agg_list("tx_join_criteria", "tmp_transformantion_dataset_rs_select", "cd_join_type = 'JOIN' AND nm_target_schema = 'dta_generic_utilities' AND nm_target_table = 'list_1_till_10000' AND cd_alias = 'ls' ORDER BY ni_join_criteria", " ")
 
@@ -148,31 +168,31 @@ Function DetectSubqueries(sqlString As String, ByRef result As SQLAnalysisResult
     
     On Error GoTo RegexError
     
-    Dim regex As Object
+    Dim regEx As Object
     Dim matches As Object
     Dim match As Object
     Dim cleanSQL As String
     Dim i As Integer
     
     ' Create regex object
-    Set regex = CreateObject("VBScript.RegExp")
+    Set regEx = CreateObject("VBScript.RegExp")
     
     ' Clean SQL: remove string literals to avoid false matches
     cleanSQL = RemoveStringLiterals(sqlString)
     
     ' Configure regex for subquery detection
-    regex.IgnoreCase = True
-    regex.Global = True
+    regEx.IgnoreCase = True
+    regEx.Global = True
     
     ' Pattern explanation:
     ' \(\s* - Opening parenthesis followed by optional whitespace
     ' SELECT\b - SELECT keyword with word boundary
     ' (?:[^()]*|\([^()]*\))* - Match content that doesn't contain unmatched parentheses
     ' \) - Closing parenthesis
-    regex.Pattern = "\(\s*SELECT\b(?:[^()]*|\([^()]*\))*\)"
+    regEx.pattern = "\(\s*SELECT\b(?:[^()]*|\([^()]*\))*\)"
     
     ' Find all matches
-    Set matches = regex.Execute(cleanSQL)
+    Set matches = regEx.Execute(cleanSQL)
     
     ' Process matches
     result.SubqueryCount = matches.Count
@@ -200,20 +220,20 @@ Private Function RemoveStringLiterals(sqlString As String) As String
     
     On Error GoTo SimpleReturn
     
-    Dim regex As Object
+    Dim regEx As Object
     Dim result As String
     
-    Set regex = CreateObject("VBScript.RegExp")
-    regex.Global = True
-    regex.IgnoreCase = False
+    Set regEx = CreateObject("VBScript.RegExp")
+    regEx.Global = True
+    regEx.IgnoreCase = False
     
     ' Remove single-quoted strings
-    regex.Pattern = "'(?:[^'\\]|\\.)*'"
-    result = regex.Replace(sqlString, "''")
+    regEx.pattern = "'(?:[^'\\]|\\.)*'"
+    result = regEx.Replace(sqlString, "''")
     
     ' Remove double-quoted strings
-    regex.Pattern = """(?:[^""\\]|\\.)*"""
-    result = regex.Replace(result, """""")
+    regEx.pattern = """(?:[^""\\]|\\.)*"""
+    result = regEx.Replace(result, """""")
     
     RemoveStringLiterals = result
     Exit Function
@@ -431,3 +451,59 @@ Public Sub test_minify_sql()
     Debug.Print s
     
 End Sub
+
+Public Function source_attributes_to_placeholder(ip_tx_sql As String, ip_id_transformation_part As String) As String
+    '
+    ' Declare Local Variables
+    Dim rst As DAO.Recordset
+    Dim dbs As DAO.Database: Set dbs = CurrentDb
+    Dim sql As String: sql = ""
+    Dim emp As String: emp = ""
+    Dim nwl As String: nwl = vbNewLine
+    Dim out As String: out = ip_tx_sql
+    '
+    ' Buils SQL Statement for extraction of placeholders vs source_attributes
+    sql = sql & emp & "SELECT tuc.tx_source_attribute_1 AS tx_attribute_1"
+    sql = sql & nwl & "     , tuc.tx_source_attribute_2 AS tx_attribute_2"
+    sql = sql & nwl & "     , tuc.tx_source_attribute_3 AS tx_attribute_3"
+    sql = sql & nwl & "     , tuc.tx_source_attribute_4 AS tx_attribute_4"
+    sql = sql & nwl & "     , tuc.tx_placeholder        AS tx_placeholder"
+    sql = sql & nwl & "FROM tmp_transformation_utilized_columns AS tuc "
+    sql = sql & nwl & "WHERE tuc.id_transformation_part = '" & ip_id_transformation_part & "'"
+    '
+    ' Replace the Meta-references for the Alias and Columns
+    Set rst = dbs.OpenRecordset(sql): Do While Not rst.EOF:
+        out = Replace(out, rst!tx_attribute_1, rst!tx_placeholder)
+        out = Replace(out, rst!tx_attribute_2, rst!tx_placeholder)
+        out = Replace(out, rst!tx_attribute_3, rst!tx_placeholder)
+        out = Replace(out, rst!tx_attribute_4, rst!tx_placeholder)
+    rst.MoveNext: Loop: rst.Close
+    '
+    ' Returnm out
+    source_attributes_to_placeholder = out
+    '
+End Function
+
+Public Function placeholder_to_source_attributes(ip_tx_sql As String, ip_id_transformation_part As String) As String
+    '
+    ' Declare Local Variables
+    Dim rst As DAO.Recordset
+    Dim dbs As DAO.Database: Set dbs = CurrentDb
+    Dim sql As String: sql = ""
+    Dim emp As String: emp = ""
+    Dim nwl As String: nwl = vbNewLine
+    Dim out As String: out = ip_tx_sql
+    '
+    ' Buils SQL Statement for extraction of placeholders vs source_attributes
+    sql = sql & emp & "SELECT tuc.tx_source_attribute_3 AS tx_attribute"
+    sql = sql & nwl & "     , tuc.tx_placeholder        AS tx_placeholder"
+    sql = sql & nwl & "FROM tmp_transformation_utilized_columns AS tuc "
+    sql = sql & nwl & "WHERE tuc.id_transformation_part = '" & ip_id_transformation_part & "'"
+    '
+    ' Replace the Meta-references for the Alias and Columns
+    Set rst = dbs.OpenRecordset(sql): Do While Not rst.EOF: out = Replace(out, rst!tx_placeholder, rst!tx_attribute): rst.MoveNext: Loop: rst.Close
+    '
+    ' Returnm out
+    placeholder_to_source_attributes = out
+    '
+End Function

@@ -11,30 +11,6 @@ Private fp_exported_macros  As String
 Private fp_exported_tables  As String
 Private fp_exported_queries As String
 
-Sub set_folder_paths()
-    '
-    ' Local Variables
-    Dim fso As FileSystemObject: Set fso = New FileSystemObject
-    Dim fdr As folder: Set fdr = fso.GetFolder(CurrentProject.Path)
-    Dim dev As String: dev = IIf(fdr.Name = "Development-Version", "", IIf(fdr.Name = "1-Frontend", "\Development-Version", "<not-allowed>"))
-    '
-    ' Check if Tool is started from allowed location!
-    If dev = "<not-allowed>" Then
-        MsgBox "Tooling is only allowed to start from `Development-Version` or `1-Frontend`", vbCritical
-        Application.Quit
-    End If
-    '
-    ' Setting Folderpaths
-    fp_exported_code = CurrentProject.Path & dev & "\Code"
-    fp_exported_modules = fp_exported_code & "\Modules\"
-    fp_exported_forms = fp_exported_code & "\Forms\"
-    fp_exported_reports = fp_exported_code & "\Reports\"
-    fp_exported_macros = fp_exported_code & "\Macros\"
-    fp_exported_tables = fp_exported_code & "\Tables\"
-    fp_exported_queries = fp_exported_code & "\Queries\"
-    '
-End Sub
-
 Public Sub ExportAllCodeModules()
     '
     ' Set Folder paths
@@ -46,8 +22,11 @@ Public Sub ExportAllCodeModules()
     Dim tgt As TextStream
     Dim obj As Object
     Dim tmp As String: tmp = "C:\Temp\temp.txt"
+    Dim frm As String
+    Dim srh As String: srh = "    NoSaveCTIWhenDisabled =1" & vbNewLine & "    NoSaveCTIWhenDisabled =1"
+    Dim rpl As String: rpl = "    NoSaveCTIWhenDisabled =1"
+    
     '
-    If fso.FolderExists(fp_exported_code) = False Then fso.CreateFolder fp_exported_code
     If fso.FolderExists(fp_exported_code) = False Then fso.CreateFolder fp_exported_code
     If fso.FolderExists(fp_exported_modules) = False Then fso.CreateFolder fp_exported_modules
     If fso.FolderExists(fp_exported_forms) = False Then fso.CreateFolder fp_exported_forms
@@ -69,7 +48,12 @@ Public Sub ExportAllCodeModules()
     Next
 
     For Each obj In Application.CurrentProject.AllForms
-        Application.SaveAsText acForm, obj.Name, fp_exported_forms & obj.Name & ".frm"
+        Application.SaveAsText acForm, obj.Name, tmp
+        Set txt = fso.OpenTextFile(tmp, ForReading, False, TristateMixed)
+        Set tgt = fso.OpenTextFile(fp_exported_forms & obj.Name & ".frm", ForWriting, True, TristateMixed)
+        frm = txt.ReadAll: Do While InStr(1, frm, srh) > 0: frm = Replace(frm, srh, rpl): Loop
+        tgt.Write frm: tgt.Close: Set tgt = Nothing
+        txt.Close: Set txt = Nothing: fso.DeleteFile tmp, True
         Debug.Print "Form definition for '" & obj.Name & "' exported to: " & fp_exported_forms & obj.Name & ".frm"
     Next
 
@@ -119,6 +103,30 @@ Public Sub ImportAll() 'As Boolean
     '
     ' Open form "StartUp" this form will ingest of de meta-data-defintions form the repository.
     DoCmd.OpenForm "StartUp"
+    '
+End Sub
+
+Sub set_folder_paths()
+    '
+    ' Local Variables
+    Dim fso As FileSystemObject: Set fso = New FileSystemObject
+    Dim fdr As folder: Set fdr = fso.GetFolder(CurrentProject.Path)
+    Dim dev As String: dev = IIf(fdr.Name = "Development-Version", "", IIf(fdr.Name = "1-Frontend", "\Development-Version", "<not-allowed>"))
+    '
+    ' Check if Tool is started from allowed location!
+    If dev = "<not-allowed>" Then
+        MsgBox "Tooling is only allowed to start from `Development-Version` or `1-Frontend`", vbCritical
+        Application.Quit
+    End If
+    '
+    ' Setting Folderpaths
+    fp_exported_code = CurrentProject.Path & dev & "\Code"
+    fp_exported_modules = fp_exported_code & "\Modules\"
+    fp_exported_forms = fp_exported_code & "\Forms\"
+    fp_exported_reports = fp_exported_code & "\Reports\"
+    fp_exported_macros = fp_exported_code & "\Macros\"
+    fp_exported_tables = fp_exported_code & "\Tables\"
+    fp_exported_queries = fp_exported_code & "\Queries\"
     '
 End Sub
 
@@ -204,7 +212,7 @@ Private Function GenerateCreateTableSQL(tdf As DAO.TableDef) As String
     
     ' Loop through fields
     For Each fld In tdf.fields
-        If (fld.Name <> "meta_created_at") Then
+        If (fld.Name <> "meta_created_at" And fld.Name <> "meta_updated_at") Then
             If (strFields <> "") Then strFields = strFields & "," & vbCrLf
             
             ' Get field data type
@@ -360,8 +368,14 @@ Public Sub ExportSingleTableDef(strObjectName As String): On Error GoTo ErrorHan
     Dim def           As DAO.TableDef:     Set def = dbs.TableDefs(strObjectName)
     Dim CurTextWithDt As String:     CurTextWithDt = GenerateCreateTableSQL(def)
     Dim CurText       As String:           CurText = CurTextWithDt
-    Dim txtRepo       As Object:       Set txtRepo = fso.OpenTextFile(strFileName, IOMode.ForReading, False, TristateTrue)
-    Dim GitText       As String:           GitText = txtRepo.ReadAll: txtRepo.Close: Set txtRepo = Nothing
+    Dim txtRepo       As Object
+    Dim GitText       As String
+    '
+    ' Check if there is already a export file
+    If fso.FileExists(strFileName) Then
+        Set txtRepo = fso.OpenTextFile(strFileName, IOMode.ForReading, False, TristateTrue)
+        GitText = txtRepo.ReadAll: txtRepo.Close: Set txtRepo = Nothing
+    End If
     '
     If (1 = 1) Then ' GitText: Remove first 4 lines
         If InStr(GitText, vbCrLf) > 0 Then GitText = Mid(GitText, InStr(GitText, vbCrLf) + 2)
@@ -470,6 +484,11 @@ Sub AddMetaCreatedAtWithDefault(strTableName)
 
     ' Add the field
     Set fld = tdf.CreateField("meta_created_at", dbDate)
+    fld.DefaultValue = "=Now()"
+    tdf.fields.Append fld
+
+    ' Add the field
+    Set fld = tdf.CreateField("meta_updated_at", dbDate)
     fld.DefaultValue = "=Now()"
     tdf.fields.Append fld
 
@@ -866,8 +885,14 @@ Public Sub ExportSingleQueryDef(strObjectName As String): On Error GoTo ErrorHan
     Dim def           As DAO.QueryDef:     Set def = dbs.QueryDefs(strObjectName)
     Dim CurTextWithDt As String:     CurTextWithDt = GenerateQuerySQL(def)
     Dim CurText       As String:           CurText = CurTextWithDt
-    Dim txtRepo       As Object:       Set txtRepo = fso.OpenTextFile(strFileName, IOMode.ForReading, False, TristateTrue)
-    Dim GitText       As String:           GitText = txtRepo.ReadAll: txtRepo.Close: Set txtRepo = Nothing
+    Dim txtRepo       As Object
+    Dim GitText       As String
+    '
+    ' Check if there is already a export file
+    If fso.FileExists(strFileName) Then
+        Set txtRepo = fso.OpenTextFile(strFileName, IOMode.ForReading, False, TristateTrue)
+        GitText = txtRepo.ReadAll: txtRepo.Close: Set txtRepo = Nothing
+    End If
     '
     If (1 = 1) Then ' GitText: Remove first 4 lines
         If InStr(GitText, vbCrLf) > 0 Then GitText = Mid(GitText, InStr(GitText, vbCrLf) + 2)

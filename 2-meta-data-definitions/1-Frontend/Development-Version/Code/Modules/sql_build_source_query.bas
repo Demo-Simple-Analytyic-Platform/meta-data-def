@@ -18,9 +18,10 @@ Public Function build_source_query(ip_id_model As String, ip_id_dataset As Strin
     Dim sql As String: sql = ""
     Dim emp As String: emp = ""
     Dim nwl As String: nwl = vbNewLine
+    Dim prt As String
     '
     ' Build SQL Query to loop throught the Transformation Parts
-    sql = sql & emp & "SELECT ni_transformation_part, id_transformation_part"
+    sql = sql & emp & "SELECT ni_transformation_part, id_transformation_part, tx_transformation_part"
     sql = sql & nwl & "FROM dta_transformation_part"
     sql = sql & nwl & "WHERE id_model   = '" & ip_id_model & "'"
     sql = sql & nwl & "AND   id_dataset = '" & ip_id_dataset & "'"
@@ -30,7 +31,11 @@ Public Function build_source_query(ip_id_model As String, ip_id_dataset As Strin
     '
     ' Loop throught the resultset
     Do While Not rst.EOF
-        sql = sql & IIf(sql = "", "", nwl & "UNION ALL" & nwl) & build_sql_transformation_part(ip_id_model, rst.fields("id_transformation_part"), ip_is_debugging)
+        prt = build_sql_transformation_part(ip_id_model, rst.fields("id_transformation_part"), ip_is_debugging)
+        If (InStr(1, rst.fields("tx_transformation_part"), "master..spt_values", vbTextCompare) > 0) Then
+            prt = rst.fields("tx_transformation_part")
+        End If
+        sql = sql & IIf(sql = "", "", nwl & nwl & "UNION ALL" & nwl & nwl) & prt
     rst.MoveNext: Loop
     '
     ' Return the Source Query build
@@ -67,9 +72,11 @@ Public Function build_sql_clause_select(ip_id_model As String, ip_id_transformat
     '
     ' Build SELECT-clause
     Do While Not rst.EOF: sql = sql & IIf(sql = "", "SELECT ", nwl & "     , ") & rst.fields("tx_mapping") & " AS " & rst.fields("nm_column"): rst.MoveNext: Loop
+    If ip_is_debugging Then Debug.Print "SQL before replacing placeholders: " & sql
     '
-    ' Return the Source Query build
-    If ip_is_debugging Then Debug.Print sql
+    ' Replace the Meta-references for the Alias and Columns
+    sql = placeholder_to_source_attributes(sql, ip_id_transformation_part)
+    If ip_is_debugging Then Debug.Print "SQL After replacing placeholders: " & sql
     '
     ' Return "SELECT"-Clause
     build_sql_clause_select = sql
@@ -93,10 +100,10 @@ Public Function build_sql_clause_from(ip_id_model As String, ip_id_transformatio
     sql = sql & nwl & "     , dst.nm_target_table"
     sql = sql & nwl & "     , tds.cd_alias"
     sql = sql & nwl & "     , tds.tx_join_criteria"
-    sql = sql & nwl & "     , [tds].[cd_join_type] & ' [' & [dst].[nm_target_schema] & '.' & [dst].[nm_target_table] & '] AS [' & [tds].[cd_alias] & ']' & IIf("
+    sql = sql & nwl & "     , [tds].[cd_join_type] & ' [' & [dst].[nm_target_schema] & '].[' & [dst].[nm_target_table] & '] AS [' & [tds].[cd_alias] & ']' & IIf("
     sql = sql & nwl & "         Len(Nz ([tds].[tx_join_criteria], '')) = 0,"
     sql = sql & nwl & "         '',"
-    sql = sql & nwl & "         ' ' & Nz ([tds].[tx_join_criteria], '')"
+    sql = sql & nwl & "         ' ON ' & Nz ([tds].[tx_join_criteria], '')"
     sql = sql & nwl & "    ) AS tx_sql"
     sql = sql & nwl & ""
     sql = sql & nwl & "FROM dta_transformation_dataset AS tds"
@@ -113,10 +120,12 @@ Public Function build_sql_clause_from(ip_id_model As String, ip_id_transformatio
     Dim rst As Recordset: Set rst = CurrentDb.OpenRecordset(sql): sql = ""
     '
     ' Build SELECT-clause
-    Do While Not rst.EOF: sql = sql & rst.fields("tx_sql") & vbNewLine: rst.MoveNext: Loop
+    Do While Not rst.EOF: sql = sql & nwl & rst.fields("tx_sql"): rst.MoveNext: Loop
+    If ip_is_debugging Then Debug.Print "SQL before replacing placeholders: " & sql
     '
-    ' Return the Source Query build
-    If ip_is_debugging Then Debug.Print sql
+    ' Replace the Meta-references for the Alias and Columns
+    sql = placeholder_to_source_attributes(sql, ip_id_transformation_part)
+    If ip_is_debugging Then Debug.Print "SQL After replacing placeholders: " & sql
     '
     ' Return "FROM"-Clause
     build_sql_clause_from = sql
@@ -125,9 +134,11 @@ End Function
 
 Public Function build_sql_clause_where_group_by_having(ip_id_model As String, ip_id_transformation_part As String, Optional ip_is_debugging As Boolean = False)
     '
-    ' Example: ?build_sql_clause_where_group_by_having("5f4a1942465c575a1f5a5a575d1e191c", "6d2df191e0faa40455d3305cb20b28f2", True)
+    ' Example 1: ?build_sql_clause_where_group_by_having("5f4a1942465c575a1f5a5a575d1e191c", "6d2df191e0faa40455d3305cb20b28f2", True)
     '
     ' Declare Local Variables
+    Dim rst As DAO.Recordset
+    Dim dbs As DAO.Database: Set dbs = CurrentDb
     Dim sql As String: sql = ""
     Dim emp As String: emp = ""
     Dim nwl As String: nwl = vbNewLine
@@ -142,19 +153,25 @@ Public Function build_sql_clause_where_group_by_having(ip_id_model As String, ip
     sql = sql & nwl & "WHERE tpt.id_transformation_part = '" & ip_id_transformation_part & "'"
     sql = sql & nwl & "AND   tpt.id_model               = '" & ip_id_model & "';"
     If ip_is_debugging Then Debug.Print sql
-    Dim rst As Recordset: Set rst = CurrentDb.OpenRecordset(sql): sql = ""
+    Set rst = CurrentDb.OpenRecordset(sql): sql = ""
     '
     ' Build WHERE/GROUP BY and HAVING-clause
-    sql = IIf(rst.fields("tx_sql_where") = "", "", IIf(sql = "", "", vbNewLine) & "WHERE " & rst.fields("tx_sql_where"))
-    sql = IIf(rst.fields("tx_sql_group_by") = "", "", IIf(sql = "", "", vbNewLine) & "GROUP BY " & rst.fields("tx_sql_group_by") & vbNewLine)
-    sql = IIf(rst.fields("tx_sql_having") = "", "", IIf(sql = "", "", vbNewLine) & "HAVING " & rst.fields("tx_sql_having") & vbNewLine)
+    sql = sql & IIf(rst.fields("tx_sql_where") = "", "", IIf(sql = "", "", nwl) & rst.fields("tx_sql_where"))
+    sql = sql & IIf(rst.fields("tx_sql_group_by") = "", "", IIf(sql = "", "", nwl) & rst.fields("tx_sql_group_by") & nwl)
+    sql = sql & IIf(rst.fields("tx_sql_having") = "", "", IIf(sql = "", "", nwl) & rst.fields("tx_sql_having") & nwl)
+    If ip_is_debugging Then Debug.Print "SQL before replacing placeholders: " & sql
     '
-    ' Return "WHERE/GROUP BY and HAVING"-Clause
-    If ip_is_debugging Then Debug.Print sql
+    ' Done With recordset
+    rst.Close
+    '
+    ' Replace the Meta-references for the Alias and Columns
+    sql = placeholder_to_source_attributes(sql, ip_id_transformation_part)
+    '
+    ' Return "WHERE/GROUP BY and HAVING"-Clause after
+    If ip_is_debugging Then Debug.Print "SQL After replacing placeholders: " & sql
     build_sql_clause_where_group_by_having = sql
     '
 End Function
-
 
 Public Function build_sql_transformation_part(ip_id_model As String, ip_id_transformation_part As String, Optional ip_is_debugging As Boolean = False)
     '
@@ -171,9 +188,9 @@ Public Function build_sql_transformation_part(ip_id_model As String, ip_id_trans
     Dim sql_wgbh As String: sql_wgbh = build_sql_clause_where_group_by_having(ip_id_model, ip_id_transformation_part, ip_is_debugging)
     '
     ' Combining all SQL Clauses
-    sql = sql & IIf(sql_slct = "", "", IIf(sql = "", "", vbNewLine) & sql_slct)
-    sql = sql & IIf(sql_from = "", "", IIf(sql = "", "", vbNewLine) & sql_from)
-    sql = sql & IIf(sql_wgbh = "", "", IIf(sql = "", "", vbNewLine) & sql_wgbh)
+    sql = sql & IIf(sql_slct = "", "", IIf(sql = "", "", nwl) & sql_slct)
+    sql = sql & IIf(sql_from = "", "", IIf(sql = "", "", nwl) & sql_from)
+    sql = sql & IIf(sql_wgbh = "", "", IIf(sql = "", "", nwl & nwl) & sql_wgbh)
     '
     ' Return Transformation Part
     If ip_is_debugging Then Debug.Print sql

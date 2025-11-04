@@ -100,7 +100,10 @@ Public Function StripSQLComments(inputTextWithComments As String) As String
                 
                 ' Add found character to output
                 textWithoutComments = textWithoutComments & char2
-                
+                    
+                ' Move to next character
+                i = i + 1
+                    
                 ' Loop through text until closing single quote is found
                 Do While i <= maxLength And Mid(sqlCode, i, 1) <> "'"
                     

@@ -165,7 +165,8 @@ End Sub
 Public Sub export_dataset_and_related_definitions(id_dataset As String)
     '
     ' build sql for filtering on model.
-    Dim tx_where As String: tx_where = "WHERE id_dataset = '" & id_dataset & "' AND id_model = '" & mdl_Folders.id_model(mdl_Folders.nm_repository) & "'"
+    Dim id_model As String: id_model = mdl_Folders.id_model(mdl_Folders.nm_repository)
+    Dim tx_where As String: tx_where = "WHERE id_dataset = '" & id_dataset & "' AND id_model = '" & id_model & "'"
     '
     If (id_dataset = "") Then
         Exit Sub
@@ -176,7 +177,7 @@ Public Sub export_dataset_and_related_definitions(id_dataset As String)
     '
     ' Local Variables
     Dim txt As TextStream: Set txt = fso.OpenTextFile(mdl_Folders.dta() & id_dataset & ".sql", ForWriting, True, TristateTrue)
-    Dim rst As Recordset
+    Dim rst As Recordset:  Set rst = CurrentDb.OpenRecordset("SELECT * FROM dta_dataset " & tx_where)
     '
     ' Write to SQL-file
     txt.WriteLine "/* -------------------------------------------------------------------------- */"
@@ -191,75 +192,42 @@ Public Sub export_dataset_and_related_definitions(id_dataset As String)
     txt.WriteLine ""
     '
     ' Export record to "Dataset"-definitions
-    Set rst = CurrentDb.OpenRecordset("SELECT * FROM dta_dataset " & tx_where)
-    txt.WriteLine "  /* --------------------- */"
-    txt.WriteLine "  /* `Dataset`-definitions */"
-    txt.WriteLine "  /* --------------------- */"
-    txt.WriteLine build_sql_insert("dta", "dataset", rst.fields)
-    If rst.RecordCount = 0 Then: txt.WriteLine "  -- No Defintions for `Dataset`"
-    txt.WriteLine "  "
+    Call add_to_export_file(txt, tx_where, "dta", "Dataset")
+    Call add_to_export_file(txt, tx_where, "dta", "Attribute")
+    Call add_to_export_file(txt, tx_where, "dta", "Parameter Value")
+    Call add_to_export_file(txt, tx_where, "dta", "Ingestion Etl")
+    Call add_to_export_file(txt, tx_where, "dta", "Schedule")
+    Call add_to_export_file(txt, tx_where, "ohg", "Related")
+    Call add_to_export_file(txt, tx_where, "dqm", "DQ Control")
     '
-    ' Export record to "Attribute"-definitions
-    Set rst = CurrentDb.OpenRecordset("SELECT * FROM dta_attribute " & tx_where)
-    txt.WriteLine "  /* ----------------------- */"
-    txt.WriteLine "  /* `Attribute`-definitions */"
-    txt.WriteLine "  /* ----------------------- */"
-    Do Until rst.EOF: With rst: txt.WriteLine build_sql_insert("dta", "attribute", .fields): .MoveNext: End With: Loop
-    If rst.RecordCount = 0 Then: txt.WriteLine "  -- No Defintions for `Attribute`"
-    txt.WriteLine ""
+    ' Re-build WHERE Clause
+    tx_where = "WHERE id_dq_control IN (SELECT id_dq_control FROM dqm_dq_control " & tx_where & ") AND id_model = '" & id_model & "'"
+    Call add_to_export_file(txt, tx_where, "dqm", "DQ Threshold")
     '
-    ' Export record to "Parameter Values"-definitions
-    Set rst = CurrentDb.OpenRecordset("SELECT * FROM dta_parameter_value " & tx_where)
-    txt.WriteLine "  /* ------------------------------ */"
-    txt.WriteLine "  /* `Parameter Values`-definitions */"
-    txt.WriteLine "  /* ------------------------------ */"
-    Do Until rst.EOF: With rst: txt.WriteLine build_sql_insert("dta", "parameter_value", .fields): .MoveNext: End With: Loop
-    If rst.RecordCount = 0 Then: txt.WriteLine "  -- No Defintions for `Parameter Values`"
-    txt.WriteLine ""
+    ' If Transformation (NOT Ingestion) then Export Transformation Parts, Datasets, Column Mappings and Attribute References.
+    If (Not rst!is_ingestion) Then
+        '
+        ' Build WHERE Clause for Transformation Part
+        tx_where = "WHERE id_dataset = '" & id_dataset & "' AND id_model = '" & id_model & "'"
+        Call add_to_export_file(txt, tx_where, "dta", "Transformation Part")
+        '
+        ' Build WHERE Clause for Transformation Dataset and Column Mapping
+        Dim tx_where_tpt As String:  tx_where_tpt = "WHERE id_transformation_part IN (SELECT id_transformation_part FROM dta_transformation_part " & tx_where & ") AND id_model = '" & id_model & "'"
+        Call add_to_export_file(txt, tx_where_tpt, "dta", "Transformation Dataset")
+        Call add_to_export_file(txt, tx_where_tpt, "dta", "Transformation Column Mapping")
+        Call add_to_export_file(txt, tx_where_tpt, "dta", "Transformation Part Attribute")
+        '
+        ' Build WHERE Clause for Transformation Dataset and Column Mapping
+        Dim tx_where_tds As String:  tx_where_tds = "WHERE id_transformation_dataset IN (SELECT id_transformation_dataset FROM dta_transformation_dataset " & tx_where_tpt & ") AND id_model = '" & id_model & "'"
+        Call add_to_export_file(txt, tx_where_tds, "dta", "Transformation Dataset Attribute")
+        '
+        ' Build WHERE Clause for Transformation Dataset and Column Mapping
+        Dim tx_where_tcm As String:  tx_where_tcm = "WHERE id_transformation_column_mapping IN (SELECT id_transformation_column_mapping FROM dta_transformation_column_mapping " & tx_where_tpt & ") AND id_model = '" & id_model & "'"
+        Call add_to_export_file(txt, tx_where_tcm, "dta", "Transformation Column Mapping Attribute")
+        '
+    End If
     '
-    ' Export record to "SQL for ETL"-definitions
-    Set rst = CurrentDb.OpenRecordset("SELECT * FROM dta_ingestion_etl " & tx_where)
-    txt.WriteLine "  /* ------------------------------ */"
-    txt.WriteLine "  /* `SQL for ETL`-definitions      */"
-    txt.WriteLine "  /* ------------------------------ */"
-    Do Until rst.EOF: With rst: txt.WriteLine build_sql_insert("dta", "ingestion_etl", .fields): .MoveNext: End With: Loop
-    If rst.RecordCount = 0 Then: txt.WriteLine "  -- No Defintions for `SQL for ETL`"
-    txt.WriteLine ""
-    '
-    ' Export record to "Schedule"-definitions
-    Set rst = CurrentDb.OpenRecordset("SELECT * FROM dta_schedule " & tx_where)
-    txt.WriteLine "  /* ------------------------------ */"
-    txt.WriteLine "  /* `Schedule`-definitions         */"
-    txt.WriteLine "  /* ------------------------------ */"
-    Do Until rst.EOF: With rst: txt.WriteLine build_sql_insert("dta", "schedule", .fields): .MoveNext: End With: Loop
-    If rst.RecordCount = 0 Then: txt.WriteLine "  -- No Defintions for `SQL for ETL`"
-    txt.WriteLine ""
-    '
-    ' Export record to "Related (Groups)"-definitions
-    Set rst = CurrentDb.OpenRecordset("SELECT * FROM ohg_related " & tx_where)
-    txt.WriteLine "  /* -------------------------------- */"
-    txt.WriteLine "  /* `Related (Group(s))`-definitions */"
-    txt.WriteLine "  /* -------------------------------- */"
-    Do Until rst.EOF: With rst: txt.WriteLine build_sql_insert("ohg", "related", .fields): .MoveNext: End With: Loop
-    If rst.RecordCount = 0 Then: txt.WriteLine "  -- No Defintions for `Related (Group(s))`"
-    txt.WriteLine ""
-    '
-    ' Export record to "DQ Controls"-definitions
-    Set rst = CurrentDb.OpenRecordset("SELECT * FROM dqm_dq_control " & tx_where)
-    txt.WriteLine "  /* ------------------------ */"
-    txt.WriteLine "  /* `DQ Control`-definitions */"
-    txt.WriteLine "  /* ------------------------ */"
-    Do Until rst.EOF: With rst: txt.WriteLine build_sql_insert("dqm", "dq_control", .fields): .MoveNext: End With: Loop
-    If rst.RecordCount = 0 Then: txt.WriteLine "  -- No Defintions for `DQ Control`"
-    txt.WriteLine ""
-    '
-    ' Export record to "DQ Threshold"-definitions
-    Set rst = CurrentDb.OpenRecordset("SELECT * FROM dqm_dq_threshold WHERE id_dq_control IN (SELECT id_dq_control FROM dqm_dq_control " & tx_where & ") AND id_model = '" & mdl_Folders.id_model(mdl_Folders.nm_repository) & "'")
-    txt.WriteLine "  /* -------------------------- */"
-    txt.WriteLine "  /* `DQ Threshold`-definitions */"
-    txt.WriteLine "  /* -------------------------- */"
-    Do Until rst.EOF: With rst: txt.WriteLine build_sql_insert("dqm", "dq_threshold", .fields): .MoveNext: End With: Loop
-    If rst.RecordCount = 0 Then: txt.WriteLine "  -- No Defintions for `DQ Threshold`"
+    ' End the SQL Block
     txt.WriteLine "  "
     txt.WriteLine "END"
     txt.WriteLine "GO"
@@ -268,6 +236,17 @@ Public Sub export_dataset_and_related_definitions(id_dataset As String)
     ' Close "SQL"-file.
     txt.Close
     '
+End Sub
+
+Public Sub add_to_export_file(ByRef ip_ob_txt As TextStream, ByVal ip_tx_where As String, ByVal ip_nm_schema As String, ByVal ip_nm_table As String)
+    Dim rst As DAO.Recordset: Set rst = CurrentDb.OpenRecordset("SELECT * FROM " & Trim(ip_nm_schema) & "_" & Trim(LCase(Replace(ip_nm_table, " ", "_"))) & " " & ip_tx_where)
+    Dim fdt As String:            fdt = "`" & Trim(ip_nm_table) & "`-definitions"
+    ip_ob_txt.WriteLine "  /* " & String(Len(fdt), "-") & " */"
+    ip_ob_txt.WriteLine "  /* " & fdt & " */"
+    ip_ob_txt.WriteLine "  /* " & String(Len(fdt), "-") & " */"
+    Do Until rst.EOF: With rst: ip_ob_txt.WriteLine build_sql_insert(Trim(ip_nm_schema), Trim(LCase(Replace(ip_nm_table, " ", "_"))), .fields): .MoveNext: End With: Loop
+    If rst.RecordCount = 0 Then: ip_ob_txt.WriteLine "  -- No Defintions for `" & Trim(ip_nm_table) & "`": rst.Close
+    ip_ob_txt.WriteLine ""
 End Sub
 
 Public Function build_sql_insert(ByVal nm_schema As String, ByVal nm_table As String, ByRef fields As fields) As String
@@ -279,25 +258,31 @@ Public Function build_sql_insert(ByVal nm_schema As String, ByVal nm_table As St
     ' Export record to SQL-file
     Dim fld As Field: For Each fld In fields
         '
-        tx_fields = tx_fields & IIf(tx_fields = "", "", ", ")
-        tx_fields = tx_fields & fld.Name
-        '
-        tx_values = tx_values & IIf(tx_values = "", "", ", ")
-        Select Case fld.Type
-            Case DAO.DataTypeEnum.dbDate
-                tx_values = tx_values & "'" & Format(fld.Value, "yyyy-mm-dd") & "'"
-            
-            Case DAO.DataTypeEnum.dbDecimal
-                tx_values = tx_values & "'" & Replace(Format(fld.Value, "0.000000"), CheckDecimalSeparator, ".") & "'"
-                                
-            
-            Case DAO.DataTypeEnum.dbBoolean
-                tx_values = tx_values & "'" & IIf(fld.Value = True, "1", "0") & "'"
-                                
-            Case Else
-                tx_values = tx_values & "'" & Replace(Nz(fld.Value, ""), "'", "<quot>") & "'"
+        ' Filter Meta-Attributes
+        If fld.Name <> "meta_created_at" And fld.Name <> "meta_updated_at" Then
+            '
+            tx_fields = tx_fields & IIf(tx_fields = "", "", ", ")
+            tx_fields = tx_fields & fld.Name
+            tx_values = tx_values & IIf(tx_values = "", "", ", ")
+            '
+            ' Handling Dataypes
+            Select Case fld.Type
+                Case DAO.DataTypeEnum.dbDate
+                    tx_values = tx_values & "'" & Format(fld.Value, "yyyy-mm-dd") & "'"
                 
-        End Select
+                Case DAO.DataTypeEnum.dbDecimal
+                    tx_values = tx_values & "'" & Replace(Format(fld.Value, "0.000000"), CheckDecimalSeparator, ".") & "'"
+                                    
+                
+                Case DAO.DataTypeEnum.dbBoolean
+                    tx_values = tx_values & "'" & IIf(fld.Value = True, "1", "0") & "'"
+                                    
+                Case Else
+                    tx_values = tx_values & "'" & Replace(Nz(fld.Value, ""), "'", "<quot>") & "'"
+                    
+            End Select
+            '
+        End If
         '
     Next fld
     '

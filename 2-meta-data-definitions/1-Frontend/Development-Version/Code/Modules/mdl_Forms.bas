@@ -6,7 +6,10 @@ Public Sub set_buttons(ByRef ip_form As Form)
     '
     ' Local Variables
     Dim cd As String: cd = get_cd_development_status(Nz(ip_form.id_development_status, "-1"))
-    Dim nc As Boolean: nc = IIf(ip_form.id_model = id_model_default() And ip_form.Name = "dta_dataset", True, False) 'nc = "Not Current Model"
+    Dim nc As Boolean: nc = IIf(ip_form.id_model = id_model_default() And ( _
+                                ip_form.Name = "dta_dataset" Or _
+                                ip_form.Name = "dqm_dq_requirement" Or _
+                                ip_form.Name = "dqm_dq_control"), True, False) 'nc = "Not Current Model"
     '
     ' Close all button by default
     ip_form.btn_Save.Enabled = False
@@ -157,7 +160,10 @@ End Sub
 Public Sub set_attributes(ob_form As Form)
     '
     ' Local Variables
-    Dim nc As Boolean:         nc = IIf(ob_form.id_model = id_model_default() And ob_form.Name = "dta_dataset", False, True)
+    Dim nc As Boolean:         nc = IIf(ob_form.id_model = id_model_default() And ( _
+                                        ob_form.Name = "dta_dataset" Or _
+                                        ob_form.Name = "dqm_dq_requirement" Or _
+                                        ob_form.Name = "dqm_dq_control"), False, True)
     Dim nmf As String:        nmf = ob_form.Name
     Dim sts As String:        sts = get_cd_development_status(Nz(ob_form.id_development_status, ""))
     Dim shm As String:        shm = Left(nmf, 3)
@@ -170,7 +176,7 @@ Public Sub set_attributes(ob_form As Form)
     '
     ' If "refernced dataset" for form "dta_dataset" all fields should be disabled, regardless of which "status" the dataset has.
     Dim rd As Boolean
-    If (ob_form.Name = "dta_dataset") Then
+    If (ob_form.Name = "dta_dataset" Or ob_form.Name = "dqm_dq_control") Then
         If (is_referenced_dataset(ob_form.Controls("id_model"), ob_form.Controls("id_dataset")) = True) Then
             lck = True
         End If
@@ -178,7 +184,7 @@ Public Sub set_attributes(ob_form As Form)
     '
     ' Loop through "Attributes"
     For Each fld In rst.fields
-        If (fld.Name <> "meta_created_at") Then
+        If (fld.Name <> "meta_created_at" And fld.Name <> "meta_updated_at") Then
             ob_form.Controls(fld.Name).Locked = lck
         End If
     Next fld

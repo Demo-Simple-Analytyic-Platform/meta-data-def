@@ -45,5 +45,18 @@ Public Sub parse_transformation_dataset_attribute( _
     sql = sql & nwl & "WHERE id_transformation_dataset = '" & ip_id_transformation_dataset & "';"
     If ip_is_debugging Then Debug.Print sql
     If Not ip_is_testing Then DoCmd.SetWarnings False: DoCmd.RunSQL sql: DoCmd.SetWarnings True
-
+    '
+    ' Fetch Transformation Part SQL Clauses
+    sql = emp & emp & "SELECT tx_join_criteria, id_transformation_part"
+    sql = sql & nwl & "FROM dta_transformation_dataset"
+    sql = sql & nwl & "WHERE id_transformation_dataset = '" & ip_id_transformation_dataset & "'"
+    Dim dbs As DAO.Database:  Set dbs = CurrentDb
+    Dim rst As DAO.Recordset: Set rst = dbs.OpenRecordset(sql)
+    '
+    ' Update Transformation Part SQL Clauses
+    rst.Edit
+    rst!tx_join_criteria = source_attributes_to_placeholder(rst!tx_join_criteria, rst!id_transformation_part)
+    rst.Update
+    rst.Close
+    '
 End Sub

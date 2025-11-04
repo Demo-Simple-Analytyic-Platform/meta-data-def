@@ -134,6 +134,10 @@ Public Sub process_all_sql_files(fm As Form_StartUp)
         mdl_Export.export_all
     End If
     '
+    ' Update meta_updated_at
+    Dim sql As String: sql = "UPDATE dta_model SET dta_model.meta_updated_at = Now();"
+    DoCmd.SetWarnings False: DoCmd.RunSQL sql: DoCmd.SetWarnings True
+    '
 End Sub
 Public Function process_all_sql_files_no_feedback() As Boolean
     '
@@ -148,6 +152,7 @@ Public Function process_all_sql_files_no_feedback() As Boolean
     Dim sp As Integer
     Dim tx As String
     Dim is_setup_mode_detected As Boolean: is_setup_mode_detected = is_setup_mode
+    Dim sql As String
     '
     ' Truncate all tables in Access DB
     Call truncate_all_meta_datasets
@@ -240,6 +245,10 @@ Public Function process_all_sql_files_no_feedback() As Boolean
         Call mdl_Export.export_all
     End If
     '
+    ' Update meta_updated_at
+    sql = "UPDATE dta_model SET dta_model.meta_updated_at = Now();"
+    DoCmd.SetWarnings False: DoCmd.RunSQL sql: DoCmd.SetWarnings True
+    '
     ' Return
     process_all_sql_files_no_feedback = True
     '
@@ -260,6 +269,14 @@ Public Sub truncate_all_meta_datasets()
     Call empty_table("dta", "parameter_value")
     Call empty_table("srd", "parameter_group")
     Call empty_table("srd", "parameter")
+    '
+    ' Empty out the "Transformations" related Datasets
+    Call empty_table("dta", "transformation_column_mapping_attribute")
+    Call empty_table("dta", "transformation_dataset_attribute")
+    Call empty_table("dta", "transformation_part_attribute")
+    Call empty_table("dta", "transformation_column_mapping")
+    Call empty_table("dta", "transformation_dataset")
+    Call empty_table("dta", "transformation_part")
     '
     ' Empty out the "Dataset" related tables
     Call empty_table("dta", "ingestion_etl")

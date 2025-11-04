@@ -3,16 +3,30 @@ Option Compare Database
 Option Explicit
 
 Public Type typ_transformation_part
-    id_transformation_part As String
-    ni_transformation_part As Integer
-    tx_transformation_part As String
+    id_transformation_part                 As String
+    ni_transformation_part                 As Integer
+    tx_transformation_part                 As String
     tx_transformation_part_where_clause    As String
     tx_transformation_part_group_by_clause As String
     tx_transformation_part_having_clause   As String
 End Type
 '
 Public Sub test_parse_transformation_parts()
-    parse_transformation_parts "5f4a1942465c575a1f5a5a575d1e191c", "06020d070f0d0a04030d0b0705021500", True, False
+    Dim is_debugging As Boolean
+    Dim id_model     As String: id_model = "5f4a1942465c575a1f5a5a575d1e191c"
+    Dim id_dataset   As String: id_dataset = "06020d070f0d0a04030d0b0705021500"
+    Dim dt_start As Date: dt_start = Now()
+    parse_transformation_parts id_model, id_dataset, is_debugging, False
+    Dim dt_delta As Date: dt_delta = Now() - dt_start
+    Debug.Print ""
+    Debug.Print "-------------------------------"
+    Debug.Print "Duration: " & Format(dt_delta, " yyyy-MM-dd hh:mm:ss")
+    Debug.Print "-------------------------------"
+    Dim sql As String: sql = build_source_query(id_model, id_dataset, is_debugging)
+    Debug.Print "Duration: " & Format(dt_delta, " yyyy-MM-dd hh:mm:ss")
+    Debug.Print "--- SQL ----------------------------"
+    Debug.Print sql
+    Debug.Print "-------------------------------"
 End Sub
 '
 Sub parse_transformation_parts(ip_id_model As String, ip_id_dataset As String, Optional is_debugging As Boolean = False, Optional is_testing As Boolean = False)
@@ -20,11 +34,15 @@ Sub parse_transformation_parts(ip_id_model As String, ip_id_dataset As String, O
     'Declare Local Variables
     Dim nwl   As String:        nwl = vbNewLine
     Dim emp   As String:        emp = ""
-    Dim pos   As Integer:       pos = 1
+    Dim pos   As Integer:       pos = 0
+    Dim nun   As Integer:       nun = 1
     Dim sql   As String:        sql = "SELECT tx_source_query FROM dta_dataset WHERE id_dataset = '" & ip_id_dataset & "' AND id_model = '" & ip_id_model & "'"
     Dim rst   As Recordset: Set rst = CurrentDb.OpenRecordset(sql)
     Dim txt   As String:        txt = MinifySQL(rst.fields("tx_source_query"))
     Dim tpt   As typ_transformation_part
+    Dim iua   As Boolean
+    Dim hun   As Boolean
+    Dim lgt   As Integer
     '
     ' Delclare Local Variables for Extractio Where Clause
     Dim ni_pos_where_begin  As Integer
@@ -52,8 +70,7 @@ Sub parse_transformation_parts(ip_id_model As String, ip_id_dataset As String, O
     tpt.tx_transformation_part_having_clause = ""
     '
     sql = "" ' delete existing transformation_part(s)
-    sql = sql & emp & "DELETE *"
-    sql = sql & nwl & "FROM dta_transformation_part"
+    sql = sql & emp & "DELETE * FROM dta_transformation_part"
     sql = sql & nwl & "WHERE id_model   = '" & ip_id_model & "'"
     sql = sql & nwl & "AND   id_dataset = '" & ip_id_dataset & "'"
     If (is_testing = False) Then
@@ -62,28 +79,30 @@ Sub parse_transformation_parts(ip_id_model As String, ip_id_dataset As String, O
 
     '
     ' Initalize Variables
-    Do Until (txt = "")
+    Do Until (txt = ""): pos = 0
         '
-        ' Find next "UNION"
-        pos = InStr(1, txt, " UNION ", vbTextCompare): pos = IIf(pos = 0, Len(txt), pos)
+        ' Find next "UNION" OR "UNION ALL"
+        If (pos = 0) Then pos = InStr(1, txt, " UNION ALL ", vbTextCompare): iua = True:  hun = True
+        If (pos = 0) Then pos = InStr(1, txt, " UNION ", vbTextCompare):     iua = False: hun = True
+        If (pos = 0) Then pos = Len(txt):                                    iua = False: hun = False
         '
         ' Extract Transformation Part(s)
         tpt.id_transformation_part = CreateMD5("|" & ip_id_dataset & "|" & CStr(tpt.ni_transformation_part) & "|")
         tpt.ni_transformation_part = tpt.ni_transformation_part + 1
-        tpt.tx_transformation_part = Mid(txt, 1, pos)
-        sql = UCase(tpt.tx_transformation_part)
+        tpt.tx_transformation_part = Trim(Mid(txt, 1, pos))
+        sql = tpt.tx_transformation_part
         '
         If (1 = 1) Then ' Extract WHERE Caluse if any
             '
             ' Determin Begin and End of WHERE Clause
-            ni_pos_where_begin = InStr(1, sql, " WHERE ", vbTextCompare): ni_pos_where_ended = 0
-            ni_pos_where_ended = IIf(ni_pos_where_begin = 0, 0, IIf(ni_pos_where_ended <> 0, ni_pos_where_ended, InStr(1, sql, " GROUP BY ", vbTextCompare)))
-            ni_pos_where_ended = IIf(ni_pos_where_begin = 0, 0, IIf(ni_pos_where_ended <> 0, ni_pos_where_ended, InStr(1, sql, " HAVING ", vbTextCompare)))
+            ni_pos_where_begin = InStr(1, UCase(sql), " WHERE ", vbTextCompare): ni_pos_where_ended = 0
+            ni_pos_where_ended = IIf(ni_pos_where_begin = 0, 0, IIf(ni_pos_where_ended <> 0, ni_pos_where_ended, InStr(1, UCase(sql), " GROUP BY ", vbTextCompare)))
+            ni_pos_where_ended = IIf(ni_pos_where_begin = 0, 0, IIf(ni_pos_where_ended <> 0, ni_pos_where_ended, InStr(1, UCase(sql), " HAVING ", vbTextCompare)))
             '
             tpt.tx_transformation_part_where_clause = ""
             If (ni_pos_where_begin <> 0) Then
                 ni_pos_where_length = IIf(ni_pos_where_ended <> 0, ni_pos_where_ended, Len(sql)) - 1
-                tpt.tx_transformation_part_where_clause = Mid(sql, ni_pos_where_begin, ni_pos_where_length)
+                tpt.tx_transformation_part_where_clause = Trim(Mid(sql, ni_pos_where_begin, ni_pos_where_length))
             End If
             '
         End If
@@ -91,13 +110,13 @@ Sub parse_transformation_parts(ip_id_model As String, ip_id_dataset As String, O
         If (1 = 1) Then ' Extract GROUP BY Caluse if any
             '
             ' Determin Begin and End of WHERE Clause
-            ni_pos_group_by_begin = InStr(1, sql, " GROUP BY ", vbTextCompare): ni_pos_group_by_ended = 0
-            ni_pos_group_by_ended = IIf(ni_pos_group_by_begin = 0, 0, IIf(ni_pos_group_by_ended <> 0, ni_pos_group_by_ended, InStr(1, sql, " HAVING ", vbTextCompare)))
+            ni_pos_group_by_begin = InStr(1, UCase(sql), " GROUP BY ", vbTextCompare): ni_pos_group_by_ended = 0
+            ni_pos_group_by_ended = IIf(ni_pos_group_by_begin = 0, 0, IIf(ni_pos_group_by_ended <> 0, ni_pos_group_by_ended, InStr(1, UCase(sql), " HAVING ", vbTextCompare)))
             '
             tpt.tx_transformation_part_group_by_clause = ""
             If (ni_pos_group_by_begin <> 0) Then
                 ni_pos_group_by_length = IIf(ni_pos_group_by_ended <> 0, ni_pos_group_by_ended, Len(sql)) - 1
-                tpt.tx_transformation_part_group_by_clause = Mid(sql, ni_pos_group_by_begin, ni_pos_group_by_length)
+                tpt.tx_transformation_part_group_by_clause = Trim(Mid(sql, ni_pos_group_by_begin, ni_pos_group_by_length))
             End If
             '
         End If
@@ -105,12 +124,12 @@ Sub parse_transformation_parts(ip_id_model As String, ip_id_dataset As String, O
         If (1 = 1) Then ' Extract HAVING Caluse if any
             '
             ' Determin Begin and End of WHERE Clause
-            ni_pos_having_begin = InStr(1, sql, " HAVING ", vbTextCompare): ni_pos_having_ended = 0
+            ni_pos_having_begin = InStr(1, UCase(sql), " HAVING ", vbTextCompare): ni_pos_having_ended = 0
             '
             tpt.tx_transformation_part_having_clause = ""
             If (ni_pos_having_begin <> 0) Then
                 ni_pos_having_length = IIf(ni_pos_having_ended <> 0, ni_pos_having_ended, Len(sql)) - 1
-                tpt.tx_transformation_part_having_clause = Mid(sql, ni_pos_having_begin, ni_pos_having_length)
+                tpt.tx_transformation_part_having_clause = Trim(Mid(sql, ni_pos_having_begin, ni_pos_having_length))
             End If
             '
         End If
@@ -156,11 +175,16 @@ Sub parse_transformation_parts(ip_id_model As String, ip_id_dataset As String, O
         ' Parse Transformation Part for Attributes Utilized
         Call parse_transformation_part_attribute(ip_id_model, tpt.id_transformation_part, is_debugging, is_testing)
         '
-        ' Update the Metadata for the WHERE/GROUP BY/HAVING clauses with placeholder, referening id_source_attribute and id_transformation_dataset for the correct cd_alias
-        ' to do some code
-        '
         ' Remove processed part from the "Source Query"-text
-        txt = IIf(Len(txt) - pos > 0, Mid(txt, pos + 7, Len(txt) - pos), "")
+        lgt = Len(txt) - pos
+        pos = pos + IIf(hun, IIf(iua, Len(" UNION ALL "), Len(" UNION ")), 0)
+        '
+        If is_debugging Then Debug.Print "txt: " & txt
+        If is_debugging Then Debug.Print "pos: " & CStr(pos)
+        If is_debugging Then Debug.Print "lgt: " & CStr(lgt)
+        If is_debugging Then Debug.Print "net txt : " & Trim(IIf(lgt <= 0, "", Mid(txt, pos, lgt)))
+        '
+        txt = Trim(IIf(lgt <= 0, "", Mid(txt, pos, lgt)))
         '
     Loop
     '
