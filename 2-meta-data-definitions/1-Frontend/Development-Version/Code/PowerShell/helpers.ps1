@@ -262,7 +262,7 @@ function Set-Secure-Information($ip_nm_information) {
     #
     # Store the secure information in the secure model folder
     if (-not (Test-Path $fp_information)) { 
-        $secure_tx_information = Read-Host "Provide $ip_nm_information : " -AsSecureString
+        $secure_tx_information = Read-Host "Provide $ip_nm_information" -AsSecureString
         $secure_tx_information | ConvertFrom-SecureString | Set-Content "$fp_information"
         if ($global:is_debugging) { Write-Host "Secure information stored in: $fp_information" }
     }

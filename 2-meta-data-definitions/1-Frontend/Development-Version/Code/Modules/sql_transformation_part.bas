@@ -12,9 +12,9 @@ Public Type typ_transformation_part
 End Type
 '
 Public Sub test_parse_transformation_parts()
-    Dim is_debugging As Boolean
+    Dim is_debugging As Boolean: is_debugging = True
     Dim id_model     As String: id_model = "5f4a1942465c575a1f5a5a575d1e191c"
-    Dim id_dataset   As String: id_dataset = "06020d070f0d0a04030d0b0705021500"
+    Dim id_dataset   As String: id_dataset = "41ad790af71b66ba480a4023886b455e"
     Dim dt_start As Date: dt_start = Now()
     parse_transformation_parts id_model, id_dataset, is_debugging, False
     Dim dt_delta As Date: dt_delta = Now() - dt_start
@@ -30,6 +30,7 @@ Public Sub test_parse_transformation_parts()
 End Sub
 '
 Sub parse_transformation_parts(ip_id_model As String, ip_id_dataset As String, Optional is_debugging As Boolean = False, Optional is_testing As Boolean = False)
+On Error GoTo ErrorHandling
     '
     'Declare Local Variables
     Dim nwl   As String:        nwl = vbNewLine
@@ -101,7 +102,7 @@ Sub parse_transformation_parts(ip_id_model As String, ip_id_dataset As String, O
             '
             tpt.tx_transformation_part_where_clause = ""
             If (ni_pos_where_begin <> 0) Then
-                ni_pos_where_length = IIf(ni_pos_where_ended <> 0, ni_pos_where_ended, Len(sql)) - 1
+                ni_pos_where_length = IIf(ni_pos_where_ended <> 0, (ni_pos_where_ended - ni_pos_where_begin), Len(sql))
                 tpt.tx_transformation_part_where_clause = Trim(Mid(sql, ni_pos_where_begin, ni_pos_where_length))
             End If
             '
@@ -115,7 +116,7 @@ Sub parse_transformation_parts(ip_id_model As String, ip_id_dataset As String, O
             '
             tpt.tx_transformation_part_group_by_clause = ""
             If (ni_pos_group_by_begin <> 0) Then
-                ni_pos_group_by_length = IIf(ni_pos_group_by_ended <> 0, ni_pos_group_by_ended, Len(sql)) - 1
+                ni_pos_group_by_length = IIf(ni_pos_group_by_ended <> 0, (ni_pos_group_by_ended - ni_pos_group_by_begin), Len(sql))
                 tpt.tx_transformation_part_group_by_clause = Trim(Mid(sql, ni_pos_group_by_begin, ni_pos_group_by_length))
             End If
             '
@@ -128,7 +129,7 @@ Sub parse_transformation_parts(ip_id_model As String, ip_id_dataset As String, O
             '
             tpt.tx_transformation_part_having_clause = ""
             If (ni_pos_having_begin <> 0) Then
-                ni_pos_having_length = IIf(ni_pos_having_ended <> 0, ni_pos_having_ended, Len(sql)) - 1
+                ni_pos_having_length = IIf(ni_pos_having_ended <> 0, ni_pos_having_ended, Len(sql))
                 tpt.tx_transformation_part_having_clause = Trim(Mid(sql, ni_pos_having_begin, ni_pos_having_length))
             End If
             '
@@ -188,4 +189,16 @@ Sub parse_transformation_parts(ip_id_model As String, ip_id_dataset As String, O
         '
     Loop
     '
+    ' All is Well
+    Exit Sub
+    '
+ErrorHandling:
+  '
+  ' Print Error
+  Debug.Print ("--- Error --------------------------------------------------------------")
+  Debug.Print ("Err Number      : " & CStr(Err.Number))
+  Debug.Print ("Err Description : " & Err.Description)
+  Stop
+  Resume
+  '
 End Sub

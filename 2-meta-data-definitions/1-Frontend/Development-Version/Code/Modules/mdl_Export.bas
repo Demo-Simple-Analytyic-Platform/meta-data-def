@@ -3,8 +3,13 @@ Option Compare Database
 Option Explicit
 '
 ' Module Variables
-Private fso     As New FileSystemObject
+Private fso As New FileSystemObject
 
+' Export all metadata definitions to repository .sql files.
+' Creates folder structure, exports non-dataset + dataset definitions.
+' Builds datasets.sql and insert_definition_into_temp_tables.sql includes.
+' Params: none.
+' Example: Call export_all
 Public Sub export_all()
     '
     ' Initialize fso
@@ -57,15 +62,15 @@ Public Sub export_all()
     txt.WriteLine ""
     txt.WriteLine "BEGIN /* Name of Git Repository / Current Model */"
     txt.WriteLine "  "
-    txt.WriteLine "  DELETE FROM mdm.current_model;"
-    txt.WriteLine "  INSERT INTO mdm.current_model (id_model, nm_repository) SELECT"
+    txt.WriteLine "  DELETE FROM deployment.current_model;"
+    txt.WriteLine "  INSERT INTO deployment.current_model (id_model, nm_repository) SELECT"
     txt.WriteLine "    id_model      = CONVERT(CHAR(32),      '" & l_id_model & "'),"
     txt.WriteLine "    nm_repository = CONVERT(NVARCHAR(128), '" & l_nm_repository & "');"
     txt.WriteLine "  "
-    txt.WriteLine "  DELETE FROM mdm.last_deployment;"
-    txt.WriteLine "  INSERT INTO mdm.last_deployment (id_model, dt_deployment) SELECT"
+    txt.WriteLine "  DELETE FROM deployment.last_deployment;"
+    txt.WriteLine "  INSERT INTO deployment.last_deployment (id_model, dt_deployment) SELECT"
     txt.WriteLine "    id_model       = CONVERT(CHAR(32),      '" & l_id_model & "'),"
-    txt.WriteLine "    dt_deployment  = (SELECT MAX(meta_dt_valid_from) FROM dta.dataset WHERE id_model = '" & l_id_model & "')"
+    txt.WriteLine "    dt_deployment  = (SELECT ISNULL(MAX(meta_dt_valid_from), CONVERT(DATETIME, '1979-01-01')) FROM dta.dataset WHERE id_model = '" & l_id_model & "')"
     txt.WriteLine "  "
     txt.WriteLine "END"
     txt.WriteLine "GO"
@@ -74,8 +79,16 @@ Public Sub export_all()
     ' Close SQL-File
     txt.Close
     '
+    ' Build All SQL Schemes, Tables and Procedures files
+    Call all_create_dataset_specified_procedure
+    '
 End Sub
 
+' Ensure repository export folders exist (create if missing).
+' Creates base repos folder plus domain folders (srd/ohg/dta/dqm).
+' Uses mdl_Folders.* paths and FileSystemObject.FolderExists/CreateFolder.
+' Params: none.
+' Example: Call create_folder_structure
 Public Sub create_folder_structure()
     '
     ' Check if " 2-Definitions"-folder exists.
@@ -88,6 +101,13 @@ Public Sub create_folder_structure()
     If Not fso.FolderExists(mdl_Folders.dqm) Then Call fso.CreateFolder(mdl_Folders.dqm)
 
 End Sub
+
+
+' Export metadata not directly tied to datasets.
+' Writes static reference data (srd), groups/hierarchies (ohg), and DQ model.
+' Calls export_table for each fixed table name.
+' Params: none.
+' Example: Call export_non_direct_related_to_dataset
 Public Sub export_non_direct_related_to_dataset()
     '
     ' Static Reference Data
@@ -110,6 +130,12 @@ Public Sub export_non_direct_related_to_dataset()
     export_table "dqm", "dq_requirement"
     '
 End Sub
+
+' Export one schema/table to a .sql file under the repo folder.
+' Params: nm_schema = schema prefix (srd/ohg/dta/dqm); nm_table = table name.
+' Filters by id_model_default() for non-model tables.
+' Writes BEGIN/END + INSERT lines via build_sql_insert.
+' Example: Call export_table("srd", "datatype")
 Public Sub export_table(nm_schema As String, nm_table As String)
     '
     ' Local Variables
@@ -131,6 +157,12 @@ Public Sub export_table(nm_schema As String, nm_table As String)
     txt.Close
     '
 End Sub
+
+' Build the datasets.sql include file for all exported dataset definition files.
+' Writes ":r .\<id_dataset>.sql" lines based on dta_dataset rows for model.
+' Output: mdl_Folders.dta() & "datasets.sql".
+' Params: none.
+' Example: Call build_sql_file_dataset
 Public Sub build_sql_file_dataset()
     '
     ' Local Variables
@@ -145,11 +177,39 @@ Public Sub build_sql_file_dataset()
     ' Close SQL-File
     txt.Close
     '
-End Sub
-Public Sub export_all_dataset_and_related_definitions()
+    ' Now remove those file that nolonger have a related dataset in the dta_dataset-table.
+    Dim is_found As Boolean
+    Set rst = CurrentDb.OpenRecordset("SELECT * FROM dta_dataset WHERE id_model = '" & mdl_Folders.id_model(mdl_Folders.nm_repository) & "'")
+    Dim ob_files As Files: Set ob_files = fso.GetFolder(mdl_Folders.dta).Files
+    Dim ob_file  As file:
+    Dim id_dataset  As String
+    For Each ob_file In ob_files
+      '
+      ' extract "id_datasaet"
+      id_dataset = Replace(ob_file.Name, ".sql", "")
+      '
+      ' Exclude database.sql, model.sql and datasets.sql
+      If (id_dataset <> "database" And id_dataset <> "model" And id_dataset <> "datasets") Then
+        '
+        ' Find id_dataset in dta_dataset-recordset
+        is_found = False: rst.MoveFirst: Do Until (rst.EOF Or is_found):  is_found = (rst!id_dataset = id_dataset):      rst.MoveNext: Loop
+        '
+        ' If NOT found then delete the file
+        If (is_found = False) Then
+          ob_file.Delete True
+        End If
+      End If
+      '
+    Next ob_file
     '
-    ' Local Variables
-    Dim txt As TextStream: Set txt = fso.OpenTextFile(mdl_Folders.fld("dta") & "datasets.sql", ForWriting, True, TristateTrue)
+End Sub
+
+' Export all datasets and their related definitions to individual .sql files.
+' Iterates dta_dataset for current model and calls export_dataset_and_related_definitions.
+' Rebuilds datasets.sql include file at the end.
+' Params: none.
+' Example: Call export_all_dataset_and_related_definitions
+Public Sub export_all_dataset_and_related_definitions()
     '
     ' Local Variables
     Dim rst As Recordset: Set rst = CurrentDb.OpenRecordset("SELECT * FROM dta_dataset WHERE id_model = '" & mdl_Folders.id_model(mdl_Folders.nm_repository) & "'")
@@ -157,11 +217,16 @@ Public Sub export_all_dataset_and_related_definitions()
     ' Export all data to SQL-file.
     Do Until rst.EOF: With rst: export_dataset_and_related_definitions .fields("id_dataset"): .MoveNext: End With: Loop
     '
-    ' Close SQL-File
-    txt.Close
+    ' Build SQL file to exec als dta-dataset-sql-files
+    Call build_sql_file_dataset
     '
 End Sub
 
+' Export one dataset and its related objects to a single .sql file.
+' Param: id_dataset = dataset id to export (skips when empty).
+' Writes dta/ohg/dqm rows and transformation-related objects when applicable.
+' Output: mdl_Folders.dta() & "<id_dataset>.sql".
+' Example: Call export_dataset_and_related_definitions(id_dataset)
 Public Sub export_dataset_and_related_definitions(id_dataset As String)
     '
     ' build sql for filtering on model.
@@ -238,6 +303,11 @@ Public Sub export_dataset_and_related_definitions(id_dataset As String)
     '
 End Sub
 
+' Append INSERT statements for one table to an open export TextStream.
+' Params: ip_ob_txt = output stream; ip_tx_where = WHERE clause incl WHERE.
+' ip_nm_schema = schema prefix; ip_nm_table = display name (spaces allowed).
+' Writes a small section header and rows via build_sql_insert.
+' Example: Call add_to_export_file(txt, "WHERE 1=1", "dta", "Dataset")
 Public Sub add_to_export_file(ByRef ip_ob_txt As TextStream, ByVal ip_tx_where As String, ByVal ip_nm_schema As String, ByVal ip_nm_table As String)
     Dim rst As DAO.Recordset: Set rst = CurrentDb.OpenRecordset("SELECT * FROM " & Trim(ip_nm_schema) & "_" & Trim(LCase(Replace(ip_nm_table, " ", "_"))) & " " & ip_tx_where)
     Dim fdt As String:            fdt = "`" & Trim(ip_nm_table) & "`-definitions"
@@ -249,6 +319,11 @@ Public Sub add_to_export_file(ByRef ip_ob_txt As TextStream, ByVal ip_tx_where A
     ip_ob_txt.WriteLine ""
 End Sub
 
+' Build one SQL INSERT statement from a DAO.Fields collection.
+' Params: nm_schema/nm_table = target table; fields = current record fields.
+' Formats dates/decimals/bools and escapes quotes/newlines for export.
+' Returns: INSERT statement text for tsa_<schema>.tsa_<table>.
+' Example: sql = build_sql_insert("srd", "datatype", rst.Fields)
 Public Function build_sql_insert(ByVal nm_schema As String, ByVal nm_table As String, ByRef fields As fields) As String
     '
     ' Local Variables

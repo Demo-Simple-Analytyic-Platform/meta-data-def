@@ -8,20 +8,20 @@ Public Function RegExMatch(ByVal inputString As String, ByVal pattern As String)
     
     On Error GoTo ErrorHandler
     
-    Dim regEx As Object
-    Set regEx = CreateObject("VBScript.RegExp")
+    Dim regex As Object
+    Set regex = CreateObject("VBScript.RegExp")
     
-    With regEx
+    With regex
         .pattern = pattern
         .IgnoreCase = True
         .Global = True
     End With
     
     ' Test if pattern matches
-    RegExMatch = regEx.Test(inputString)
+    RegExMatch = regex.Test(inputString)
     
 ExitFunction:
-    Set regEx = Nothing
+    Set regex = Nothing
     Exit Function
     
 ErrorHandler:

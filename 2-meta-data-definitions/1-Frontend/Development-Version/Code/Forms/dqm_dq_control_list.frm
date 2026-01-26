@@ -1,7 +1,7 @@
 Version =21
 VersionRequired =20
 PublishOption =1
-Checksum =1064376388
+Checksum =-833097339
 Begin Form
     RecordSelectors = NotDefault
     NavigationButtons = NotDefault
@@ -27,31 +27,31 @@ Begin Form
         0x519aa5d55359e640
     End
     GUID = Begin
-        0x6d483c7947596a4ab4686f7f8d304375
+        0x80980df98faada4da892ccc43574e388
     End
     NameMap = Begin
-        0x0acc0e55000000003445f67dade9884c9f60d1e9da1d6e1f0000000041cf8d0b ,
-        0x5c71e6400000000000000000640071006d005f00640071005f0063006f006e00 ,
-        0x740072006f006c005f006c006900730074000000000000004f193bc1b69ae943 ,
-        0xa69f39b732351a6b070000003445f67dade9884c9f60d1e9da1d6e1f69006400 ,
-        0x5f00640071005f0063006f006e00740072006f006c00000000000000033048c6 ,
-        0x5d38964f83f52750a5279e2d070000003445f67dade9884c9f60d1e9da1d6e1f ,
+        0x0acc0e55000000004e0ff9f87a78ce4f820f272d8b66b46d000000008e9c3721 ,
+        0x3278e6400000000000000000640071006d005f00640071005f0063006f006e00 ,
+        0x740072006f006c005f006c006900730074000000000000003b00876e0671884c ,
+        0xb228472ea0e12c7d070000004e0ff9f87a78ce4f820f272d8b66b46d69006400 ,
+        0x5f00640071005f0063006f006e00740072006f006c00000000000000842453e7 ,
+        0xb83b0349b3540ab92157bd77070000004e0ff9f87a78ce4f820f272d8b66b46d ,
         0x690064005f00640071005f0072006500710075006900720065006d0065006e00 ,
-        0x7400000000000000e36b1258a65a0441aa8fb11b422406c8070000003445f67d ,
-        0xade9884c9f60d1e9da1d6e1f690064005f006400610074006100730065007400 ,
-        0x000000000000ff7e07876c6d1345b7c99a2ecf47a890070000003445f67dade9 ,
-        0x884c9f60d1e9da1d6e1f630064005f00640071005f0063006f006e0074007200 ,
-        0x6f006c00000000000000ab57667e308932408eee87808ede520d070000003445 ,
-        0xf67dade9884c9f60d1e9da1d6e1f66006e005f00640071005f0063006f006e00 ,
-        0x740072006f006c00000000000000ab52a8323f0e964e8aecb9dc0a9916200700 ,
-        0x00003445f67dade9884c9f60d1e9da1d6e1f640074005f00760061006c006900 ,
-        0x64005f00660072006f006d00000000000000b11370805c8f67429aac23bba4f0 ,
-        0x92c9070000003445f67dade9884c9f60d1e9da1d6e1f640074005f0076006100 ,
-        0x6c00690064005f00740069006c006c00000000000000bed211be6097a24cbdd6 ,
-        0x3425064ac528070000003445f67dade9884c9f60d1e9da1d6e1f66006e005f00 ,
-        0x640071005f00640069006d0065006e00730069006f006e000000000000008b98 ,
-        0x8d878558d04f8db7513cec307628070000003445f67dade9884c9f60d1e9da1d ,
-        0x6e1f690064005f00640071005f00640069006d0065006e00730069006f006e00 ,
+        0x74000000000000006edefbab4568124d80c3594fc1cb4f62070000004e0ff9f8 ,
+        0x7a78ce4f820f272d8b66b46d690064005f006400610074006100730065007400 ,
+        0x000000000000857f8747cf4fc541953409fa27239a20070000004e0ff9f87a78 ,
+        0xce4f820f272d8b66b46d630064005f00640071005f0063006f006e0074007200 ,
+        0x6f006c00000000000000f8a6017cfec43347b88ce88319e6322d070000004e0f ,
+        0xf9f87a78ce4f820f272d8b66b46d66006e005f00640071005f0063006f006e00 ,
+        0x740072006f006c00000000000000eb96d7a6f8d6c147961806dc3aa8333c0700 ,
+        0x00004e0ff9f87a78ce4f820f272d8b66b46d640074005f00760061006c006900 ,
+        0x64005f00660072006f006d000000000000005a81b5c2972dc8418f4919d92fd1 ,
+        0xda8d070000004e0ff9f87a78ce4f820f272d8b66b46d640074005f0076006100 ,
+        0x6c00690064005f00740069006c006c0000000000000015440473deb11b468d90 ,
+        0x547e016c4d15070000004e0ff9f87a78ce4f820f272d8b66b46d66006e005f00 ,
+        0x640071005f00640069006d0065006e00730069006f006e000000000000009ea6 ,
+        0xb8e78a582546b7919ef457700a7c070000004e0ff9f87a78ce4f820f272d8b66 ,
+        0xb46d690064005f00640071005f00640069006d0065006e00730069006f006e00 ,
         0x000000000000000000000000000000000000000000000c000000050000000000 ,
         0x000000000000000000000000
     End
@@ -62,9 +62,9 @@ Begin Form
         0x010000006801000000000000a10700000100000001000000
     End
     PrtDevMode = Begin
-        0x0000000000000000000000000000000000000000000000000000000000000000 ,
+        0x0000e33dfb7f0000000000000000000000000000000000000c00000000000000 ,
         0x01040a0c9c00d40e032f0100010009009a0b3408640001000f00580202000100 ,
-        0x5802010001004134000000000000000000000000000000000000000000000000 ,
+        0x5802010001004134000000000000000001000000000000000000000000000000 ,
         0x0000000000000000000000000000000000000000000000000000000001000000 ,
         0x02000000010000000100000000000000000000000000000000000000d40e0000 ,
         0x424a444d0a0c000000000000900a0000d9000000d90000000000000000000000 ,
@@ -191,7 +191,7 @@ Begin Form
         0x08001c0030000100000000000000000000000000000000000000000000000000 ,
         0x000000000000000000000000000000005753442d61643665633538302d393036 ,
         0x392d343935342d616335322d3939633031663235396536660000000000000000 ,
-        0x000000000000000000
+        0x00000000000000000000000000
     End
     AllowDatasheetView =0
     FilterOnLoad =0
@@ -207,11 +207,11 @@ Begin Form
     AlternateBackThemeColorIndex =1
     AlternateBackShade =95.0
     PrtDevModeW = Begin
-        0x0000dabaed0100000400000400000000408e66b2ed0100000000dabaed010000 ,
-        0x209c06a7ed010000011737c3a100000000007900700065005001dabaed010000 ,
+        0x00005d74a7000000e0c85d74a70000001cca437cf77f00000200000000000000 ,
+        0x40d95d74a70000000400000000000000a0c05d74a70000005a1892fbfb7f0000 ,
         0x01040a0cdc00d40e032f0100010009009a0b3408640001000f00580202000100 ,
-        0x580201000100410034000000000000007f000000000000004e0061006d006500 ,
-        0x00000000700000007f000000000000005001dabaed0100007f00000000000000 ,
+        0x580201000100410034000000a7000000f0c9437cf77f000028c05d74a7000000 ,
+        0x0000000064020000000000000000000000007900700065000000000000000000 ,
         0x0000000000000000000000000000000000000000000000000000000001000000 ,
         0x02000000010000000100000000000000000000000000000000000000d40e0000 ,
         0x424a444d0a0c000000000000900a0000d9000000d90000000000000000000000 ,
@@ -341,7 +341,7 @@ Begin Form
         0x610064003600650063003500380030002d0039003000360039002d0034003900 ,
         0x350034002d0061006300350032002d0039003900630030003100660032003500 ,
         0x3900650036006600000000000000000000000000000000000000000000000000 ,
-        0x00000000000000000000
+        0x000000000000000000000000000000000000
     End
     NoSaveCTIWhenDisabled =1
     Begin
@@ -474,7 +474,7 @@ Begin Form
             BackColor =15849926
             Name ="FormHeader"
             GUID = Begin
-                0x080385a59a2cf44cace5c42ed4c8311a
+                0x09ddef61361f6a429198b5493a073ca5
             End
             AlternateBackThemeColorIndex =1
             AlternateBackShade =95.0
@@ -496,7 +496,7 @@ Begin Form
                     Name ="Label0"
                     Caption ="ID"
                     GUID = Begin
-                        0xb044c62fbe18194ebecb9a53278bdb9d
+                        0xc3e34f5ba4a2b549bc470d988de617d5
                     End
                     GroupTable =1
                     LeftPadding =0
@@ -524,7 +524,7 @@ Begin Form
                     Name ="Label3"
                     Caption ="id_dataset"
                     GUID = Begin
-                        0xebe554fcd2f3a0478fa9706e0f9c375d
+                        0xfac2849662949940950ef8d1e015789b
                     End
                     GroupTable =1
                     LeftPadding =0
@@ -554,7 +554,7 @@ Begin Form
                     Name ="Label1"
                     Caption ="id_dq_requirement"
                     GUID = Begin
-                        0x0c28dd82269c7d479906c5528ef33552
+                        0x66bd510434b0064baf5fda9418435ae6
                     End
                     GroupTable =1
                     LeftPadding =0
@@ -583,7 +583,7 @@ Begin Form
                     Name ="Label2"
                     Caption ="DQ Dimension"
                     GUID = Begin
-                        0xcf4d9ee5ace5cd468e18f78eb6a28c63
+                        0xc0879a2f9bf9db4592e91af6baba1f3a
                     End
                     GroupTable =1
                     TopPadding =0
@@ -610,7 +610,7 @@ Begin Form
                     Name ="Label4"
                     Caption ="Code"
                     GUID = Begin
-                        0x32e80530e5267648b249b74decfed7d4
+                        0xe27574e99c07b045ac8c4943e1e7d950
                     End
                     GroupTable =1
                     TopPadding =0
@@ -637,7 +637,7 @@ Begin Form
                     Name ="Label5"
                     Caption ="Naam"
                     GUID = Begin
-                        0xa3c852ea2562a24fbe134b4fc098c2b2
+                        0x0caf975e5fde9f42b0270e56f1e1e01e
                     End
                     GroupTable =1
                     TopPadding =0
@@ -664,7 +664,7 @@ Begin Form
                     Name ="Label63"
                     Caption ="Valid From"
                     GUID = Begin
-                        0x7ddef3a34189a944b6742d35574075ca
+                        0xf55e7ad77de4a04f9f207be5b51795b1
                     End
                     GroupTable =1
                     TopPadding =0
@@ -689,7 +689,7 @@ Begin Form
                     OnClick ="[Event Procedure]"
                     ControlTipText ="Formulier afdrukken"
                     GUID = Begin
-                        0x21c05196f946ad43bb4ab1a0f3bba9f1
+                        0x5d087870e0a06a4e8225e7d9f04056c8
                     End
                     GroupTable =1
                     TopPadding =0
@@ -756,7 +756,7 @@ Begin Form
                             Name ="Label64"
                             Caption ="Valid Till"
                             GUID = Begin
-                                0xe9c07f43e04faa48bd537c3244e1217e
+                                0x53e8a25d8325b448b4c1ce621de5047d
                             End
                             GroupTable =1
                             TopPadding =0
@@ -781,7 +781,7 @@ Begin Form
                     Name ="Label116"
                     Caption =" "
                     GUID = Begin
-                        0x60362d62f1cd3e4199b450609206e86d
+                        0xc0cdc0e89491de4d82f848af4e618212
                     End
                     GroupTable =1
                     TopPadding =0
@@ -801,7 +801,7 @@ Begin Form
             Height =650
             Name ="Detail"
             GUID = Begin
-                0x947677e670e4d943b51cb5340de46456
+                0x579dc9dc7215eb4d93f11c608e0f00cb
             End
             AlternateBackColor =15921906
             AlternateBackThemeColorIndex =1
@@ -824,7 +824,7 @@ Begin Form
                     Name ="id_dq_control"
                     ControlSource ="id_dq_control"
                     GUID = Begin
-                        0xa3e486d8fe8f9440a48ca5c1cf3c8815
+                        0x652603023607d54c8da4d5a7b1b9f937
                     End
                     GroupTable =1
                     LeftPadding =0
@@ -855,7 +855,7 @@ Begin Form
                     Name ="id_dq_requirement"
                     ControlSource ="id_dq_requirement"
                     GUID = Begin
-                        0x2324d7fdf6f2594685ff684bf0495c38
+                        0x0228c22e74500b45843c8b6f49f96bfe
                     End
                     GroupTable =1
                     LeftPadding =0
@@ -888,7 +888,7 @@ Begin Form
                     Name ="id_dataset"
                     ControlSource ="id_dataset"
                     GUID = Begin
-                        0x4cab6f531419584791a55df59c01355d
+                        0x6deb006b5ed363428be4505ae02ca849
                     End
                     GroupTable =1
                     LeftPadding =0
@@ -920,7 +920,7 @@ Begin Form
                     Name ="cd_dq_control"
                     ControlSource ="cd_dq_control"
                     GUID = Begin
-                        0xa4f381c6b593b94b84e57d97fae3d479
+                        0x58b90688ab9aa34eb75486d82f61f18c
                     End
                     GroupTable =1
 
@@ -945,7 +945,7 @@ Begin Form
                     TabIndex =6
                     ForeColor =4210752
                     GUID = Begin
-                        0xfa6b372b9af8f8438068e24bbe0d8685
+                        0x3f46d8adf69aa144b18e5fee0c6822a1
                     End
                     Name ="fn_dq_control"
                     ControlSource ="fn_dq_control"
@@ -985,7 +985,7 @@ Begin Form
                     Name ="dt_valid_from"
                     ControlSource ="dt_valid_from"
                     GUID = Begin
-                        0x051b8b05c15b4e4f8a0bbc61e03888d9
+                        0xcac1987235bab143a1c9a0bd1d7d063f
                     End
                     GroupTable =1
 
@@ -1015,7 +1015,7 @@ Begin Form
                     Name ="dt_valid_till"
                     ControlSource ="dt_valid_till"
                     GUID = Begin
-                        0x3fbda6134daa9b49b75faa862da0ed32
+                        0xda7fb8a750c9c049b6ebfb5c0a2c8478
                     End
                     GroupTable =1
 
@@ -1042,7 +1042,7 @@ Begin Form
                     OnClick ="[Event Procedure]"
                     ControlTipText ="Formulier afdrukken"
                     GUID = Begin
-                        0xe2428bdcd129284c86dcbbf739e19a05
+                        0xf02f597cd7ddc0468c8298b23ef5208a
                     End
                     GroupTable =1
                     ImageData = Begin
@@ -1109,7 +1109,7 @@ Begin Form
                     OnClick ="[Event Procedure]"
                     ControlTipText ="Formulier afdrukken"
                     GUID = Begin
-                        0xade3c9cbc310cc4a81bb008046d6af22
+                        0x125b34b6ae5fe84c934a45fc85908467
                     End
                     GroupTable =1
                     ImageData = Begin
@@ -1175,7 +1175,7 @@ Begin Form
                     Name ="fn_dq_dimension"
                     ControlSource ="fn_dq_dimension"
                     GUID = Begin
-                        0x45e9fb2a395ba34599318fdf9f043d74
+                        0x4dd0651c17b12341a6f166156215de78
                     End
                     GroupTable =1
 
@@ -1205,7 +1205,7 @@ Begin Form
                     Name ="id_dq_dimension"
                     ControlSource ="id_dq_dimension"
                     GUID = Begin
-                        0x32396d76cd8bdf458220bfc8c2c57282
+                        0xa26f092a4200644d834d75bf90b38ee0
                     End
                     GroupTable =1
 
@@ -1226,7 +1226,7 @@ Begin Form
             Height =0
             Name ="FormFooter"
             GUID = Begin
-                0xf650774b91c7a145b1ef9e95f1e534b6
+                0x771e6c27f2633d46be099ee2a0043661
             End
             AlternateBackThemeColorIndex =1
             AlternateBackShade =95.0

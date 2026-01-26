@@ -1,7 +1,7 @@
 Version =21
 VersionRequired =20
 PublishOption =1
-Checksum =-713982378
+Checksum =-1992575699
 Begin Form
     PopUp = NotDefault
     Modal = NotDefault
@@ -29,16 +29,20 @@ Begin Form
     GUID = Begin
         0x7d460e355ca19c499ce2a05865336c7a
     End
+    NameMap = Begin
+        0x0acc0e5500000000000000000000000000000000000000000c00000005000000 ,
+        0x0000000000000000000000000000
+    End
     DatasheetFontName ="Calibri"
     PrtMip = Begin
         0x6801000068010000680100006801000000000000201c0000e010000001000000 ,
         0x010000006801000000000000a10700000100000001000000
     End
     PrtDevMode = Begin
-        0x00fe0f000000000000000000000000000000000000000000c88baff9f7000000 ,
+        0x000000000000000000000000000000000000000000000000e061dfd60a020000 ,
         0x01040a0c9c00d40e03df8103010009009a0b3408640001001401fdff02000100 ,
-        0x0000010001004134000000000000000000000000000000009883aff9f7000000 ,
-        0xffffffffffff0000000000000000000000000000000000000000000001000000 ,
+        0x00000100010041340000000000000000503c53d60a020000d09a8fcc0a020000 ,
+        0x1a00000000000000000000000000000000000000000000000000000001000000 ,
         0x02000000010000000100000000000000000000000000000000000000d40e0000 ,
         0x424a444d0a0c000000000000900a0000d9000000d90000000000000000000000 ,
         0x0100000008520000047400002c01000054010000604f0000e47000002c010000 ,
@@ -163,7 +167,8 @@ Begin Form
     PrtDevNames = Begin
         0x08001c0030000100000000000000000000000000000000000000000000000000 ,
         0x000000000000000000000000000000005753442d61643665633538302d393036 ,
-        0x392d343935342d616335322d3939633031663235396536660000000000
+        0x392d343935342d616335322d3939633031663235396536660000000000000000 ,
+        0x00
     End
     OnLoad ="[Event Procedure]"
     AllowDatasheetView =0
@@ -181,12 +186,12 @@ Begin Form
     AlternateBackThemeColorIndex =1
     AlternateBackShade =95.0
     PrtDevModeW = Begin
-        0x0000aff9f7000000a4cc5118f97f000003000000000000000000000000000000 ,
-        0x5875aff9f70000004f006600660069000000000000000000c840403933020000 ,
+        0x0000000000000000000000000000000000000000000000000000000000000000 ,
+        0x8e5142b8e90b0000ee5142b8e90b0000000000000a0200000000000000000000 ,
         0x01040a0cdc00d40e03df8103010009009a0b3408640001001401fdff02000100 ,
-        0x00000100010041003400000000000000c8404039330200000600000000000000 ,
-        0x900a403933020000e03f4a2733020000ffffffffffffffff0000000000000000 ,
-        0x907d3a1033020000000000000000000000000000000000000000000001000000 ,
+        0x000001000100410034000000b8000000e061fbc5b8000000ae07ae3cfb7f0000 ,
+        0x000000000000000030469ad60a0200000200000000000000ecb2b33cfb7f0000 ,
+        0x0000000000000000000000000000000000000000000000000000000001000000 ,
         0x02000000010000000100000000000000000000000000000000000000d40e0000 ,
         0x424a444d0a0c000000000000900a0000d9000000d90000000000000000000000 ,
         0x0100000008520000047400002c01000054010000604f0000e47000002c010000 ,
@@ -314,7 +319,7 @@ Begin Form
         0x0000000000000000000000000000000000000000000000005700530044002d00 ,
         0x610064003600650063003500380030002d0039003000360039002d0034003900 ,
         0x350034002d0061006300350032002d0039003900630030003100660032003500 ,
-        0x390065003600660000000000000000000000
+        0x3900650036006600000000000000000000000000000000000000
     End
     NoSaveCTIWhenDisabled =1
     Begin
@@ -404,7 +409,7 @@ Begin Form
             GridlineShade =65.0
         End
         Begin Section
-            Height =2355
+            Height =2385
             Name ="Detail"
             GUID = Begin
                 0xc36b9f8003e074479ddee0e41eda5496
@@ -418,9 +423,9 @@ Begin Form
                     FontItalic = NotDefault
                     OverlapFlags =85
                     Left =30
-                    Top =1185
+                    Top =1210
                     Width =5640
-                    Height =1125
+                    Height =1130
                     FontSize =12
                     FontWeight =700
                     TabIndex =1
@@ -436,9 +441,9 @@ Begin Form
                     BottomPadding =45
 
                     LayoutCachedLeft =30
-                    LayoutCachedTop =1185
+                    LayoutCachedTop =1210
                     LayoutCachedWidth =5670
-                    LayoutCachedHeight =2310
+                    LayoutCachedHeight =2340
                     RowStart =2
                     RowEnd =2
                     LayoutGroup =1
@@ -458,18 +463,18 @@ Begin Form
                     PressedForeColor =2500134
                     PressedForeTint =85.0
                     GroupTable =1
-                    WebImagePaddingLeft =2
-                    WebImagePaddingTop =2
-                    WebImagePaddingRight =2
-                    WebImagePaddingBottom =2
+                    WebImagePaddingLeft =3
+                    WebImagePaddingTop =3
+                    WebImagePaddingRight =4
+                    WebImagePaddingBottom =4
                 End
                 Begin CommandButton
                     FontItalic = NotDefault
                     OverlapFlags =85
-                    Left =5745
-                    Top =1185
-                    Width =1065
-                    Height =1125
+                    Left =5750
+                    Top =1210
+                    Width =1070
+                    Height =1130
                     TabIndex =2
                     Name ="btn_cancel"
                     Caption ="Cancel"
@@ -480,10 +485,10 @@ Begin Form
                     GroupTable =1
                     BottomPadding =45
 
-                    LayoutCachedLeft =5745
-                    LayoutCachedTop =1185
-                    LayoutCachedWidth =6810
-                    LayoutCachedHeight =2310
+                    LayoutCachedLeft =5750
+                    LayoutCachedTop =1210
+                    LayoutCachedWidth =6820
+                    LayoutCachedHeight =2340
                     RowStart =2
                     RowEnd =2
                     ColumnStart =1
@@ -502,18 +507,18 @@ Begin Form
                     PressedThemeColorIndex =1
                     PressedShade =85.0
                     GroupTable =1
-                    WebImagePaddingLeft =2
-                    WebImagePaddingTop =2
-                    WebImagePaddingRight =1
-                    WebImagePaddingBottom =2
+                    WebImagePaddingLeft =3
+                    WebImagePaddingTop =3
+                    WebImagePaddingRight =2
+                    WebImagePaddingBottom =4
                 End
                 Begin TextBox
                     OverlapFlags =85
                     TextAlign =1
                     IMESentenceMode =3
                     Left =30
-                    Top =435
-                    Width =6780
+                    Top =450
+                    Width =6790
                     Height =690
                     Name ="tx_folderpath_new_model"
                     GUID = Begin
@@ -522,9 +527,9 @@ Begin Form
                     GroupTable =1
 
                     LayoutCachedLeft =30
-                    LayoutCachedTop =435
-                    LayoutCachedWidth =6810
-                    LayoutCachedHeight =1125
+                    LayoutCachedTop =450
+                    LayoutCachedWidth =6820
+                    LayoutCachedHeight =1140
                     RowStart =1
                     RowEnd =1
                     ColumnEnd =1
@@ -537,7 +542,7 @@ Begin Form
                     TextAlign =1
                     Left =30
                     Top =30
-                    Width =6780
+                    Width =6790
                     Height =345
                     FontWeight =700
                     Name ="Label7"
@@ -548,7 +553,7 @@ Begin Form
                     GroupTable =1
                     LayoutCachedLeft =30
                     LayoutCachedTop =30
-                    LayoutCachedWidth =6810
+                    LayoutCachedWidth =6820
                     LayoutCachedHeight =375
                     ColumnEnd =1
                     LayoutGroup =1

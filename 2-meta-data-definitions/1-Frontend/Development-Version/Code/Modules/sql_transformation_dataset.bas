@@ -14,7 +14,7 @@ Public Type typ_transformation_dataset
 End Type
 
 Public Sub test_parse_transformation_dataset()
-    Dim rst As Recordset: Set rst = CurrentDb.OpenRecordset("SELECT * FROM dta_transformation_part where id_model = '5f4a1942465c575a1f5a5a575d1e191c' AND id_dataset = '06020d070f0d0a04030d0b0705021500'")
+    Dim rst As Recordset: Set rst = CurrentDb.OpenRecordset("SELECT * FROM dta_transformation_part where id_model = '5f4a1942465c575a1f5a5a575d1e191c' AND id_dataset = '06070105010308050605000600001503'")
     Call parse_transformation_dataset(rst!id_model, rst!id_dataset, rst!id_transformation_part, rst!tx_transformation_part, True, False)
 End Sub
 
@@ -27,6 +27,7 @@ Public Sub parse_transformation_dataset(ip_id_model As String, ip_id_dataset As 
     Dim tx As Variant
     Dim rs As DAO.Recordset
     Dim cr As DAO.Recordset
+    Dim pt As DAO.Recordset
     Dim db As DAO.Database: Set db = CurrentDb
     '
     ' Local Variables
@@ -46,6 +47,10 @@ Public Sub parse_transformation_dataset(ip_id_model As String, ip_id_dataset As 
     Dim tx_error_message As String
     Dim tx_sql_execution As String
     '
+    ' Remove existing transformation dataset information
+    sql = "DELETE * FROM dta_transformation_dataset WHERE id_transformation_part = '" & ip_id_transformation_part & "';"
+    DoCmd.SetWarnings False: DoCmd.RunSQL sql: DoCmd.SetWarnings True
+    '
     If (1 = 1) Then ' /* Extraction of "FROM/JOIN"-clauses of "Transformation"-part. */
         '
         If (Mid(tx_sql_statement, 1, Len("--- Warning ")) = "--- Warning ") Then
@@ -54,8 +59,12 @@ Public Sub parse_transformation_dataset(ip_id_model As String, ip_id_dataset As 
         End If
         '
         ' /* Find " Beginning" of the "FROM/JOIN"-clause. */
-        ni_position_begin = InStr(1, UCase(tx_sql_statement), "FROM", 1)
+        ni_position_begin = InStr(1, UCase(tx_sql_statement), "FROM ", 1)
         '
+        'Check if there is a FROM-clause, if NOT procedure is done there is NO transformation_dataset-info to be extracted
+        If (ni_position_begin = 0) Then
+          GoSub CleanUp
+        End If
         ' /* Find the "End" of the "FROM/JOIN"-clause. */
         ni_position_end = InStr(1, UCase(tx_sql_statement), "WHERE", 1)
         '
@@ -103,7 +112,7 @@ Public Sub parse_transformation_dataset(ip_id_model As String, ip_id_dataset As 
     If (1 = 1) Then ' /* "Temp"-table: md -> Match dataset(s) with "parts" of the "SQL"-statement and determine is alias is used. */)
         '
         If (1 = 1) Then ' /* Define Views (tmp_transformation_dataset_md_txt/prv/nxt) */
-            Call CreateView("tmp_transformation_dataset_md_txt", "SELECT txt.id_model, CStr(txt.tx_sql) AS tx_sql, (txt.ni_ordering + 0) AS ni_ordering FROM tmp_transformation_dataset_tx AS txt;")
+            Call CreateView("tmp_transformation_dataset_md_txt", "SELECT txt.id_model, CStr(txt.tx_sql) AS tx_sql,      (txt.ni_ordering + 0) AS ni_ordering FROM tmp_transformation_dataset_tx AS txt;")
             Call CreateView("tmp_transformation_dataset_md_prv", "SELECT txt.id_model, CStr(txt.tx_sql) AS tx_sql_prev, (txt.ni_ordering + 1) AS ni_ordering FROM tmp_transformation_dataset_tx AS txt;")
             Call CreateView("tmp_transformation_dataset_md_nxt", "SELECT txt.id_model, CStr(txt.tx_sql) AS tx_sql_next, (txt.ni_ordering - 1) AS ni_ordering FROM tmp_transformation_dataset_tx AS txt;")
         End If
@@ -228,7 +237,7 @@ Public Sub parse_transformation_dataset(ip_id_model As String, ip_id_dataset As 
             sql = sql & nwl & "  "
             sql = sql & nwl & "  IIf(" ' /* cd_join_type */
             sql = sql & nwl & "      Nz(foj.tx_sql, 'n/a') NOT IN ('FROM', 'JOIN'), '',"
-            sql = sql & nwl & "      Iif(Nz(jtp.tx_sql, '') IN ('INNER', 'CROSS', 'LEFT', 'RIGHT'), Nz(jtp.tx_sql, '') & ' ', '')"
+            sql = sql & nwl & "      Iif(Nz(jtp.tx_sql, '') IN ('INNER', 'CROSS', 'LEFT', 'RIGHT', 'FULL'), Nz(jtp.tx_sql, '') & ' ', '')"
             sql = sql & nwl & "  ) & Nz(foj.tx_sql, '') AS cd_join_type,"
             sql = sql & nwl & "  "
             sql = sql & nwl & "  Replace(Replace(Nz(als.tx_sql, '')," ' /* cd_alias */
@@ -323,162 +332,65 @@ Public Sub parse_transformation_dataset(ip_id_model As String, ip_id_dataset As 
         '
     End If
     '
-    If (1 = 1) Then ' /* "Temp"-table: ds -> Ordering for only "Datasets". */
+    If (1 = 1) Then ' /* String Aggregate */
         '
-        If (1 = 1) Then ' /* tmp_transformation_dataset_ds_select */
-            sql = emp & emp & "SELECT ni.cd_join_type,"
-            sql = sql & nwl & "       ni.id_dataset,"
-            sql = sql & nwl & "       ni.id_source_model,"
-            sql = sql & nwl & "       ni.nm_target_schema,"
-            sql = sql & nwl & "       ni.nm_target_table,"
-            sql = sql & nwl & "       ni.cd_alias,"
-            sql = sql & nwl & "       Iif(ni.cd_join_type = 'FROM', ni.ni_ordering, ni.ni_ordering_for_join_with_als+2) AS ni_ordering_from,"
-            sql = sql & nwl & "       Iif(ni.cd_join_type = 'FROM', ni.ni_ordering, Nz(("
-            sql = sql & nwl & "         SELECT MIN(lead.ni_ordering)"
-            sql = sql & nwl & "         FROM [tmp_transformation_dataset_ni_select] AS lead"
-            sql = sql & nwl & "         WHERE lead.ni_ordering > (ni.ni_ordering_for_join_with_als+1)"
-            sql = sql & nwl & "         AND lead.tx_sql IN ('CROSS', 'LEFT', 'RIGT', 'FULL', 'JOIN')"
-            sql = sql & nwl & "         AND ((lead.tx_sql <> 'JOIN' AND lead.tx_sql_next = 'JOIN') OR (lead.tx_sql = 'JOIN')) "
-            sql = sql & nwl & "       ), [ls].[ni_ordering])) AS ni_ordering_till,"
-            sql = sql & nwl & "       ni.tx_sql, ni.ni_ordering"
-            sql = sql & nwl & "FROM tmp_transformation_dataset_ls AS ls, tmp_transformation_dataset_ni_select AS ni;"
-            Call CreateView("tmp_transformation_dataset_ds_select", sql)
-        End If
-        '
-        If (1 = 1) Then ' /* Detele Query */
-            Call CreateView("tmp_transformation_dataset_ds_delete", "" _
-            & vbNewLine & "DELETE tmp_transformation_dataset_ds.*" _
-            & vbNewLine & "FROM tmp_transformation_dataset_ds;")
-        End If
-        '
-        If (1 = 1) Then ' /* Insert Query */
-            Call CreateView("tmp_transformation_dataset_ds_insert", "" _
-            & vbNewLine & "INSERT INTO tmp_transformation_dataset_ds ( cd_join_type, id_dataset, id_source_model, nm_target_schema, nm_target_table, cd_alias, ni_ordering_from, ni_ordering_till )" _
-            & vbNewLine & "SELECT cd_join_type, id_dataset, id_source_model, nm_target_schema, nm_target_table, cd_alias, ni_ordering_from, ni_ordering_till" _
-            & vbNewLine & "FROM tmp_transformation_dataset_ds_select;")
-        End If
-        '
-        ' Truncate Table and then populate
-        DoCmd.SetWarnings False ' Turn off Warnings
-        DoCmd.OpenQuery ("tmp_transformation_dataset_ds_delete")
-        DoCmd.OpenQuery ("tmp_transformation_dataset_ds_insert")
-        DoCmd.SetWarnings True ' Turn on Warnings
-        '
-        ' Display Results
-        If ip_is_debugging Then
-            sql = "SELECT * FROM tmp_transformation_dataset_ds ORDER BY ni_ordering_from ASC"
-            Set rs = db.OpenRecordset(sql): With rs: Do Until .EOF
-                Debug.Print "--- tmp_transformation_dataset_ds " & String(40, "-")
-                Debug.Print "cd_join_type     : '" & !cd_join_type & "'"
-                Debug.Print "id_dataset       : '" & !id_dataset & "'"
-                Debug.Print "id_source_model  : '" & !id_source_model & "'"
-                Debug.Print "nm_target_schema : '" & !nm_target_schema & "'"
-                Debug.Print "nm_target_table  : '" & !nm_target_table & "'"
-                Debug.Print "cd_alias         : '" & !cd_alias & "'"
-                Debug.Print "ni_ordering_from : '" & !ni_ordering_from & "'"
-                Debug.Print "ni_ordering_till : '" & !ni_ordering_till & "'"
-            .MoveNext: Loop: End With
-        End If
+        ' Build SQL Statement for fetching transformation dataset
+        sql = emp & emp & "SELECT nm_target_schema, nm_target_table, cd_join_type, id_source_model, id_source_dataset, cd_alias, ni_ordering_from"
+        sql = sql & nwl & "FROM tmp_transformation_dataset_join_criteria"
+        sql = sql & nwl & "GROUP BY nm_target_schema, nm_target_table, cd_join_type, id_source_model, id_source_dataset, cd_alias, ni_ordering_from"
+        sql = sql & nwl & "ORDER BY ni_ordering_from ASC"
+        
+        Dim id_transformation_dataset As String
+        Dim ni_transformation_dataset As Integer: ni_transformation_dataset = 0
+        Dim tx_join_criteria          As String
+        
+        Set pt = db.OpenRecordset("SELECT * FROM dta_transformation_dataset WHERE 1=2")
+        Set rs = db.OpenRecordset(sql): Do While Not rs.EOF
+          id_transformation_dataset = CreateMD5("|" & ip_id_model & "|" & ip_id_transformation_part & "|" & rs!id_source_model & "|" & rs!id_source_dataset & "|" & rs!cd_alias & "|")
+          ni_transformation_dataset = ni_transformation_dataset + 1
+          tx_join_criteria = agg_list( _
+            "tx_join_criteria", "tmp_transformation_dataset_join_criteria", _
+            "cd_join_type     = '" & rs!cd_join_type & "'     AND " & _
+            "nm_target_schema = '" & rs!nm_target_schema & "' AND " & _
+            "nm_target_table  = '" & rs!nm_target_table & "'  AND " & _
+            "cd_alias         = '" & rs!cd_alias & "'" & _
+            "ORDER BY ni_ordering ASC", " ")
+          pt.AddNew
+          pt!id_model = ip_id_model
+          pt!id_transformation_part = ip_id_transformation_part
+          pt!id_transformation_dataset = id_transformation_dataset
+          pt!ni_transformation_dataset = ni_transformation_dataset
+          pt!cd_join_type = rs!cd_join_type
+          pt!id_source_model = rs!id_source_model
+          pt!id_source_dataset = rs!id_source_dataset
+          pt!cd_alias = rs!cd_alias
+          pt!tx_join_criteria = tx_join_criteria
+          pt.Update
+        rs.MoveNext: Loop: pt.Close: rs.Close
         '
     End If
     '
-    If (1 = 1) Then '/* "Temp"-table: rs -> "Resultset". */
-        '
-        If (1 = 1) Then ' /* tmp_transformation_dataset_rs_md */
-            sql = emp & emp & "SELECT ds.ni_ordering_from,"
-            sql = sql & nwl & "       ds.ni_ordering_till,"
-            sql = sql & nwl & "       md.ni_ordering,"
-            sql = sql & nwl & "       md.tx_sql"
-            sql = sql & nwl & "FROM tmp_transformation_dataset_ni_select AS md,"
-            sql = sql & nwl & "     tmp_transformation_dataset_ds_select AS ds"
-            sql = sql & nwl & "WHERE (((ds.cd_join_type)     <> '') "
-            sql = sql & nwl & "AND    ((ds.ni_ordering_till) <> ds.ni_ordering_from) "
-            sql = sql & nwl & "AND    ((md.ni_ordering)      >= ds.ni_ordering_from)"
-            sql = sql & nwl & "AND    ((md.ni_ordering)      <= ds.ni_ordering_till));"
-            Call CreateView("tmp_transformation_dataset_rs_md", sql)
-        End If
-        '
-        If (1 = 1) Then ' /* ds.cd_join_type <> '' */
-            sql = emp & emp & "SELECT"
-            sql = sql & nwl & "    ds.cd_join_type,"
-            sql = sql & nwl & "    ds.id_source_model,"
-            sql = sql & nwl & "    ds.id_dataset AS id_source_dataset,"
-            sql = sql & nwl & "    ds.nm_target_schema,"
-            sql = sql & nwl & "    ds.nm_target_table,"
-            sql = sql & nwl & "    ds.cd_alias,"
-            sql = sql & nwl & "    md.ni_ordering AS ni_join_criteria,"
-            sql = sql & nwl & "    IIf([ds].[cd_join_type] = 'FROM', NULL, [md].[tx_sql]) AS tx_join_criteria"
-            sql = sql & nwl & "FROM tmp_transformation_dataset_ds AS ds"
-            sql = sql & nwl & "    LEFT JOIN tmp_transformation_dataset_rs_md AS md"
-            sql = sql & nwl & "    ON  (ds.ni_ordering_till = md.ni_ordering_till)"
-            sql = sql & nwl & "    AND (ds.ni_ordering_from = md.ni_ordering_from)"
-            sql = sql & nwl & "WHERE ds.cd_join_type <> ''"
-            sql = sql & nwl & "ORDER BY md.ni_ordering_from ASC,"
-            sql = sql & nwl & "         md.ni_ordering_till ASC,"
-            sql = sql & nwl & "         md.ni_ordering ASC;"
-            Call CreateView("tmp_transformantion_dataset_rs_select", sql)
-        End If
-        '
-        If (1 = 1) Then ' /* ds.cd_join_type <> '' */
-            sql = emp & emp & "SELECT DISTINCT"
-            sql = sql & nwl & "    ds.cd_join_type,"
-            sql = sql & nwl & "    ds.id_source_model,"
-            sql = sql & nwl & "    ds.id_source_dataset,"
-            sql = sql & nwl & "    ds.nm_target_schema,"
-            sql = sql & nwl & "    ds.nm_target_table,"
-            sql = sql & nwl & "    ds.cd_alias,"
-            sql = sql & nwl & "    ds.cd_join_type & '|' & ds.nm_target_schema & '|' & ds.nm_target_table & '|' & ds.cd_alias AS id"
-            sql = sql & nwl & "FROM tmp_transformantion_dataset_rs_select AS ds"
-            Call CreateView("tmp_transformantion_dataset_rs_dist", sql)
-        End If
-        '
-        If (1 = 1) Then ' /* ni/tx_join_criteria */
-            sql = emp & emp & "SELECT '" & ip_id_model & "' AS id_model,"
-            sql = sql & nwl & "       '" & ip_id_transformation_part & "' AS id_transformation_part,"
-            sql = sql & nwl & "       CreateMD5("
-            sql = sql & nwl & "       '|' & '" & ip_id_model & "' &"
-            sql = sql & nwl & "       '|' & '" & ip_id_transformation_part & "' &"
-            sql = sql & nwl & "       '|' & x.id_source_model &"
-            sql = sql & nwl & "       '|' & x.id_source_dataset &"
-            sql = sql & nwl & "       '|' & x.cd_alias &"
-            sql = sql & nwl & "       '|') AS id_transformation_dataset,"
-            sql = sql & nwl & "       (SELECT COUNT(*) FROM tmp_transformantion_dataset_rs_dist AS c WHERE c.id < x.id) AS ni_transformation_dataset,"
-            sql = sql & nwl & "       x.cd_join_type,"
-            sql = sql & nwl & "       x.id_source_model,"
-            sql = sql & nwl & "       x.id_source_dataset,"
-            sql = sql & nwl & "       x.cd_alias,"
-            sql = sql & nwl & "       agg_list ("
-            sql = sql & nwl & "         'tx_join_criteria', 'tmp_transformantion_dataset_rs_select',"
-            sql = sql & nwl & "         'cd_join_type = ''' & x.cd_join_type & ''' AND nm_target_schema = ''' & x.nm_target_schema & ''' AND nm_target_table  = ''' & x.nm_target_table & ''' AND cd_alias = ''' & x.cd_alias & ''' ORDER BY ni_join_criteria ASC', ' '"
-            sql = sql & nwl & "       ) AS tx_join_criteria"
-            sql = sql & nwl & "FROM tmp_transformantion_dataset_rs_dist AS x"
-            Call CreateView("tmp_transformantion_dataset_rs_ni_and_tx_join_criteria", sql)
-        End If
-        '
-        If (1 = 1) Then ' /* String Aggregate */
-            '
-            sql = "DELETE * FROM dta_transformation_dataset WHERE id_transformation_part = '" & ip_id_transformation_part & "';"
-            DoCmd.SetWarnings False: DoCmd.RunSQL sql: DoCmd.SetWarnings True
-            '
-            sql = emp & emp & "INSERT INTO dta_transformation_dataset ("
-            sql = sql & nwl & "  id_model, id_transformation_part, id_transformation_dataset, ni_transformation_dataset,"
-            sql = sql & nwl & "  cd_join_type, id_source_model, id_source_dataset, cd_alias, tx_join_criteria"
-            sql = sql & nwl & ")"
-            sql = sql & nwl & "SELECT "
-            sql = sql & nwl & "  id_model, id_transformation_part, id_transformation_dataset, ni_transformation_dataset,"
-            sql = sql & nwl & "  cd_join_type, id_source_model, id_source_dataset, cd_alias, tx_join_criteria"
-            sql = sql & nwl & "FROM tmp_transformantion_dataset_rs_ni_and_tx_join_criteria;"
-            DoCmd.SetWarnings False: DoCmd.RunSQL sql: DoCmd.SetWarnings True
-            '
-        End If
-        '
-        ' Determing Utilized Attribute per "Transformation Dataset", how ever you`ll need to process all the "Transformation Dataset(s)" !
-        Set rs = db.OpenRecordset("SELECT id_transformation_dataset FROM dta_transformation_dataset WHERE id_transformation_part = '" & ip_id_transformation_part & "'")
-        Do While Not rs.EOF
-            Call parse_transformation_dataset_attribute(ip_id_model, rs!id_transformation_dataset, ip_is_debugging, ip_is_testing)
-            rs.MoveNext
-        Loop
-        '
-        '
-    End If
+    ' Determing Utilized Attribute per "Transformation Dataset", how ever you`ll need to process all the "Transformation Dataset(s)" !
+    Set rs = db.OpenRecordset("SELECT id_transformation_dataset FROM dta_transformation_dataset WHERE id_transformation_part = '" & ip_id_transformation_part & "'")
+    Do While Not rs.EOF
+        Call parse_transformation_dataset_attribute(ip_id_model, rs!id_transformation_dataset, ip_is_debugging, ip_is_testing)
+        rs.MoveNext
+    Loop
+    '
+' Clean up
+CleanUp:
+    DropView "tmp_transformation_dataset_ls_delete"
+    DropView "tmp_transformation_dataset_ls_insert"
+    DropView "tmp_transformation_dataset_md_delete"
+    DropView "tmp_transformation_dataset_md_dst"
+    DropView "tmp_transformation_dataset_md_insert"
+    DropView "tmp_transformation_dataset_md_nxt"
+    DropView "tmp_transformation_dataset_md_prv"
+    DropView "tmp_transformation_dataset_md_select"
+    DropView "tmp_transformation_dataset_md_txt"
+    DropView "tmp_transformation_dataset_ni_als_foj_jtp"
+    DropView "tmp_transformation_dataset_ni_delete"
+    DropView "tmp_transformation_dataset_ni_insert"
+    DropView "tmp_transformation_dataset_ni_select"
+    '
 End Sub

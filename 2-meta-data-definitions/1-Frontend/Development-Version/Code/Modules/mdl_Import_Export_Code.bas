@@ -11,6 +11,98 @@ Private fp_exported_macros  As String
 Private fp_exported_tables  As String
 Private fp_exported_queries As String
 
+Public Sub run_importAllCodeModules()
+    Call ImportAll
+End Sub
+Public Sub ExportOnlyModules()
+  '
+  ' Set Folder paths
+  Call set_folder_paths
+  '
+  ' Create FileSystemObject to handle folder creation
+  Dim fso As FileSystemObject: Set fso = New FileSystemObject
+  Dim txt As TextStream
+  Dim tgt As TextStream
+  Dim obj As Object
+  Dim tmp As String: tmp = "C:\Temp\temp.txt"
+  Dim frm As String
+  Dim srh As String: srh = "    NoSaveCTIWhenDisabled =1" & vbNewLine & "    NoSaveCTIWhenDisabled =1"
+  Dim rpl As String: rpl = "    NoSaveCTIWhenDisabled =1"
+  '
+  If fso.FolderExists(fp_exported_code) = False Then fso.CreateFolder fp_exported_code
+  If fso.FolderExists(fp_exported_modules) = False Then fso.CreateFolder fp_exported_modules
+  '
+  For Each obj In Application.CurrentProject.AllModules
+      '
+      Application.SaveAsText acModule, obj.Name, tmp
+      Set txt = fso.OpenTextFile(tmp, ForReading, False, TristateMixed)
+      Set tgt = fso.OpenTextFile(fp_exported_modules & obj.Name & ".bas", ForWriting, True, TristateMixed)
+      tgt.Write "Attribute VB_Name = """ & obj.Name & """" & vbNewLine
+      tgt.Write txt.ReadAll: tgt.Close: Set tgt = Nothing
+      txt.Close: Set txt = Nothing: fso.DeleteFile tmp, True
+      Debug.Print "Module/Class definition for '" & obj.Name & "' exported to: " & fp_exported_modules & obj.Name & ".bas"
+      '
+  Next
+  '
+  Debug.Print "Exported all code modules"
+  '
+End Sub
+Public Sub ExportOnlyTables()
+    '
+    ' Set Folder paths
+    Call set_folder_paths
+    '
+    ' Create FileSystemObject to handle folder creation
+    Dim fso As FileSystemObject: Set fso = New FileSystemObject
+    Dim txt As TextStream
+    Dim tgt As TextStream
+    Dim obj As Object
+    Dim tmp As String: tmp = "C:\Temp\temp.txt"
+    Dim frm As String
+    Dim srh As String: srh = "    NoSaveCTIWhenDisabled =1" & vbNewLine & "    NoSaveCTIWhenDisabled =1"
+    Dim rpl As String: rpl = "    NoSaveCTIWhenDisabled =1"
+    '
+    If fso.FolderExists(fp_exported_tables) = False Then fso.CreateFolder fp_exported_tables
+    '
+    For Each obj In Application.CurrentDb.TableDefs
+        If Left(obj.Name, 4) <> "MSys" And Left(obj.Name, 1) <> "~" Then
+            Call ExportSingleTableDef(obj.Name)
+        End If
+    Next
+   
+    Debug.Print "Exported all tables"
+
+End Sub
+Public Sub ExportOnlyForms()
+    '
+    ' Set Folder paths
+    Call set_folder_paths
+    '
+    ' Create FileSystemObject to handle folder creation
+    Dim fso As FileSystemObject: Set fso = New FileSystemObject
+    Dim txt As TextStream
+    Dim tgt As TextStream
+    Dim obj As Object
+    Dim tmp As String: tmp = "C:\Temp\temp.txt"
+    Dim frm As String
+    Dim srh As String: srh = "    NoSaveCTIWhenDisabled =1" & vbNewLine & "    NoSaveCTIWhenDisabled =1"
+    Dim rpl As String: rpl = "    NoSaveCTIWhenDisabled =1"
+    '
+    If fso.FolderExists(fp_exported_forms) = False Then fso.CreateFolder fp_exported_forms
+    '
+    For Each obj In Application.CurrentProject.AllForms
+        Application.SaveAsText acForm, obj.Name, tmp
+        Set txt = fso.OpenTextFile(tmp, ForReading, False, TristateMixed)
+        Set tgt = fso.OpenTextFile(fp_exported_forms & obj.Name & ".frm", ForWriting, True, TristateMixed)
+        frm = txt.ReadAll: Do While InStr(1, frm, srh) > 0: frm = Replace(frm, srh, rpl): Loop
+        tgt.Write frm: tgt.Close: Set tgt = Nothing
+        txt.Close: Set txt = Nothing: fso.DeleteFile tmp, True
+        Debug.Print "Form definition for '" & obj.Name & "' exported to: " & fp_exported_forms & obj.Name & ".frm"
+    Next
+    
+    Debug.Print "Exported all Forms"
+
+End Sub
 Public Sub ExportAllCodeModules()
     '
     ' Set Folder paths
@@ -25,7 +117,6 @@ Public Sub ExportAllCodeModules()
     Dim frm As String
     Dim srh As String: srh = "    NoSaveCTIWhenDisabled =1" & vbNewLine & "    NoSaveCTIWhenDisabled =1"
     Dim rpl As String: rpl = "    NoSaveCTIWhenDisabled =1"
-    
     '
     If fso.FolderExists(fp_exported_code) = False Then fso.CreateFolder fp_exported_code
     If fso.FolderExists(fp_exported_modules) = False Then fso.CreateFolder fp_exported_modules
@@ -131,7 +222,7 @@ Sub set_folder_paths()
 End Sub
 
 Public Function load_from_repo_file(ip_object As file, ip_object_type As AcObjectType) As Boolean
-On Error GoTo ErrHandle
+On Error GoTo errHandle
     '
     ' Set Folder paths
     Call set_folder_paths
@@ -178,7 +269,7 @@ On Error GoTo ErrHandle
     Debug.Print "All code has been imported!"
     '
 Exit Function
-ErrHandle:
+errHandle:
     'log.ReadAll
     log.WriteLine "--- Error:---------------------------------"
     log.WriteLine "Description : " & Err.Description
@@ -298,6 +389,11 @@ Private Function GetAccessDataType(fld As DAO.Field) As String
             strDataType = "IMAGE"
         Case dbGUID
             strDataType = "UNIQUEIDENTIFIER"
+        
+        Case dbDecimal:
+            strDataType = "DEC(" & CStr(fld.Properties("Precision")) & "," & CStr(fld.Properties("Scale")) & ")"
+
+            
         Case Else
             strDataType = "VARCHAR(255)" ' Default fallback
     End Select
@@ -426,6 +522,7 @@ On Error GoTo ErrorHandler
     Dim strSQL As String: strSQL = ReadSQLFile(fp_exported_tables & strTableName & ".sql")
     
     
+    Dim regex As Object:     Set regex = CreateObject("VBScript.RegExp")
     Dim dbs As DAO.Database: Set dbs = CurrentDb()
     Dim tdf As DAO.TableDef
     Dim strCreateSQL As String
@@ -448,8 +545,24 @@ On Error GoTo ErrorHandler
         ' Convert SQL Server syntax to Access syntax
         strCreateSQL = ConvertSQLServerToAccess(strCreateSQL)
         
+        ' Replace DECIMAL("percision", "scale") with only "Decimal"
+        With regex: .pattern = "DECIMAL\(\d+,\d+\)": .Global = True: End With
+        Do While (strCreateSQL <> regex.Replace(strCreateSQL, "TEXT"))
+          strCreateSQL = regex.Replace(strCreateSQL, "TEXT")
+        Loop
+        
+        With regex: .pattern = "DEC\(\d+,\d+\)": .Global = True: End With:
+        Do While (strCreateSQL <> regex.Replace(strCreateSQL, "TEXT"))
+          strCreateSQL = regex.Replace(strCreateSQL, "TEXT")
+        Loop
+        
         ' Execute the CREATE TABLE statement
         dbs.Execute strCreateSQL, dbFailOnError
+        Set dbs = Nothing
+        DoEvents
+        
+        ' Based on the SQL file, convert the Attribute with datatype " DECIMAL(precision, scale)" to Access Decimal type in the Access table
+        Call ConvertDecimalFieldsToAccessDecimal(strTableName, strSQL)
         
         ' Add Attribute "meta_created_at"
         Call AddMetaCreatedAtWithDefault(strTableName)
@@ -473,6 +586,11 @@ ErrorHandler:
     Debug.Print "Error creating table " & strTableName & ": " & Err.Number & " - " & Err.Description & vbNewLine & "SQL:" & vbNewLine & strCreateSQL
     ImportSingleTableDef = False
 End Function
+Public Sub test_ImportSingleTableDef()
+    ImportSingleTableDef "dqm_dq_threshold"
+End Sub
+
+
 
 Sub AddMetaCreatedAtWithDefault(strTableName)
     Dim db As DAO.Database
@@ -495,6 +613,86 @@ Sub AddMetaCreatedAtWithDefault(strTableName)
     'MsgBox "created_at field added with default Now()."
 End Sub
 
+' Function to convert TEXT fields to Access Decimal type based on original SQL definition
+Private Sub ConvertDecimalFieldsToAccessDecimal(strTableName As String, strOriginalSQL As String)
+    On Error GoTo ErrorHandler
+    '
+    Dim cn As ADODB.Connection
+    Dim db As DAO.Database: Set db = CurrentDb
+    Dim tdf As DAO.TableDef
+    Dim fldOld As DAO.Field
+    Dim fld    As DAO.Field
+    Dim prp    As DAO.Properties
+    Dim regex As Object
+    Dim matches As Object
+    Dim match As Object
+    Dim strFieldName As String
+    Dim intPrecision As Integer
+    Dim intScale As Integer
+    Dim strPattern As String
+    Dim i As Integer
+    
+    Set regex = CreateObject("VBScript.RegExp")
+    Set tdf = db.TableDefs(strTableName)
+    
+    ' Pattern to match: [FieldName] DECIMAL(precision, scale) or [FieldName] DEC(precision, scale)
+    ' This pattern captures field name, precision, and scale
+    regex.pattern = "\[([^\]]+)\]\s+(?:DECIMAL|DEC)\((\d+)\s*,\s*(\d+)\)"
+    regex.Global = True
+    regex.IgnoreCase = True
+    
+    Set matches = regex.Execute(strOriginalSQL)
+    
+    ' Loop through all DECIMAL field definitions found in the SQL
+    For Each match In matches
+        If match.SubMatches.Count >= 3 Then
+            strFieldName = match.SubMatches(0)
+            intPrecision = CInt(match.SubMatches(1))
+            intScale = CInt(match.SubMatches(2))
+            
+            ' Check if this field exists in the table and is currently TEXT
+            On Error Resume Next
+            Set fldOld = Nothing
+            Set fldOld = tdf.fields(strFieldName)
+            On Error GoTo ErrorHandler
+            
+            If Not fldOld Is Nothing Then
+                If fldOld.Type = dbText Or fldOld.Type = dbMemo Then
+                    
+                    ' Delete the old TEXT field and create a new Decimal field
+                    Call tdf.fields.Delete(strFieldName)
+                    Set tdf = db.TableDefs(strTableName)
+                    Set fld = tdf.CreateField(strFieldName, dbDecimal)
+                    tdf.fields.Append fld
+                    
+                    Set cn = CurrentProject.Connection: cn.Execute "ALTER TABLE " & strTableName & " ALTER COLUMN " & strFieldName & " DECIMAL(" & intPrecision & "," & intScale & ");": cn.Close
+                    
+                    
+                    ' Debug.Print "Converted field '" & strFieldName & "' to DECIMAL(" & intPrecision & "," & intScale & ") in table '" & strTableName & "'"
+                    
+                End If
+            End If
+        End If
+    Next match
+    
+    Set fld = Nothing
+    Set fldOld = Nothing
+    Set tdf = Nothing
+    Set matches = Nothing
+    Set regex = Nothing
+    Exit Sub
+
+ErrorHandler:
+    Set fld = Nothing
+    Set fldOld = Nothing
+    Set tdf = Nothing
+    Set matches = Nothing
+    Set regex = Nothing
+    Debug.Print "Error converting DECIMAL fields in table " & strTableName & ": " & Err.Number & " - " & Err.Description
+    Stop
+    Resume
+    
+End Sub
 
 ' Function to read SQL file content using FileSystemObject
 Private Function ReadSQLFile(strFilePath As String) As String
@@ -530,6 +728,9 @@ ErrorHandler:
     Debug.Print "Error reading file " & strFilePath & ": " & Err.Description
     ReadSQLFile = ""
 End Function
+Public Sub test_ReadSQLFile()
+    ReadSQLFile ""
+End Sub
 
 ' Function to extract CREATE TABLE statement from SQL content
 Private Function ExtractCreateTableSQL(strSQL As String) As String
@@ -561,7 +762,7 @@ End Function
 ' Function to convert SQL Server syntax to Access syntax
 
 Private Function ConvertSQLServerToAccess(strSQL As String) As String
-    On Error GoTo ErrorHandler
+                                                  On Error GoTo ErrorHandler
     
     Dim strResult As String
     strResult = strSQL
@@ -576,6 +777,7 @@ Private Function ConvertSQLServerToAccess(strSQL As String) As String
     strResult = Replace(strResult, "MONEY", "CURRENCY")
     strResult = Replace(strResult, "REAL", "SINGLE")
     strResult = Replace(strResult, "FLOAT", "DOUBLE")
+    strResult = Replace(strResult, "DATETIME DEFAULT Now()", "DATETIME")
     strResult = Replace(strResult, "DATETIME", "DATETIME")
     strResult = Replace(strResult, "TEXT", "MEMO")
     strResult = Replace(strResult, "VARCHAR", "TEXT")
@@ -611,6 +813,13 @@ Private Function ConvertSQLServerToAccess(strSQL As String) As String
 ErrorHandler:
     ConvertSQLServerToAccess = strSQL
 End Function
+
+Public Sub test_ConvertSQLServerToAccess()
+
+Dim r As String: r = "dqm_dq_threshold"
+Debug.Print (r)
+ImportSingleTableDef r
+End Sub
 
 ' Function to add indexes from SQL content
 

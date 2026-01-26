@@ -80,9 +80,9 @@ Public Sub parse_transformation_part_attribute( _
     '
     ' Update Transformation Part SQL Clauses
     rst.Edit
-    rst!tx_transformation_part_where_clause = source_attributes_to_placeholder(rst!tx_transformation_part_where_clause, ip_id_transformation_part)
-    rst!tx_transformation_part_group_by_clause = source_attributes_to_placeholder(rst!tx_transformation_part_group_by_clause, ip_id_transformation_part)
-    rst!tx_transformation_part_having_clause = source_attributes_to_placeholder(rst!tx_transformation_part_having_clause, ip_id_transformation_part)
+    rst!tx_transformation_part_where_clause = source_attributes_to_placeholder(Nz(rst!tx_transformation_part_where_clause, ""), ip_id_transformation_part)
+    rst!tx_transformation_part_group_by_clause = source_attributes_to_placeholder(Nz(rst!tx_transformation_part_group_by_clause, ""), ip_id_transformation_part)
+    rst!tx_transformation_part_having_clause = source_attributes_to_placeholder(Nz(rst!tx_transformation_part_having_clause, ""), ip_id_transformation_part)
     rst.Update
     rst.Close
     '

@@ -20,6 +20,13 @@ Public Sub set_buttons(ByRef ip_form As Form)
     ip_form.btn_Move_to_Out_of_Scope.Enabled = False
     ip_form.btn_Delete.Enabled = False
     '
+    ' Determine if DQ "Transformation"
+    If (ip_form.Name = "dta_dataset" And nc = True) Then
+      If (Mid(ip_form.Controls("nm_target_schema"), 1, 2) = "dq") Then
+        nc = False
+      End If
+    End If
+    '
     ' Open buttons on "Developemnt"-status
     If (cd = "DEV") Then
         ip_form.btn_Save.Enabled = nc
@@ -164,6 +171,14 @@ Public Sub set_attributes(ob_form As Form)
                                         ob_form.Name = "dta_dataset" Or _
                                         ob_form.Name = "dqm_dq_requirement" Or _
                                         ob_form.Name = "dqm_dq_control"), False, True)
+    '
+    ' Determine if DQ "Transformation"
+    If (ob_form.Name = "dta_dataset" And nc = True) Then
+      If (Mid(ob_form.Controls("nm_target_schema"), 1, 2) = "dq") Then
+        nc = False
+      End If
+    End If
+    '
     Dim nmf As String:        nmf = ob_form.Name
     Dim sts As String:        sts = get_cd_development_status(Nz(ob_form.id_development_status, ""))
     Dim shm As String:        shm = Left(nmf, 3)

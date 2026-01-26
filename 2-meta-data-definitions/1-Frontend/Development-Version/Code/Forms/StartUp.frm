@@ -1,7 +1,7 @@
 Version =21
 VersionRequired =20
 PublishOption =1
-Checksum =554525164
+Checksum =-1943496714
 Begin Form
     PopUp = NotDefault
     Modal = NotDefault
@@ -29,7 +29,7 @@ Begin Form
         0x78d157587d4be640
     End
     GUID = Begin
-        0x1fdb84d84428904a90fd330eeeac7ac2
+        0x1cc6716f8336674488ed08ffbb966430
     End
     NameMap = Begin
         0x0acc0e5500000000000000000000000000000000000000000c00000005000000 ,
@@ -170,7 +170,7 @@ Begin Form
         0x08001c0030000100000000000000000000000000000000000000000000000000 ,
         0x000000000000000000000000000000005753442d37613738373737392d306235 ,
         0x382d343037392d623832642d6138626564613432643939640000000000000000 ,
-        0x00
+        0x0000000000
     End
     OnTimer ="[Event Procedure]"
     OnLoad ="[Event Procedure]"
@@ -189,12 +189,12 @@ Begin Form
     AlternateBackThemeColorIndex =1
     AlternateBackShade =95.0
     PrtDevModeW = Begin
-        0x00000000000000004fa6d5f6f97f00000100000000000000a09277f0bf000000 ,
-        0x010000004c020000510f6c00000000ff510f6c00000000ff040f0000016c0100 ,
+        0x00000000000000000000e33dfb7f000008000000000000000eb5e73dfb7f0000 ,
+        0x02000000640200000000000000000000fe0100000000000000ac117664020000 ,
         0x01040a0cdc00d40e03df8103010009009a0b3408640001001401fdff02000100 ,
-        0x00000100010041003400000000000000cc7513bc4c020000510f016c00000000 ,
-        0x0100000000000000fc9bd5f6f97f0000ac0000004c0200001000000000000000 ,
-        0x1e00000000000000000000000000000000000000000000000000000001000000 ,
+        0x000001000100410034000000f77f0000806cf319640200000000000000000000 ,
+        0x0900000064020000960100000000000040d2c10b64020000f301010000000000 ,
+        0x2909c69ccd460000000000000000000000000000000000000000000001000000 ,
         0x02000000010000000100000000000000000000000000000000000000d40e0000 ,
         0x424a444d0a0c000000000000900a0000d9000000d90000000000000000000000 ,
         0x0100000008520000047400002c01000054010000604f0000e47000002c010000 ,
@@ -322,7 +322,8 @@ Begin Form
         0x0000000000000000000000000000000000000000000000005700530044002d00 ,
         0x370061003700380037003700370039002d0030006200350038002d0034003000 ,
         0x370039002d0062003800320064002d0061003800620065006400610034003200 ,
-        0x6400390039006400000000000000000000000000000000000000
+        0x6400390039006400000000000000000000000000000000000000000000000000 ,
+        0x0000
     End
     NoSaveCTIWhenDisabled =1
     Begin
@@ -353,7 +354,7 @@ Begin Form
             BackColor =15849926
             Name ="Formulierkoptekst"
             GUID = Begin
-                0xf2294bde3b274d4faa29293af03816b6
+                0xa8475b1b89d56a4b930e5b94ce8d6aa4
             End
             AlternateBackThemeColorIndex =1
             AlternateBackShade =95.0
@@ -371,7 +372,7 @@ Begin Form
                     Name ="tx_title"
                     Caption ="Loading"
                     GUID = Begin
-                        0x21f721128c6103459ce87e078976e3a7
+                        0x25efb38fb30f72488c8e1c913f13fa5d
                     End
                     LayoutCachedWidth =5670
                     LayoutCachedHeight =567
@@ -383,7 +384,7 @@ Begin Form
             BackColor =9211020
             Name ="Details"
             GUID = Begin
-                0x5641b84d422b2d43a354d48930b314d8
+                0x9a0e8d7834358440b66c48a7b1bbe85e
             End
             AlternateBackColor =15921906
             AlternateBackThemeColorIndex =1
@@ -394,20 +395,20 @@ Begin Form
                     OverlapFlags =85
                     TextAlign =1
                     Left =60
-                    Top =375
+                    Top =380
                     Width =6800
                     Height =6030
                     BackColor =15921906
                     Name ="tx_loading_feedback"
                     Caption ="Loading: "
                     GUID = Begin
-                        0xde9f6762db86cd4e8e91cec5671c2c6e
+                        0xf174afae2e1fcb4487aa72679757734e
                     End
                     GroupTable =1
                     LayoutCachedLeft =60
-                    LayoutCachedTop =375
+                    LayoutCachedTop =380
                     LayoutCachedWidth =6860
-                    LayoutCachedHeight =6405
+                    LayoutCachedHeight =6410
                     RowStart =1
                     RowEnd =1
                     LayoutGroup =1
@@ -429,7 +430,7 @@ Begin Form
                     Caption ="100.00 %  |||||||||||||||||||||||||||||||||||||||||||||||||||"
                     FontName ="Consolas"
                     GUID = Begin
-                        0xbc44bcf79b58a447ab5ebde2ffc2a636
+                        0x8640ef031e570949abc1a1357ba75661
                     End
                     GroupTable =1
                     LayoutCachedLeft =60
@@ -447,7 +448,7 @@ Begin Form
             Height =0
             Name ="Formuliervoettekst"
             GUID = Begin
-                0x48dfab526f25414aa661358a5f51a192
+                0x75d992ed0734414ebf2934389aae74b1
             End
             AlternateBackThemeColorIndex =1
             AlternateBackShade =95.0
@@ -577,9 +578,6 @@ Public Sub StartUp(): On Error GoTo err_handle
     '
     ' Import all SQL-files.
     Call mdl_Import.process_all_sql_files(Me)
-    '
-    ' Parse alle SQL  Source Queries
-    Call parse_sql_statement_all_transfromations
     '
     ' Start loading meta-data
     DoCmd.OpenForm "menu_meta_data_editor", acNormal

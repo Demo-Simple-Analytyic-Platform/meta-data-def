@@ -1,16 +1,15 @@
 Version =21
 VersionRequired =20
 PublishOption =1
-Checksum =100230509
+Checksum =-2115665721
 Begin Form
     DividingLines = NotDefault
-    FilterOn = NotDefault
     AllowDesignChanges = NotDefault
     DefaultView =0
     PictureAlignment =2
     DatasheetGridlinesBehavior =3
     GridY =10
-    Width =15118
+    Width =15155
     DatasheetFontHeight =11
     ItemSuffix =88
     Right =17610
@@ -22,46 +21,46 @@ Begin Form
         0x1050f41bef4be640
     End
     GUID = Begin
-        0xb6af93d807f58949817cc252119dc14c
+        0x138b86623b93c04b87a4fef5bdd90e0c
     End
     NameMap = Begin
-        0x0acc0e5500000000bc0dc95209a68d47a8fa2b93776eaec40000000064a3fc13 ,
-        0x5c71e6400000000000000000640071006d005f00640071005f00720065007100 ,
-        0x75006900720065006d0065006e007400000000000000bc88cdae6002ea4b8c19 ,
-        0xcf665d8fa65706000000b6af93d807f58949817cc252119dc14c690064005f00 ,
+        0x0acc0e55000000004a68233b22a35740b44c7d19730a7cb800000000b4d5ab23 ,
+        0x3278e6400000000000000000640071006d005f00640071005f00720065007100 ,
+        0x75006900720065006d0065006e007400000000000000f0ba1d2a7757ca49b090 ,
+        0xc9d4fae9a92106000000138b86623b93c04b87a4fef5bdd90e0c690064005f00 ,
         0x640071005f0072006500710075006900720065006d0065006e00740000000000 ,
-        0x0000304c655d5b9c444d9dc3aaeb68d601bd06000000b6af93d807f58949817c ,
-        0xc252119dc14c690064005f006d006f00640065006c00000000000000c26e755c ,
-        0x20021e40859047bc08405f1e01000000a9f93e145c71e6400000000000000000 ,
+        0x000066b84fe458fba6489aecabeeaae40f1306000000138b86623b93c04b87a4 ,
+        0xfef5bdd90e0c690064005f006d006f00640065006c00000000000000e4137228 ,
+        0x48fbd54ca1647865f10eabe6010000002cfc41e43178e6400000000000000000 ,
         0x640071006d005f00640071005f0063006f006e00740072006f006c005f006c00 ,
         0x6900730074005f00660072006f006d005f00640071005f007200650071007500 ,
-        0x6900720065006d0065006e0074000000000000003445f67dade9884c9f60d1e9 ,
-        0xda1d6e1f0000000041cf8d0b5c71e6400000000000000000640071006d005f00 ,
+        0x6900720065006d0065006e0074000000000000004e0ff9f87a78ce4f820f272d ,
+        0x8b66b46d00000000850838243278e6400000000000000000640071006d005f00 ,
         0x640071005f0063006f006e00740072006f006c005f006c006900730074000000 ,
-        0x000000007ce6b2ce3e99e14387af5a71a59bebc307000000bc0dc95209a68d47 ,
-        0xa8fa2b93776eaec4690064005f00640071005f00720065007100750069007200 ,
-        0x65006d0065006e00740000000000000083df9b4d857166408a34e461e0e0292d ,
-        0x07000000bc0dc95209a68d47a8fa2b93776eaec4690064005f006d006f006400 ,
-        0x65006c00000000000000fd3bac7f5186764e9a7e660be7fd2ebf000000006a08 ,
-        0x8d0b5c71e6400000000000000000640064006c005f006400740061005f006d00 ,
-        0x6f00640065006c000000000000000165bb11c9b16b489d3f4a87f3c544900700 ,
-        0x0000bc0dc95209a68d47a8fa2b93776eaec46d006500740061005f0075007000 ,
-        0x640061007400650064005f00610074000000000000004b8a2c9710e9404e9298 ,
-        0x7ec744c486d107000000bc0dc95209a68d47a8fa2b93776eaec4630064005f00 ,
+        0x00000000f43f73a24213bc4084f5ce05c0574340070000004a68233b22a35740 ,
+        0xb44c7d19730a7cb8690064005f00640071005f00720065007100750069007200 ,
+        0x65006d0065006e007400000000000000a5b14d2d167ee84e949843fb94d283d0 ,
+        0x070000004a68233b22a35740b44c7d19730a7cb8690064005f006d006f006400 ,
+        0x65006c0000000000000083beb52d21d75e4fb48c44f9f95af07500000000f214 ,
+        0x38243278e6400000000000000000640064006c005f006400740061005f006d00 ,
+        0x6f00640065006c00000000000000ffe3add3728a364787283046171d85640700 ,
+        0x00004a68233b22a35740b44c7d19730a7cb86d006500740061005f0075007000 ,
+        0x640061007400650064005f0061007400000000000000e875770c8fafd74faa43 ,
+        0xacd35969788f070000004a68233b22a35740b44c7d19730a7cb8630064005f00 ,
         0x640071005f0072006500710075006900720065006d0065006e00740000000000 ,
-        0x0000f724aaf368226745bfd24c86f7b227f507000000bc0dc95209a68d47a8fa ,
-        0x2b93776eaec466006e005f00640071005f007200650071007500690072006500 ,
-        0x6d0065006e00740000000000000046f9923cc27a374793b2362c4886d6920700 ,
-        0x0000bc0dc95209a68d47a8fa2b93776eaec4660064005f00640071005f007200 ,
-        0x6500710075006900720065006d0065006e007400000000000000765a858688f1 ,
-        0x9949ba291fb94e671e5307000000bc0dc95209a68d47a8fa2b93776eaec46400 ,
-        0x74005f00760061006c00690064005f00660072006f006d000000000000001809 ,
-        0x0ee13d0ea74097ca1d339906c12707000000bc0dc95209a68d47a8fa2b93776e ,
-        0xaec4640074005f00760061006c00690064005f00740069006c006c0000000000 ,
-        0x000095c37fdcb5437e4eb46e503e0b50a68907000000bc0dc95209a68d47a8fa ,
-        0x2b93776eaec4690064005f0064006500760065006c006f0070006d0065006e00 ,
-        0x74005f0073007400610074007500730000000000000082c6d730b88c644b9a07 ,
-        0xe3fb0f6a8cdc00000000b89082015d71e6400000000000000000640064006c00 ,
+        0x000020d0e0c2039c704495b96e3635f6b938070000004a68233b22a35740b44c ,
+        0x7d19730a7cb866006e005f00640071005f007200650071007500690072006500 ,
+        0x6d0065006e007400000000000000af2dae163834bf4a9657207eedda4a960700 ,
+        0x00004a68233b22a35740b44c7d19730a7cb8660064005f00640071005f007200 ,
+        0x6500710075006900720065006d0065006e0074000000000000008393252840a2 ,
+        0xc044a5460a27ab51cc00070000004a68233b22a35740b44c7d19730a7cb86400 ,
+        0x74005f00760061006c00690064005f00660072006f006d000000000000007864 ,
+        0xb50ba82e1e43a2a64946be9f4af4070000004a68233b22a35740b44c7d19730a ,
+        0x7cb8640074005f00760061006c00690064005f00740069006c006c0000000000 ,
+        0x0000d8bbafeb6fc01e428d3b128f9350a0cc070000004a68233b22a35740b44c ,
+        0x7d19730a7cb8690064005f0064006500760065006c006f0070006d0065006e00 ,
+        0x74005f007300740061007400750073000000000000005a0f0889f120b74c9bf4 ,
+        0x2e3c178d55d000000000602138243278e6400000000000000000640064006c00 ,
         0x5f007300720064005f0064006500760065006c006f0070006d0065006e007400 ,
         0x5f00730074006100740075007300000000000000000000000000000000000000 ,
         0x000000000c000000050000000000000000000000000000000000
@@ -74,9 +73,9 @@ Begin Form
         0x010000006801000000000000a10700000100000001000000
     End
     PrtDevMode = Begin
-        0x00452a2f330200000046aef9f700000040452a2f330200001046aef9f7000000 ,
+        0x008f37346402000060365d74a7000000208f37346402000070365d74a7000000 ,
         0x010403069c004003032f0100010009009a0b3408640001000f00580202000100 ,
-        0x580203000100413400c073fdff7f00000000000000000000d0c073fdff7f0000 ,
+        0x580203000100413400ca6c46fb7f0000000000000000000070cb6c46fb7f0000 ,
         0x0000000002000000000000000000000000000000010000000000000001000000 ,
         0x0200000001000000ffffffff4749533400000000000000000000000044494e55 ,
         0x2200c80024031c00ac13d8c00000000000000000000000000000000000000000 ,
@@ -109,7 +108,7 @@ Begin Form
     PrtDevNames = Begin
         0x08002c003e000100000000000000000000000000000000000000000000000000 ,
         0x0000000000000000000000000000000000000000000000000000000000006e75 ,
-        0x6c3a00000000000000000000000000
+        0x6c3a0000000000000000000000000000000000
     End
     OnLoad ="[Event Procedure]"
     AllowDatasheetView =0
@@ -126,11 +125,11 @@ Begin Form
     AlternateBackThemeColorIndex =1
     AlternateBackShade =95.0
     PrtDevModeW = Begin
-        0x000000000000000050012e103302000080000000000000008a00000000000000 ,
-        0xe0674a2f3302000028032e103302000003000000000000000000000000000000 ,
+        0x000000000000000050010b746402000080000000a70000006800000000000000 ,
+        0xc03e0d0d6402000028030b746402000003000000000000000000000000000000 ,
         0x01040306dc004003032f0100010009009a0b3408640001000f00580202000100 ,
-        0x58020300010041003400000000000000903eb62633020000a4cc5118f97f0000 ,
-        0x40040000000000000000000000000000000000000000000072f4008600000000 ,
+        0x580203000100410034000000000000008085b60964020000a4ccc918fc7f0000 ,
+        0x400400000000000000000000000000000000000000000000f96c009500000000 ,
         0x0000000000000000000000000000000000000000010000000000000001000000 ,
         0x0200000001000000ffffffff4749533400000000000000000000000044494e55 ,
         0x2200c80024031c00ac13d8c00000000000000000000000000000000000000000 ,
@@ -165,7 +164,7 @@ Begin Form
         0x0000000000000000000000000000000000000000000000000000000000000000 ,
         0x0000000000000000000000000000000000000000000000000000000000000000 ,
         0x00000000000000000000000000000000000000006e0075006c003a0000000000 ,
-        0x00000000000000000000000000000000000000000000
+        0x000000000000000000000000000000000000000000000000000000000000
     End
     NoSaveCTIWhenDisabled =1
     Begin
@@ -302,7 +301,7 @@ Begin Form
             BackColor =15849926
             Name ="FormHeader"
             GUID = Begin
-                0xb0a65e0c0f88b344a37e3c325ed2cbf2
+                0x1c950f0110099b478287a075de44517d
             End
             AlternateBackThemeColorIndex =1
             AlternateBackShade =95.0
@@ -324,7 +323,7 @@ Begin Form
                     Caption ="DQ Requirement"
                     FontName ="Cambria"
                     GUID = Begin
-                        0x95543f11f1930c4e8f1536d7c1cf59a6
+                        0x0c4e7e3889205e40a92d81b80995550a
                     End
                     GroupTable =2
                     HorizontalAnchor =2
@@ -344,16 +343,16 @@ Begin Form
                     Enabled = NotDefault
                     OverlapFlags =85
                     Left =60
-                    Top =615
+                    Top =620
                     Width =1692
-                    Height =585
+                    Height =590
                     FontWeight =700
                     Name ="btn_Save"
                     Caption ="  Save"
                     OnClick ="[Event Procedure]"
                     ControlTipText ="Save"
                     GUID = Begin
-                        0x6bbebfb4c78cef4893552b843c2c12cb
+                        0xe4d2dcf0cfdc0f448739216b34df671b
                     End
                     GroupTable =3
                     ImageData = Begin
@@ -395,9 +394,9 @@ Begin Form
 
                     CursorOnHover =1
                     LayoutCachedLeft =60
-                    LayoutCachedTop =615
+                    LayoutCachedTop =620
                     LayoutCachedWidth =1752
-                    LayoutCachedHeight =1200
+                    LayoutCachedHeight =1210
                     PictureCaptionArrangement =5
                     LayoutGroup =3
                     Gradient =0
@@ -406,18 +405,18 @@ Begin Form
                     BackTint =100.0
                     BackShade =75.0
                     GroupTable =3
-                    WebImagePaddingLeft =2
-                    WebImagePaddingTop =2
-                    WebImagePaddingRight =1
-                    WebImagePaddingBottom =1
+                    WebImagePaddingLeft =3
+                    WebImagePaddingTop =3
+                    WebImagePaddingRight =2
+                    WebImagePaddingBottom =2
                 End
                 Begin CommandButton
                     Enabled = NotDefault
                     OverlapFlags =85
-                    Left =3570
-                    Top =615
-                    Width =1695
-                    Height =585
+                    Left =3590
+                    Top =620
+                    Width =1700
+                    Height =590
                     FontWeight =700
                     TabIndex =1
                     ForeColor =0
@@ -426,15 +425,15 @@ Begin Form
                     OnClick ="[Event Procedure]"
                     ControlTipText ="Change status to \"Acceptance\""
                     GUID = Begin
-                        0x89abb140df7b6846bf333ea2ba5aa795
+                        0x7920e94ff3011b4c89f8bc47391ca8af
                     End
                     GroupTable =3
 
                     CursorOnHover =1
-                    LayoutCachedLeft =3570
-                    LayoutCachedTop =615
-                    LayoutCachedWidth =5265
-                    LayoutCachedHeight =1200
+                    LayoutCachedLeft =3590
+                    LayoutCachedTop =620
+                    LayoutCachedWidth =5290
+                    LayoutCachedHeight =1210
                     ColumnStart =2
                     ColumnEnd =2
                     LayoutGroup =3
@@ -444,18 +443,18 @@ Begin Form
                     BackThemeColorIndex =7
                     BackTint =100.0
                     GroupTable =3
-                    WebImagePaddingLeft =2
-                    WebImagePaddingTop =2
-                    WebImagePaddingRight =1
-                    WebImagePaddingBottom =1
+                    WebImagePaddingLeft =3
+                    WebImagePaddingTop =3
+                    WebImagePaddingRight =2
+                    WebImagePaddingBottom =2
                 End
                 Begin CommandButton
                     Enabled = NotDefault
                     OverlapFlags =85
-                    Left =5325
-                    Top =615
-                    Width =1695
-                    Height =585
+                    Left =5360
+                    Top =620
+                    Width =1700
+                    Height =590
                     FontWeight =700
                     TabIndex =2
                     ForeColor =14277081
@@ -464,15 +463,15 @@ Begin Form
                     OnClick ="[Event Procedure]"
                     ControlTipText ="Change status to \"Production\""
                     GUID = Begin
-                        0xe44cb08bf4f98b498047780c5ad12bc5
+                        0xd653a72eeebc9846aa2a2cf01f44082f
                     End
                     GroupTable =3
 
                     CursorOnHover =1
-                    LayoutCachedLeft =5325
-                    LayoutCachedTop =615
-                    LayoutCachedWidth =7020
-                    LayoutCachedHeight =1200
+                    LayoutCachedLeft =5360
+                    LayoutCachedTop =620
+                    LayoutCachedWidth =7060
+                    LayoutCachedHeight =1210
                     ColumnStart =3
                     ColumnEnd =3
                     LayoutGroup =3
@@ -484,18 +483,18 @@ Begin Form
                     BackThemeColorIndex =-1
                     BackTint =100.0
                     GroupTable =3
-                    WebImagePaddingLeft =2
-                    WebImagePaddingTop =2
-                    WebImagePaddingRight =1
-                    WebImagePaddingBottom =1
+                    WebImagePaddingLeft =3
+                    WebImagePaddingTop =3
+                    WebImagePaddingRight =2
+                    WebImagePaddingBottom =2
                 End
                 Begin CommandButton
                     Enabled = NotDefault
                     OverlapFlags =85
-                    Left =8835
-                    Top =615
-                    Width =1695
-                    Height =585
+                    Left =8900
+                    Top =620
+                    Width =1700
+                    Height =590
                     FontWeight =700
                     TabIndex =3
                     ForeColor =2500134
@@ -504,15 +503,15 @@ Begin Form
                     OnClick ="[Event Procedure]"
                     ControlTipText ="Change status to \"Out of Scope\""
                     GUID = Begin
-                        0x5ed1e28c3f958840a34c278a6b3ef74f
+                        0x1c6f0e89510ee04699b6d2296a199a24
                     End
                     GroupTable =3
 
                     CursorOnHover =1
-                    LayoutCachedLeft =8835
-                    LayoutCachedTop =615
-                    LayoutCachedWidth =10530
-                    LayoutCachedHeight =1200
+                    LayoutCachedLeft =8900
+                    LayoutCachedTop =620
+                    LayoutCachedWidth =10600
+                    LayoutCachedHeight =1210
                     ColumnStart =5
                     ColumnEnd =5
                     LayoutGroup =3
@@ -527,25 +526,25 @@ Begin Form
                     PressedForeColor =2500134
                     PressedForeTint =85.0
                     GroupTable =3
-                    WebImagePaddingLeft =2
-                    WebImagePaddingTop =2
-                    WebImagePaddingRight =1
-                    WebImagePaddingBottom =1
+                    WebImagePaddingLeft =3
+                    WebImagePaddingTop =3
+                    WebImagePaddingRight =2
+                    WebImagePaddingBottom =2
                 End
                 Begin CommandButton
                     Enabled = NotDefault
                     OverlapFlags =85
-                    Left =10590
-                    Top =615
-                    Width =585
-                    Height =585
+                    Left =10670
+                    Top =620
+                    Width =590
+                    Height =590
                     TabIndex =4
                     Name ="btn_Delete"
                     Caption ="Command39"
                     OnClick ="[Event Procedure]"
                     ControlTipText ="(Soft) Delete"
                     GUID = Begin
-                        0x905e3d21375a084d8a2709c346a9e567
+                        0x243d1ca7c75e74438683b3ef5652c1da
                     End
                     GroupTable =3
                     ImageData = Begin
@@ -586,10 +585,10 @@ Begin Form
                     End
 
                     CursorOnHover =1
-                    LayoutCachedLeft =10590
-                    LayoutCachedTop =615
-                    LayoutCachedWidth =11175
-                    LayoutCachedHeight =1200
+                    LayoutCachedLeft =10670
+                    LayoutCachedTop =620
+                    LayoutCachedWidth =11260
+                    LayoutCachedHeight =1210
                     ColumnStart =6
                     ColumnEnd =6
                     LayoutGroup =3
@@ -599,18 +598,18 @@ Begin Form
                     BackTint =100.0
                     BackShade =75.0
                     GroupTable =3
-                    WebImagePaddingLeft =2
-                    WebImagePaddingTop =2
-                    WebImagePaddingRight =1
-                    WebImagePaddingBottom =1
+                    WebImagePaddingLeft =3
+                    WebImagePaddingTop =3
+                    WebImagePaddingRight =2
+                    WebImagePaddingBottom =2
                 End
                 Begin CommandButton
                     Enabled = NotDefault
                     OverlapFlags =85
-                    Left =1815
-                    Top =615
-                    Width =1695
-                    Height =585
+                    Left =1820
+                    Top =620
+                    Width =1700
+                    Height =590
                     FontWeight =700
                     TabIndex =5
                     ForeColor =0
@@ -619,15 +618,15 @@ Begin Form
                     OnClick ="[Event Procedure]"
                     ControlTipText ="Change status to \"Development\""
                     GUID = Begin
-                        0x45e734d97f027040959ee0075216733a
+                        0x74f19f2ea948f844af2dca0d1c1e3713
                     End
                     GroupTable =3
 
                     CursorOnHover =1
-                    LayoutCachedLeft =1815
-                    LayoutCachedTop =615
-                    LayoutCachedWidth =3510
-                    LayoutCachedHeight =1200
+                    LayoutCachedLeft =1820
+                    LayoutCachedTop =620
+                    LayoutCachedWidth =3520
+                    LayoutCachedHeight =1210
                     ColumnStart =1
                     ColumnEnd =1
                     LayoutGroup =3
@@ -643,18 +642,18 @@ Begin Form
                     PressedThemeColorIndex =-1
                     PressedShade =100.0
                     GroupTable =3
-                    WebImagePaddingLeft =2
-                    WebImagePaddingTop =2
-                    WebImagePaddingRight =1
-                    WebImagePaddingBottom =1
+                    WebImagePaddingLeft =3
+                    WebImagePaddingTop =3
+                    WebImagePaddingRight =2
+                    WebImagePaddingBottom =2
                 End
                 Begin CommandButton
                     Enabled = NotDefault
                     OverlapFlags =85
-                    Left =7080
-                    Top =615
-                    Width =1695
-                    Height =585
+                    Left =7130
+                    Top =620
+                    Width =1700
+                    Height =590
                     FontWeight =700
                     TabIndex =6
                     ForeColor =14806254
@@ -663,15 +662,15 @@ Begin Form
                     OnClick ="[Event Procedure]"
                     ControlTipText ="Change status to \"Ad Hoc\""
                     GUID = Begin
-                        0x6a5e84dfa0957744b0761095ea98176d
+                        0xa2bfe325f9ded04bb26d989407b53251
                     End
                     GroupTable =3
 
                     CursorOnHover =1
-                    LayoutCachedLeft =7080
-                    LayoutCachedTop =615
-                    LayoutCachedWidth =8775
-                    LayoutCachedHeight =1200
+                    LayoutCachedLeft =7130
+                    LayoutCachedTop =620
+                    LayoutCachedWidth =8830
+                    LayoutCachedHeight =1210
                     ColumnStart =4
                     ColumnEnd =4
                     LayoutGroup =3
@@ -683,10 +682,10 @@ Begin Form
                     BackTint =100.0
                     BackShade =50.0
                     GroupTable =3
-                    WebImagePaddingLeft =2
-                    WebImagePaddingTop =2
-                    WebImagePaddingRight =1
-                    WebImagePaddingBottom =1
+                    WebImagePaddingLeft =3
+                    WebImagePaddingTop =3
+                    WebImagePaddingRight =2
+                    WebImagePaddingBottom =2
                 End
                 Begin ComboBox
                     LimitToList = NotDefault
@@ -705,7 +704,7 @@ Begin Form
                     TabIndex =7
                     ColumnInfo ="\"\";\"\";\"\";\"\";\"10\";\"32\""
                     GUID = Begin
-                        0x304c655d5b9c444d9dc3aaeb68d601bd
+                        0x66b84fe458fba6489aecabeeaae40f13
                     End
                     Name ="id_model"
                     ControlSource ="id_model"
@@ -732,7 +731,7 @@ Begin Form
                     Name ="meta_updated_at"
                     ControlSource ="meta_updated_at"
                     GUID = Begin
-                        0xd10c072f16758f42911e72ed0c2742fb
+                        0xcb49c7e686f9b545a3ef4039d60e084f
                     End
 
                     LayoutCachedLeft =11338
@@ -744,10 +743,10 @@ Begin Form
         End
         Begin Section
             CanGrow = NotDefault
-            Height =8740
+            Height =8770
             Name ="Detail"
             GUID = Begin
-                0x5761e342351ac544b98710cd363a5f5a
+                0xd0d63815405de144bd34a377316cc712
             End
             AlternateBackColor =15921906
             AlternateBackThemeColorIndex =1
@@ -759,9 +758,9 @@ Begin Form
                     OverlapFlags =85
                     TextAlign =1
                     IMESentenceMode =3
-                    Left =810
-                    Top =45
-                    Width =3810
+                    Left =830
+                    Top =50
+                    Width =3820
                     Height =360
                     LeftMargin =44
                     TopMargin =22
@@ -770,14 +769,14 @@ Begin Form
                     Name ="id_dq_requirement"
                     ControlSource ="id_dq_requirement"
                     GUID = Begin
-                        0xbc88cdae6002ea4b8c19cf665d8fa657
+                        0xf0ba1d2a7757ca49b090c9d4fae9a921
                     End
                     GroupTable =1
 
-                    LayoutCachedLeft =810
-                    LayoutCachedTop =45
-                    LayoutCachedWidth =4620
-                    LayoutCachedHeight =405
+                    LayoutCachedLeft =830
+                    LayoutCachedTop =50
+                    LayoutCachedWidth =4650
+                    LayoutCachedHeight =410
                     ColumnStart =1
                     ColumnEnd =2
                     LayoutGroup =1
@@ -787,9 +786,9 @@ Begin Form
                             FontItalic = NotDefault
                             OverlapFlags =85
                             TextAlign =1
-                            Left =45
-                            Top =45
-                            Width =705
+                            Left =50
+                            Top =50
+                            Width =710
                             Height =360
                             FontWeight =700
                             LeftMargin =44
@@ -799,13 +798,13 @@ Begin Form
                             Name ="Label0"
                             Caption ="ID"
                             GUID = Begin
-                                0xcc4878f0c561ad4c95dd7eaad35a08e5
+                                0x696561206fd53a449769fce8c2ac16e0
                             End
                             GroupTable =1
-                            LayoutCachedLeft =45
-                            LayoutCachedTop =45
-                            LayoutCachedWidth =750
-                            LayoutCachedHeight =405
+                            LayoutCachedLeft =50
+                            LayoutCachedTop =50
+                            LayoutCachedWidth =760
+                            LayoutCachedHeight =410
                             LayoutGroup =1
                             GroupTable =1
                         End
@@ -815,8 +814,8 @@ Begin Form
                     OverlapFlags =85
                     TextAlign =1
                     IMESentenceMode =3
-                    Left =810
-                    Top =465
+                    Left =830
+                    Top =480
                     Width =2020
                     Height =360
                     TabIndex =2
@@ -827,14 +826,14 @@ Begin Form
                     Name ="cd_dq_requirement"
                     ControlSource ="cd_dq_requirement"
                     GUID = Begin
-                        0xbbee0090aebb584dac894fe36eda7ca9
+                        0x45caa73fde17f647a97b58c66f516ab8
                     End
                     GroupTable =1
 
-                    LayoutCachedLeft =810
-                    LayoutCachedTop =465
-                    LayoutCachedWidth =2830
-                    LayoutCachedHeight =825
+                    LayoutCachedLeft =830
+                    LayoutCachedTop =480
+                    LayoutCachedWidth =2850
+                    LayoutCachedHeight =840
                     RowStart =1
                     RowEnd =1
                     ColumnStart =1
@@ -846,9 +845,9 @@ Begin Form
                             FontItalic = NotDefault
                             OverlapFlags =85
                             TextAlign =1
-                            Left =45
-                            Top =465
-                            Width =705
+                            Left =50
+                            Top =480
+                            Width =710
                             Height =360
                             FontWeight =700
                             LeftMargin =44
@@ -858,13 +857,13 @@ Begin Form
                             Name ="Label3"
                             Caption ="Code"
                             GUID = Begin
-                                0x9b2f83ecb9b5c5448c4eefbfa66e0a6c
+                                0x998d0391f0b76f4fb4db6ea5a1497af2
                             End
                             GroupTable =1
-                            LayoutCachedLeft =45
-                            LayoutCachedTop =465
-                            LayoutCachedWidth =750
-                            LayoutCachedHeight =825
+                            LayoutCachedLeft =50
+                            LayoutCachedTop =480
+                            LayoutCachedWidth =760
+                            LayoutCachedHeight =840
                             RowStart =1
                             RowEnd =1
                             LayoutGroup =1
@@ -876,9 +875,9 @@ Begin Form
                     OverlapFlags =85
                     TextAlign =1
                     IMESentenceMode =3
-                    Left =4680
-                    Top =465
-                    Width =10380
+                    Left =4720
+                    Top =480
+                    Width =10400
                     Height =360
                     TabIndex =3
                     LeftMargin =44
@@ -888,14 +887,14 @@ Begin Form
                     Name ="fn_dq_requirement"
                     ControlSource ="fn_dq_requirement"
                     GUID = Begin
-                        0x10d85bb1222224419a4d6961d7a48495
+                        0x7e9a905c2e09e442a9377a9cfa9a4cd2
                     End
                     GroupTable =1
 
-                    LayoutCachedLeft =4680
-                    LayoutCachedTop =465
-                    LayoutCachedWidth =15060
-                    LayoutCachedHeight =825
+                    LayoutCachedLeft =4720
+                    LayoutCachedTop =480
+                    LayoutCachedWidth =15120
+                    LayoutCachedHeight =840
                     RowStart =1
                     RowEnd =1
                     ColumnStart =3
@@ -907,9 +906,9 @@ Begin Form
                             FontItalic = NotDefault
                             OverlapFlags =85
                             TextAlign =1
-                            Left =2895
-                            Top =465
-                            Width =1725
+                            Left =2920
+                            Top =480
+                            Width =1730
                             Height =360
                             FontWeight =700
                             LeftMargin =44
@@ -919,13 +918,13 @@ Begin Form
                             Name ="Label6"
                             Caption ="Name"
                             GUID = Begin
-                                0xcf46d16a890bd74ab22ad6f01f75d84a
+                                0x9f76747890f9b1449540d29bb169052c
                             End
                             GroupTable =1
-                            LayoutCachedLeft =2895
-                            LayoutCachedTop =465
-                            LayoutCachedWidth =4620
-                            LayoutCachedHeight =825
+                            LayoutCachedLeft =2920
+                            LayoutCachedTop =480
+                            LayoutCachedWidth =4650
+                            LayoutCachedHeight =840
                             RowStart =1
                             RowEnd =1
                             ColumnStart =2
@@ -941,10 +940,10 @@ Begin Form
                     OverlapFlags =85
                     TextAlign =1
                     IMESentenceMode =3
-                    Left =2895
-                    Top =1260
-                    Width =12165
-                    Height =1695
+                    Left =2920
+                    Top =1290
+                    Width =12200
+                    Height =1710
                     TabIndex =5
                     LeftMargin =44
                     TopMargin =22
@@ -953,14 +952,14 @@ Begin Form
                     Name ="fd_dq_requirement"
                     ControlSource ="fd_dq_requirement"
                     GUID = Begin
-                        0xcea7c85a06494b479b5a674225b95a59
+                        0x959f24469435774d895a0f5dff013d1c
                     End
                     GroupTable =1
 
-                    LayoutCachedLeft =2895
-                    LayoutCachedTop =1260
-                    LayoutCachedWidth =15060
-                    LayoutCachedHeight =2955
+                    LayoutCachedLeft =2920
+                    LayoutCachedTop =1290
+                    LayoutCachedWidth =15120
+                    LayoutCachedHeight =3000
                     RowStart =3
                     RowEnd =5
                     ColumnStart =2
@@ -972,8 +971,8 @@ Begin Form
                     OverlapFlags =85
                     TextAlign =1
                     IMESentenceMode =3
-                    Left =810
-                    Top =1260
+                    Left =830
+                    Top =1290
                     Width =2020
                     Height =360
                     TabIndex =4
@@ -984,14 +983,14 @@ Begin Form
                     Name ="dt_valid_from"
                     ControlSource ="dt_valid_from"
                     GUID = Begin
-                        0xf16310dfc9ab6f4f9b8db5dd3f6a8d82
+                        0x5c2e7bae9d16824596c65a3356a76152
                     End
                     GroupTable =1
 
-                    LayoutCachedLeft =810
-                    LayoutCachedTop =1260
-                    LayoutCachedWidth =2830
-                    LayoutCachedHeight =1620
+                    LayoutCachedLeft =830
+                    LayoutCachedTop =1290
+                    LayoutCachedWidth =2850
+                    LayoutCachedHeight =1650
                     RowStart =3
                     RowEnd =3
                     ColumnStart =1
@@ -1003,9 +1002,9 @@ Begin Form
                             FontItalic = NotDefault
                             OverlapFlags =85
                             TextAlign =1
-                            Left =45
-                            Top =1260
-                            Width =705
+                            Left =50
+                            Top =1290
+                            Width =710
                             Height =360
                             FontWeight =700
                             LeftMargin =44
@@ -1015,13 +1014,13 @@ Begin Form
                             Name ="Label12"
                             Caption ="From"
                             GUID = Begin
-                                0xa97ba5bac5722d498497dbe6bf3693fb
+                                0x8322d9902fba32409e964bf955f7c8fc
                             End
                             GroupTable =1
-                            LayoutCachedLeft =45
-                            LayoutCachedTop =1260
-                            LayoutCachedWidth =750
-                            LayoutCachedHeight =1620
+                            LayoutCachedLeft =50
+                            LayoutCachedTop =1290
+                            LayoutCachedWidth =760
+                            LayoutCachedHeight =1650
                             RowStart =3
                             RowEnd =3
                             LayoutGroup =1
@@ -1033,8 +1032,8 @@ Begin Form
                     OverlapFlags =85
                     TextAlign =1
                     IMESentenceMode =3
-                    Left =810
-                    Top =1680
+                    Left =830
+                    Top =1720
                     Width =2020
                     Height =360
                     TabIndex =6
@@ -1045,14 +1044,14 @@ Begin Form
                     Name ="dt_valid_till"
                     ControlSource ="dt_valid_till"
                     GUID = Begin
-                        0x573a1494e2157f44b40bfc993acd7039
+                        0x1119a69d5a92774d8c5ea65a526bb792
                     End
                     GroupTable =1
 
-                    LayoutCachedLeft =810
-                    LayoutCachedTop =1680
-                    LayoutCachedWidth =2830
-                    LayoutCachedHeight =2040
+                    LayoutCachedLeft =830
+                    LayoutCachedTop =1720
+                    LayoutCachedWidth =2850
+                    LayoutCachedHeight =2080
                     RowStart =4
                     RowEnd =4
                     ColumnStart =1
@@ -1064,9 +1063,9 @@ Begin Form
                             FontItalic = NotDefault
                             OverlapFlags =85
                             TextAlign =1
-                            Left =45
-                            Top =1680
-                            Width =705
+                            Left =50
+                            Top =1720
+                            Width =710
                             Height =360
                             FontWeight =700
                             LeftMargin =44
@@ -1076,13 +1075,13 @@ Begin Form
                             Name ="Label15"
                             Caption ="Till"
                             GUID = Begin
-                                0x2b566032b5278a418b10e9ea5aed3595
+                                0xbbcddf4491bd6f4f91397561bb23146e
                             End
                             GroupTable =1
-                            LayoutCachedLeft =45
-                            LayoutCachedTop =1680
-                            LayoutCachedWidth =750
-                            LayoutCachedHeight =2040
+                            LayoutCachedLeft =50
+                            LayoutCachedTop =1720
+                            LayoutCachedWidth =760
+                            LayoutCachedHeight =2080
                             RowStart =4
                             RowEnd =4
                             LayoutGroup =1
@@ -1093,21 +1092,21 @@ Begin Form
                 Begin Label
                     FontItalic = NotDefault
                     OverlapFlags =85
-                    Left =810
-                    Top =885
+                    Left =830
+                    Top =900
                     Width =2020
-                    Height =315
+                    Height =320
                     FontWeight =700
                     Name ="Label31"
                     Caption ="Valid"
                     GUID = Begin
-                        0x5b565f5e3e98b243b65daa0f9d65d882
+                        0x4c923d5ecdf8e249b064a3433fc001d8
                     End
                     GroupTable =1
-                    LayoutCachedLeft =810
-                    LayoutCachedTop =885
-                    LayoutCachedWidth =2830
-                    LayoutCachedHeight =1200
+                    LayoutCachedLeft =830
+                    LayoutCachedTop =900
+                    LayoutCachedWidth =2850
+                    LayoutCachedHeight =1220
                     RowStart =2
                     RowEnd =2
                     ColumnStart =1
@@ -1120,10 +1119,10 @@ Begin Form
                     FontItalic = NotDefault
                     OverlapFlags =85
                     TextAlign =1
-                    Left =2895
-                    Top =885
-                    Width =12165
-                    Height =315
+                    Left =2920
+                    Top =900
+                    Width =12200
+                    Height =320
                     FontWeight =700
                     LeftMargin =44
                     TopMargin =22
@@ -1132,13 +1131,13 @@ Begin Form
                     Name ="Label9"
                     Caption ="Description"
                     GUID = Begin
-                        0x31868ec3ede93745898c4ea3463495b3
+                        0xec9125b30fbbf0469aed512b6627f344
                     End
                     GroupTable =1
-                    LayoutCachedLeft =2895
-                    LayoutCachedTop =885
-                    LayoutCachedWidth =15060
-                    LayoutCachedHeight =1200
+                    LayoutCachedLeft =2920
+                    LayoutCachedTop =900
+                    LayoutCachedWidth =15120
+                    LayoutCachedHeight =1220
                     RowStart =2
                     RowEnd =2
                     ColumnStart =2
@@ -1153,15 +1152,15 @@ Begin Form
                     TextAlign =1
                     IMESentenceMode =3
                     ColumnCount =2
-                    Left =6405
-                    Top =45
-                    Width =8655
+                    Left =6460
+                    Top =50
+                    Width =8660
                     Height =360
                     TabIndex =1
                     ForeColor =4210752
                     ColumnInfo ="\"\";\"\";\"\";\"\";\"10\";\"510\""
                     GUID = Begin
-                        0x98fc076cb99cb8498856cc21ecbe890f
+                        0xe731e8ef71fa7241970fd1f7285bb319
                     End
                     Name ="id_development_status"
                     ControlSource ="id_development_status"
@@ -1170,10 +1169,10 @@ Begin Form
                     ColumnWidths ="0"
                     GroupTable =1
 
-                    LayoutCachedLeft =6405
-                    LayoutCachedTop =45
-                    LayoutCachedWidth =15060
-                    LayoutCachedHeight =405
+                    LayoutCachedLeft =6460
+                    LayoutCachedTop =50
+                    LayoutCachedWidth =15120
+                    LayoutCachedHeight =410
                     ColumnStart =4
                     ColumnEnd =4
                     LayoutGroup =1
@@ -1185,21 +1184,21 @@ Begin Form
                         Begin Label
                             OverlapFlags =85
                             TextAlign =1
-                            Left =4680
-                            Top =45
-                            Width =1665
+                            Left =4720
+                            Top =50
+                            Width =1670
                             Height =360
                             FontWeight =700
                             Name ="lbl_id_development_status"
                             Caption ="Status:"
                             GUID = Begin
-                                0x5f9a66c103a15844b58bbc20595195a0
+                                0x4ef762a94c6f9946b60452bf81e40f62
                             End
                             GroupTable =1
-                            LayoutCachedLeft =4680
-                            LayoutCachedTop =45
-                            LayoutCachedWidth =6345
-                            LayoutCachedHeight =405
+                            LayoutCachedLeft =4720
+                            LayoutCachedTop =50
+                            LayoutCachedWidth =6390
+                            LayoutCachedHeight =410
                             ColumnStart =3
                             ColumnEnd =3
                             LayoutGroup =1
@@ -1209,9 +1208,9 @@ Begin Form
                 End
                 Begin Subform
                     OverlapFlags =85
-                    Left =45
-                    Top =3015
-                    Width =15015
+                    Left =50
+                    Top =3070
+                    Width =15070
                     Height =5670
                     TabIndex =7
                     Name ="dqm_dq_control_list_from_dq_requirement"
@@ -1219,14 +1218,14 @@ Begin Form
                     LinkChildFields ="id_dq_requirement;id_model"
                     LinkMasterFields ="id_dq_requirement;id_model"
                     GUID = Begin
-                        0xbb26f1db754c1540b3c26d46b78a792b
+                        0xaa1025aa65d6614292a7b7ccc8af56ce
                     End
                     GroupTable =1
 
-                    LayoutCachedLeft =45
-                    LayoutCachedTop =3015
-                    LayoutCachedWidth =15060
-                    LayoutCachedHeight =8685
+                    LayoutCachedLeft =50
+                    LayoutCachedTop =3070
+                    LayoutCachedWidth =15120
+                    LayoutCachedHeight =8740
                     RowStart =6
                     RowEnd =6
                     ColumnEnd =4
@@ -1235,20 +1234,20 @@ Begin Form
                 End
                 Begin Label
                     OverlapFlags =85
-                    Left =45
-                    Top =885
-                    Width =705
-                    Height =315
+                    Left =50
+                    Top =900
+                    Width =710
+                    Height =320
                     Name ="Label66"
                     Caption =" "
                     GUID = Begin
-                        0x4ec680ec24ee9746896386f4c7f9f32e
+                        0x0ebb32d97d34b74cb8643bd6f3e68645
                     End
                     GroupTable =1
-                    LayoutCachedLeft =45
-                    LayoutCachedTop =885
-                    LayoutCachedWidth =750
-                    LayoutCachedHeight =1200
+                    LayoutCachedLeft =50
+                    LayoutCachedTop =900
+                    LayoutCachedWidth =760
+                    LayoutCachedHeight =1220
                     RowStart =2
                     RowEnd =2
                     LayoutGroup =1
@@ -1257,20 +1256,20 @@ Begin Form
                 End
                 Begin Label
                     OverlapFlags =85
-                    Left =810
-                    Top =2100
+                    Left =830
+                    Top =2140
                     Width =2020
-                    Height =855
+                    Height =860
                     Name ="Label79"
                     Caption =" "
                     GUID = Begin
-                        0x632f9a76f7c4e34687077bb28e5e38f5
+                        0xdfa0b3e94c37e74d8d392cdc16e3cc5e
                     End
                     GroupTable =1
-                    LayoutCachedLeft =810
-                    LayoutCachedTop =2100
-                    LayoutCachedWidth =2830
-                    LayoutCachedHeight =2955
+                    LayoutCachedLeft =830
+                    LayoutCachedTop =2140
+                    LayoutCachedWidth =2850
+                    LayoutCachedHeight =3000
                     RowStart =5
                     RowEnd =5
                     ColumnStart =1
@@ -1281,20 +1280,20 @@ Begin Form
                 End
                 Begin Label
                     OverlapFlags =85
-                    Left =45
-                    Top =2100
-                    Width =705
-                    Height =855
+                    Left =50
+                    Top =2140
+                    Width =710
+                    Height =860
                     Name ="Label80"
                     Caption =" "
                     GUID = Begin
-                        0x2fe940fdad50c4438c809173ab2057f2
+                        0x2f4a33d7c78d624db448481292f2d77f
                     End
                     GroupTable =1
-                    LayoutCachedLeft =45
-                    LayoutCachedTop =2100
-                    LayoutCachedWidth =750
-                    LayoutCachedHeight =2955
+                    LayoutCachedLeft =50
+                    LayoutCachedTop =2140
+                    LayoutCachedWidth =760
+                    LayoutCachedHeight =3000
                     RowStart =5
                     RowEnd =5
                     LayoutGroup =1
@@ -1307,7 +1306,7 @@ Begin Form
             Height =0
             Name ="FormFooter"
             GUID = Begin
-                0x21ff0a796c33004183a8a8b7c45eebd2
+                0xff0800e2f9a9284c92fc2f2c97c5f890
             End
             AutoHeight =1
             AlternateBackThemeColorIndex =1

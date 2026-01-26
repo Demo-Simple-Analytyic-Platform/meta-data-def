@@ -1,7 +1,7 @@
 Version =21
 VersionRequired =20
 PublishOption =1
-Checksum =-1010203651
+Checksum =-842278341
 Begin Form
     RecordSelectors = NotDefault
     NavigationButtons = NotDefault
@@ -16,54 +16,54 @@ Begin Form
     ItemSuffix =22
     Right =24105
     Bottom =13365
-    DatasheetGridlinesColor =15132391
+    DatasheetGridlinesColor =14806254
     Filter ="id_dataset = '000e0c0d020f0d070301090301001602'"
     RecSrcDt = Begin
         0x99d79b6c5457e640
     End
     GUID = Begin
-        0xb894550ac1f84d498502204b9bdf460c
+        0x55c5a578ce84bf4b8420573eab6bed96
     End
     NameMap = Begin
-        0x0acc0e550000000099f2cd9c3ef9334ebd1ece4f2eeb591e00000000b774cbd1 ,
-        0x5557e640000000000000000068006c0070005f0075006e0069006f006e005f00 ,
-        0x6d006f00720065005f007400680065006e005f003200000000000000101b993b ,
-        0x8fa55f429e412ad6ff3de1650700000099f2cd9c3ef9334ebd1ece4f2eeb591e ,
-        0x690064005f00640061007400610073006500740000000000000090f7556f0a0d ,
-        0x4840a898f491a0693a9601000000dc883b265e57e64000000000000000006800 ,
+        0x0acc0e5500000000787c80ab0cd61043b39a7794e0d90671000000009d07c523 ,
+        0x3278e640000000000000000068006c0070005f0075006e0069006f006e005f00 ,
+        0x6d006f00720065005f007400680065006e005f00320000000000000003b6c6b6 ,
+        0xf63ae942b1efa70216c725f407000000787c80ab0cd61043b39a7794e0d90671 ,
+        0x690064005f006400610074006100730065007400000000000000f3480d6e4677 ,
+        0x8e4e9fcd452042a8fc2c0100000032723d243278e64000000000000000006800 ,
         0x65006c007000650072005f0075006e0069006f006e005f006d006f0072006500 ,
         0x5f007400680065005f0032005f006400740061005f0064006100740061007300 ,
-        0x650074000000000000001fcf4be2f54c05448a0791158bff1ebf000000009964 ,
-        0xe4d45457e64000000000000000006400740061005f0064006100740061007300 ,
-        0x650074000000000000005d692f8d2c4fed4ca1f2a1747f9985f5070000001fcf ,
-        0x4be2f54c05448a0791158bff1ebf690064005f00640061007400610073006500 ,
-        0x740000000000000009729f6fb31e3d47b30a086a45cfa9860700000099f2cd9c ,
-        0x3ef9334ebd1ece4f2eeb591e740078005f0073006f0075007200630065005f00 ,
+        0x65007400000000000000a9bf195e097cfd468aa803b0e32ac4b400000000bb83 ,
+        0xb1233278e64000000000000000006400740061005f0064006100740061007300 ,
+        0x6500740000000000000001b841cffd0a7e4687e52a29f0889a9207000000a9bf ,
+        0x195e097cfd468aa803b0e32ac4b4690064005f00640061007400610073006500 ,
+        0x74000000000000005e94c2562f728c44bcce8075b7bb672407000000787c80ab ,
+        0x0cd61043b39a7794e0d90671740078005f0073006f0075007200630065005f00 ,
         0x7100750065007200790000000000000013928c5a42d91044bbe2ce549189c782 ,
-        0x01000000dc883b265e57e640000000000000000068006c0070005f0075006e00 ,
+        0x010000004dd434243278e640000000000000000068006c0070005f0075006e00 ,
         0x69006f006e005f006d006f00720065005f007400680065006e005f0032005f00 ,
         0x640061007400610073006500740073005f006c00690073007400000000000000 ,
-        0x1d56fea87cd14b43aaabe35755d39b8a00000000069f5ca75657e64000000000 ,
+        0x7edc52ddd1a2554792a08e8ea43d177d00000000cc69c6233278e64000000000 ,
         0x0000000068006c0070005f0075006e0069006f006e005f006d006f0072006500 ,
         0x5f007400680065006e005f0032005f0064006100740061007300650074007300 ,
-        0x0000000000003ce6ea447e4bdc4cbd6b7af4c68afd08070000001d56fea87cd1 ,
-        0x4b43aaabe35755d39b8a690064005f0064006100740061007300650074000000 ,
-        0x00000000e1323ee3fb2da945b7a5dc350a8ff6dd010000003ac452d76057e640 ,
+        0x000000000000f30f2a43b053b246baa08c042b7ae476070000007edc52ddd1a2 ,
+        0x554792a08e8ea43d177d690064005f0064006100740061007300650074000000 ,
+        0x00000000e1323ee3fb2da945b7a5dc350a8ff6dd01000000935035243278e640 ,
         0x000000000000000068006c0070005f0061007400740072006900620075007400 ,
         0x65005f0077006900740068005f006d0061007000700069006e0067005f006c00 ,
         0x690073007400000000000000000000000000000000000000000000000c000000 ,
         0x050000000000000000000000000000000000
     End
     RecordSource ="hlp_union_more_then_2"
-    DatasheetFontName ="Trebuchet MS"
+    DatasheetFontName ="Calibri"
     PrtMip = Begin
         0x6801000068010000680100006801000000000000201c0000e010000001000000 ,
         0x010000006801000000000000a10700000100000001000000
     End
     PrtDevMode = Begin
-        0x0091bc5da7010000f040f0f153000000f091bc5da70100000041f0f153000000 ,
+        0x008f37346402000060365d74a7000000208f37346402000070365d74a7000000 ,
         0x010403069c004003032f0000010009009a0b3408640001000f00580202000100 ,
-        0x580203000100413400c9bcc8fa7f0000000000000000000090c9bcc8fa7f0000 ,
+        0x580203000100413400ca6c46fb7f0000000000000000000070cb6c46fb7f0000 ,
         0x0000000002000000000000000000000000000000010000000000000001000000 ,
         0x0200000001000000ffffffff4749533400000000000000000000000044494e55 ,
         0x2200c80024031c00ac13d8c00000000000000000000000000000000000000000 ,
@@ -96,7 +96,7 @@ Begin Form
     PrtDevNames = Begin
         0x08002c003e000100000000000000000000000000000000000000000000000000 ,
         0x0000000000000000000000000000000000000000000000000000000000006e75 ,
-        0x6c3a00
+        0x6c3a000000000000000000
     End
     OnLoad ="[Event Procedure]"
     AllowDatasheetView =0
@@ -113,11 +113,11 @@ Begin Form
     AlternateBackThemeColorIndex =1
     AlternateBackShade =95.0
     PrtDevModeW = Begin
-        0x0000000000000000000000000000000000000000000000000000000000000000 ,
-        0x2900000000000000000000000000000000000000000000000000000000000000 ,
+        0x000000000000000050010b746402000080000000a70000006800000000000000 ,
+        0xc03e0d0d6402000028030b746402000003000000000000000000000000000000 ,
         0x01040306dc004003032f0000010009009a0b3408640001000f00580202000100 ,
-        0x5802030001004100340000000000000000000000000000000000000000000000 ,
-        0x0000000000000000000000000000000000000000000000000000000000000000 ,
+        0x580203000100410034000000000000008085b60964020000a4ccc918fc7f0000 ,
+        0x400400000000000000000000000000000000000000000000fc8f007300000000 ,
         0x0000000000000000000000000000000000000000010000000000000001000000 ,
         0x0200000001000000ffffffff4749533400000000000000000000000044494e55 ,
         0x2200c80024031c00ac13d8c00000000000000000000000000000000000000000 ,
@@ -151,7 +151,8 @@ Begin Form
         0x040028003a000100000000000000000000000000000000000000000000000000 ,
         0x0000000000000000000000000000000000000000000000000000000000000000 ,
         0x0000000000000000000000000000000000000000000000000000000000000000 ,
-        0x00000000000000000000000000000000000000006e0075006c003a000000
+        0x00000000000000000000000000000000000000006e0075006c003a0000000000 ,
+        0x0000000000000000000000000000
     End
     NoSaveCTIWhenDisabled =1
     Begin
@@ -160,7 +161,7 @@ Begin Form
             FontSize =11
             BorderColor =8355711
             ForeColor =6710886
-            FontName ="Trebuchet MS"
+            FontName ="Calibri"
             GridlineColor =10921638
             ThemeFontIndex =1
             BackThemeColorIndex =1
@@ -177,7 +178,7 @@ Begin Form
             FontSize =11
             FontWeight =400
             ForeColor =4210752
-            FontName ="Trebuchet MS"
+            FontName ="Calibri"
             GridlineColor =10921638
             ForeThemeColorIndex =0
             ForeTint =75.0
@@ -186,18 +187,18 @@ Begin Form
             UseTheme =1
             Shape =1
             Gradient =12
-            BackColor =14461583
+            BackColor =14136213
             BackThemeColorIndex =4
             BackTint =60.0
             BorderLineStyle =0
-            BorderColor =14461583
+            BorderColor =14136213
             BorderThemeColorIndex =4
             BorderTint =60.0
             ThemeFontIndex =1
-            HoverColor =15189940
+            HoverColor =15060409
             HoverThemeColorIndex =4
             HoverTint =40.0
-            PressedColor =9917743
+            PressedColor =9592887
             PressedThemeColorIndex =4
             PressedShade =75.0
             HoverForeColor =4210752
@@ -216,7 +217,7 @@ Begin Form
             FontSize =11
             BorderColor =10921638
             ForeColor =4210752
-            FontName ="Trebuchet MS"
+            FontName ="Calibri"
             AsianLineBreak =1
             GridlineColor =10921638
             BackThemeColorIndex =1
@@ -241,10 +242,11 @@ Begin Form
             ShowPageHeaderAndPageFooter =1
         End
         Begin Tab
+            TextFontFamily =18
             Width =5103
             Height =3402
             FontSize =11
-            FontName ="Trebuchet MS"
+            FontName ="Cambria"
             GridlineColor =10921638
             ThemeFontIndex =0
             GridlineThemeColorIndex =1
@@ -255,7 +257,7 @@ Begin Form
             BackThemeColorIndex =1
             BackShade =85.0
             BorderLineStyle =0
-            BorderColor =11573124
+            BorderColor =13995605
             BorderThemeColorIndex =2
             BorderTint =60.0
             HoverThemeColorIndex =1
@@ -288,10 +290,10 @@ Begin Form
         End
         Begin FormHeader
             Height =0
-            BackColor =15064278
+            BackColor =15849926
             Name ="FormHeader"
             GUID = Begin
-                0x52e39a2b9cf78144a5246057a4afe295
+                0x5cdab2ff40ed5347acdfeff0bc2f6507
             End
             AlternateBackThemeColorIndex =1
             AlternateBackShade =95.0
@@ -303,7 +305,7 @@ Begin Form
             Height =11325
             Name ="Detail"
             GUID = Begin
-                0x76ebb478c4e8674783661aa958132e8d
+                0xab969d7249e53a49b0c3ae33b497e42e
             End
             AlternateBackColor =15921906
             AlternateBackThemeColorIndex =1
@@ -317,8 +319,9 @@ Begin Form
                     Height =11265
                     Name ="pages"
                     GUID = Begin
-                        0xe19b1d813dfdff49ad25a5328edaea96
+                        0xaa8ab840e96f0943b39ad0865fee8cea
                     End
+
                     LayoutCachedTop =60
                     LayoutCachedWidth =20160
                     LayoutCachedHeight =11325
@@ -332,16 +335,16 @@ Begin Form
                             Name ="pg_step_o_inspect_target_dataset"
                             Caption ="Step 0: Define/Inspect target Dataset"
                             GUID = Begin
-                                0xce3808172722264f9d814cfb8b1bf7c5
+                                0x722a339eafc1284b9ae8b813e6ca915a
                             End
                             LayoutCachedLeft =75
                             LayoutCachedTop =570
                             LayoutCachedWidth =20085
                             LayoutCachedHeight =11250
-                            WebImagePaddingLeft =2
-                            WebImagePaddingTop =2
-                            WebImagePaddingRight =2
-                            WebImagePaddingBottom =2
+                            WebImagePaddingLeft =3
+                            WebImagePaddingTop =3
+                            WebImagePaddingRight =3
+                            WebImagePaddingBottom =3
                             Begin
                                 Begin Subform
                                     OverlapFlags =247
@@ -354,8 +357,9 @@ Begin Form
                                     LinkChildFields ="id_dataset"
                                     LinkMasterFields ="id_dataset"
                                     GUID = Begin
-                                        0x311034a9cdd0244693944d13b33db4c5
+                                        0xd32db2810effe441992fe5917054b00b
                                     End
+
                                     LayoutCachedLeft =120
                                     LayoutCachedTop =1201
                                     LayoutCachedWidth =14235
@@ -373,16 +377,17 @@ Begin Form
                                     OnClick ="[Event Procedure]"
                                     ControlTipText ="Find Next"
                                     GUID = Begin
-                                        0x9a901696a620b644bc2620ad50dcdbf6
+                                        0xe9adc58e1387c14c8a323d859cbfb9d5
                                     End
+
                                     LayoutCachedLeft =170
                                     LayoutCachedTop =623
                                     LayoutCachedWidth =4460
                                     LayoutCachedHeight =1058
-                                    WebImagePaddingLeft =2
-                                    WebImagePaddingTop =2
-                                    WebImagePaddingRight =1
-                                    WebImagePaddingBottom =1
+                                    WebImagePaddingLeft =3
+                                    WebImagePaddingTop =3
+                                    WebImagePaddingRight =2
+                                    WebImagePaddingBottom =2
                                     Overlaps =1
                                 End
                             End
@@ -396,16 +401,16 @@ Begin Form
                             Name ="pg_step_1_list_to_be_unioned_datasets"
                             Caption ="Step 1: List to be unioned Datasets"
                             GUID = Begin
-                                0xb3d89720dce65f47ae943f6a12fd6be2
+                                0x7da5a031896e7645858a748de4b60624
                             End
                             LayoutCachedLeft =75
                             LayoutCachedTop =570
                             LayoutCachedWidth =20085
                             LayoutCachedHeight =11250
-                            WebImagePaddingLeft =2
-                            WebImagePaddingTop =2
-                            WebImagePaddingRight =2
-                            WebImagePaddingBottom =2
+                            WebImagePaddingLeft =3
+                            WebImagePaddingTop =3
+                            WebImagePaddingRight =3
+                            WebImagePaddingBottom =3
                             Begin
                                 Begin Subform
                                     OverlapFlags =247
@@ -418,8 +423,9 @@ Begin Form
                                     LinkChildFields ="id_dataset"
                                     LinkMasterFields ="id_dataset"
                                     GUID = Begin
-                                        0x155806d68f49f545b5902ac7dec41a1e
+                                        0xcb0968c90dd3b2429b46cdda4c33e543
                                     End
+
                                     LayoutCachedLeft =120
                                     LayoutCachedTop =1200
                                     LayoutCachedWidth =14235
@@ -437,16 +443,17 @@ Begin Form
                                     OnClick ="[Event Procedure]"
                                     ControlTipText ="Find Next"
                                     GUID = Begin
-                                        0x511ede4700d36d4aa48f1535b10043a2
+                                        0xeeaacd90d8f75b40866ae7c43bdd9e9d
                                     End
+
                                     LayoutCachedLeft =165
                                     LayoutCachedTop =630
                                     LayoutCachedWidth =2160
                                     LayoutCachedHeight =1065
-                                    WebImagePaddingLeft =2
-                                    WebImagePaddingTop =2
-                                    WebImagePaddingRight =1
-                                    WebImagePaddingBottom =1
+                                    WebImagePaddingLeft =3
+                                    WebImagePaddingTop =3
+                                    WebImagePaddingRight =2
+                                    WebImagePaddingBottom =2
                                     Overlaps =1
                                 End
                             End
@@ -460,16 +467,16 @@ Begin Form
                             Name ="pg_step_2_inspect_attributes"
                             Caption ="Step 2: Inspect source attributes"
                             GUID = Begin
-                                0xead35b15249afd49b5e3b2d5a462ab5e
+                                0xc5b63828c29c9844a86446c6c639d020
                             End
                             LayoutCachedLeft =75
                             LayoutCachedTop =570
                             LayoutCachedWidth =20085
                             LayoutCachedHeight =11256
-                            WebImagePaddingLeft =2
-                            WebImagePaddingTop =2
-                            WebImagePaddingRight =2
-                            WebImagePaddingBottom =2
+                            WebImagePaddingLeft =3
+                            WebImagePaddingTop =3
+                            WebImagePaddingRight =3
+                            WebImagePaddingBottom =3
                             Begin
                                 Begin Subform
                                     OverlapFlags =247
@@ -480,8 +487,9 @@ Begin Form
                                     Name ="hlp_attribute_with_mapping_list"
                                     SourceObject ="Form.hlp_attribute_with_mapping_list"
                                     GUID = Begin
-                                        0x4a5ba83b6a7d8c4b84b517ddd53b065e
+                                        0x530ee77f3add5943aeeee717b51f6b19
                                     End
+
                                     LayoutCachedLeft =120
                                     LayoutCachedTop =1201
                                     LayoutCachedWidth =20085
@@ -498,16 +506,17 @@ Begin Form
                                     Caption ="Step 3: Validate Source Query"
                                     OnClick ="[Event Procedure]"
                                     GUID = Begin
-                                        0xc49da55f4e430041a61ca4036fd9238c
+                                        0x8f897c7556d46f4a87edef67b7996fc0
                                     End
+
                                     LayoutCachedLeft =165
                                     LayoutCachedTop =630
                                     LayoutCachedWidth =3330
                                     LayoutCachedHeight =1065
-                                    WebImagePaddingLeft =2
-                                    WebImagePaddingTop =2
-                                    WebImagePaddingRight =1
-                                    WebImagePaddingBottom =1
+                                    WebImagePaddingLeft =3
+                                    WebImagePaddingTop =3
+                                    WebImagePaddingRight =2
+                                    WebImagePaddingBottom =2
                                     Overlaps =1
                                 End
                             End
@@ -521,16 +530,16 @@ Begin Form
                             Name ="pg_step_3_validate_source_query"
                             Caption ="Step 3: Validata Source Query"
                             GUID = Begin
-                                0x571c827baa433c45836779507dcc0751
+                                0x782383c0dd751047ae21fa26d0870252
                             End
                             LayoutCachedLeft =75
                             LayoutCachedTop =570
                             LayoutCachedWidth =20085
                             LayoutCachedHeight =11250
-                            WebImagePaddingLeft =2
-                            WebImagePaddingTop =2
-                            WebImagePaddingRight =2
-                            WebImagePaddingBottom =2
+                            WebImagePaddingLeft =3
+                            WebImagePaddingTop =3
+                            WebImagePaddingRight =3
+                            WebImagePaddingBottom =3
                             Begin
                                 Begin TextBox
                                     EnterKeyBehavior = NotDefault
@@ -544,8 +553,9 @@ Begin Form
                                     Name ="tx_source_query"
                                     ControlSource ="tx_source_query"
                                     GUID = Begin
-                                        0xdd2f46fb96f59342be60c3d85122667d
+                                        0xff9a2d138d4ae44498a98052df3e1678
                                     End
+
                                     LayoutCachedLeft =120
                                     LayoutCachedTop =1201
                                     LayoutCachedWidth =20010
@@ -553,7 +563,7 @@ Begin Form
                                 End
                                 Begin CommandButton
                                     OverlapFlags =215
-                                    Left =165
+                                    Left =170
                                     Top =630
                                     Width =2520
                                     Height =435
@@ -562,19 +572,20 @@ Begin Form
                                     Caption ="Update Transformation"
                                     OnClick ="[Event Procedure]"
                                     GUID = Begin
-                                        0xabf16f5b03b1214c8d27023ede2a73c9
+                                        0xde789f99d829b143860e1ec7c661a117
                                     End
                                     GroupTable =1
-                                    LayoutCachedLeft =165
+
+                                    LayoutCachedLeft =170
                                     LayoutCachedTop =630
-                                    LayoutCachedWidth =2685
+                                    LayoutCachedWidth =2690
                                     LayoutCachedHeight =1065
                                     LayoutGroup =1
                                     GroupTable =1
-                                    WebImagePaddingLeft =2
-                                    WebImagePaddingTop =2
-                                    WebImagePaddingRight =1
-                                    WebImagePaddingBottom =1
+                                    WebImagePaddingLeft =3
+                                    WebImagePaddingTop =3
+                                    WebImagePaddingRight =2
+                                    WebImagePaddingBottom =2
                                 End
                             End
                         End
@@ -593,8 +604,9 @@ Begin Form
                     Name ="Text20"
                     ControlSource ="id_dataset"
                     GUID = Begin
-                        0x4f1145aeaba76c4bb28e4b572ac6db2d
+                        0x9ef442915e622f4c80bac321e7fb04c9
                     End
+
                     LayoutCachedLeft =14740
                     LayoutCachedTop =56
                     LayoutCachedWidth =17518
@@ -606,7 +618,7 @@ Begin Form
             Height =0
             Name ="FormFooter"
             GUID = Begin
-                0x007e98c25872204597323f15104f7d0b
+                0xf555a9a72d1ff84c972d82b39d95d24f
             End
             AutoHeight =1
             AlternateBackThemeColorIndex =1

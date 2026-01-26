@@ -1,7 +1,7 @@
 Version =21
 VersionRequired =20
 PublishOption =1
-Checksum =702913411
+Checksum =-574656632
 Begin Form
     RecordSelectors = NotDefault
     NavigationButtons = NotDefault
@@ -16,7 +16,7 @@ Begin Form
     ItemSuffix =35
     Right =26010
     Bottom =18760
-    DatasheetGridlinesColor =15132391
+    DatasheetGridlinesColor =14806254
     RecSrcDt = Begin
         0x0379ec2b124ce640
     End
@@ -24,31 +24,31 @@ Begin Form
         0x56b2ea03f2285746bb5ba77188700c7a
     End
     NameMap = Begin
-        0x0acc0e5500000000027bcbd56a6e0545817f67f5e8a464e201000000375bf0bb ,
-        0x0e4ce64000000000000000007300720064005f00640071005f00720065007300 ,
-        0x75006c0074005f007300740061007400750073000000000000001ec7b5834a73 ,
-        0x284298c4370e25f9ef33010000008d006dfe104ce64000000000000000006400 ,
-        0x71006d005f00640071005f0072006500710075006900720065006d0065006e00 ,
-        0x74005f006c00690073007400000000000000e3eab3c99ae77a46a731f9741d45 ,
-        0x51650100000021fc63d20e4ce64000000000000000007300720064005f006400 ,
-        0x71005f00640069006d0065006e00730069006f006e0000000000000040911b28 ,
-        0x05bed1459042c655dedc9d9701000000f0d51768104ce6400000000000000000 ,
-        0x7300720064005f00640071005f007200690073006b005f006c00650076006500 ,
-        0x6c00000000000000458be46549fe81429ac8312837f8125801000000c0a8f2ba ,
-        0x0e4ce64000000000000000007300720064005f00640071005f00720065007600 ,
+        0x0acc0e5500000000c64c3f4b37fc424083b9eeaa6654a6a2010000000a2f3724 ,
+        0x3278e6400000000000000000640071006d005f00640071005f00720065007100 ,
+        0x75006900720065006d0065006e0074005f006c00690073007400000000000000 ,
+        0x81f4de0f54385746ba0541981d49bb6301000000d7fe58e43178e64000000000 ,
+        0x000000007300720064005f00640071005f00640069006d0065006e0073006900 ,
+        0x6f006e00000000000000763ad15df72f6c4bad51658e7db60d8101000000264d ,
+        0x5be43178e64000000000000000007300720064005f00640071005f0072006900 ,
+        0x73006b005f006c006500760065006c00000000000000fbbedde3cf603f43a9ac ,
+        0xd77edc293cff01000000b61d40243278e6400000000000000000730072006400 ,
+        0x5f00640071005f0072006500730075006c0074005f0073007400610074007500 ,
+        0x730000000000000088fb4f2724853c4c9bb69e1918eee4550100000068fd4024 ,
+        0x3278e64000000000000000007300720064005f00640071005f00720065007600 ,
         0x6900650077005f00730074006100740075007300000000000000000000000000 ,
         0x000000000000000000000c000000050000000000000000000000000000000000
     End
-    DatasheetFontName ="Trebuchet MS"
+    DatasheetFontName ="Calibri"
     PrtMip = Begin
         0x6801000068010000680100006801000000000000201c0000e010000001000000 ,
         0x010000006801000000000000a10700000100000001000000
     End
     PrtDevMode = Begin
-        0x00001c1324020000000000000000000000000000000000000000000000000000 ,
+        0x0089ec0a640200007b29ec3dfb7f0000208eec0a640200000000000000000000 ,
         0x010403069c005014032f0100010009009a0b3408640001000f00580202000100 ,
-        0x5802030001004134008b5a4924020000605d6c262402000060c37ab0fd7f0000 ,
-        0xafe7564924020000000000000000000000000000010000000000000001000000 ,
+        0x58020300010041340019877bf77f0000e0275d74a7000000f0265d74a7000000 ,
+        0x0000000000000000000000000000000000000000010000000000000001000000 ,
         0x0200000001000000ffffffff4749533400000000000000000000000044494e55 ,
         0x2200c80024032c113f5d7b7e0000000000000000000000000000000000000000 ,
         0x0000000000000000050000000000050001000000000000000000000000000000 ,
@@ -217,7 +217,7 @@ Begin Form
     PrtDevNames = Begin
         0x08001f0036000100000000000000000000000000000000000000000000000000 ,
         0x00000000000000000000000000000000000000000000504f525450524f4d5054 ,
-        0x3a0000000000
+        0x3a00000000000000000000000000
     End
     AllowDatasheetView =0
     FilterOnLoad =0
@@ -233,12 +233,12 @@ Begin Form
     AlternateBackThemeColorIndex =1
     AlternateBackShade =95.0
     PrtDevModeW = Begin
-        0x00000000000000005778f6aefd7f00003062b711c00000009ad67ab0fd7f0000 ,
-        0x7f024002000000009ad67ab0fd7f000058004b00000000000001000000000000 ,
+        0x000000000000000000000000000000004000000000000000ae01000000000000 ,
+        0x0400000000000000100000000000000060190000000000000000000000000000 ,
         0x01040306dc005014032f0100010009009a0b3408640001000f00580202000100 ,
-        0x58020300010041003400000024020000a8021413240200002000000000000000 ,
-        0xe0021413240200000001000000000000200d1413240200001000000000000000 ,
-        0x0000000000000000000000000000000000000000010000000000000001000000 ,
+        0x580203000100410034000000fc7f0000f02a8b34640200000000000000000000 ,
+        0xc042f47364020000ac02f4736402000000000000000000001800000000000000 ,
+        0x1000000000000000000000000000000000000000010000000000000001000000 ,
         0x0200000001000000ffffffff4749533400000000000000000000000044494e55 ,
         0x2200c80024032c113f5d7b7e0000000000000000000000000000000000000000 ,
         0x0000000000000000050000000000050001000000000000000000000000000000 ,
@@ -409,7 +409,7 @@ Begin Form
         0x0000000000000000000000000000000000000000000000000000000000000000 ,
         0x0000000000000000000000000000000000000000000000000000000000000000 ,
         0x0000000050004f0052005400500052004f004d00500054003a00000000000000 ,
-        0x00000000
+        0x0000000000000000000000000000000000000000
     End
     NoSaveCTIWhenDisabled =1
     Begin
@@ -418,7 +418,7 @@ Begin Form
             FontSize =11
             BorderColor =8355711
             ForeColor =6710886
-            FontName ="Trebuchet MS"
+            FontName ="Calibri"
             GridlineColor =10921638
             ThemeFontIndex =1
             BackThemeColorIndex =1
@@ -481,10 +481,10 @@ Begin Form
             GridlineColor =10921638
             GridlineThemeColorIndex =1
             GridlineShade =65.0
-            HoverColor =15064278
+            HoverColor =15849926
             HoverThemeColorIndex =2
             HoverTint =20.0
-            PressedColor =11573124
+            PressedColor =13995605
             PressedThemeColorIndex =2
             PressedTint =60.0
             HoverForeColor =4210752
@@ -496,11 +496,11 @@ Begin Form
             BackThemeColorIndex =1
             OldBorderStyle =0
             BorderLineStyle =0
-            BorderColor =13553360
+            BorderColor =12835293
             BorderThemeColorIndex =3
             BorderShade =90.0
             ThemeFontIndex =1
-            FontName ="Trebuchet MS"
+            FontName ="Calibri"
             FontWeight =400
             FontSize =11
             ForeThemeColorIndex =0
@@ -533,11 +533,12 @@ Begin Form
                     GridlineStyleBottom =1
                     GridlineWidthBottom =4
                     HorizontalAnchor =2
+
                     LayoutCachedWidth =11730
                     LayoutCachedHeight =360
                     LayoutGroup =2
                     NavigationSubform ="NavigationSubform"
-                    GridlineColor =12874308
+                    GridlineColor =12419407
                     GridlineThemeColorIndex =4
                     GridlineShade =100.0
                     GroupTable =2
@@ -555,16 +556,17 @@ Begin Form
                             LeftPadding =0
                             TopPadding =0
                             BottomPadding =0
+
                             LayoutCachedWidth =1830
                             LayoutCachedHeight =360
                             LayoutGroup =1
                             NavigationTargetName ="dqm_dq_requirement_list"
                             NavigationTargetType =32768
                             Shape =3
-                            HoverColor =12874308
+                            HoverColor =12419407
                             HoverThemeColorIndex =4
                             HoverTint =100.0
-                            PressedColor =12874308
+                            PressedColor =12419407
                             PressedThemeColorIndex =4
                             PressedTint =100.0
                             HoverForeColor =16777215
@@ -573,10 +575,10 @@ Begin Form
                             PressedForeColor =16777215
                             PressedForeThemeColorIndex =1
                             PressedForeTint =100.0
-                            BackColor =15189940
+                            BackColor =15060409
                             BackThemeColorIndex =4
                             BackTint =40.0
-                            BorderColor =12874308
+                            BorderColor =12419407
                             BorderThemeColorIndex =4
                             BorderShade =100.0
                             GroupTable =1
@@ -598,6 +600,7 @@ Begin Form
                             LeftPadding =0
                             TopPadding =0
                             BottomPadding =0
+
                             LayoutCachedLeft =1860
                             LayoutCachedWidth =3430
                             LayoutCachedHeight =360
@@ -607,10 +610,10 @@ Begin Form
                             NavigationTargetName ="srd_dq_dimension"
                             NavigationTargetType =32768
                             Shape =3
-                            HoverColor =12874308
+                            HoverColor =12419407
                             HoverThemeColorIndex =4
                             HoverTint =100.0
-                            PressedColor =12874308
+                            PressedColor =12419407
                             PressedThemeColorIndex =4
                             PressedTint =100.0
                             HoverForeColor =16777215
@@ -619,10 +622,10 @@ Begin Form
                             PressedForeColor =16777215
                             PressedForeThemeColorIndex =1
                             PressedForeTint =100.0
-                            BackColor =15189940
+                            BackColor =15060409
                             BackThemeColorIndex =4
                             BackTint =40.0
-                            BorderColor =12874308
+                            BorderColor =12419407
                             BorderThemeColorIndex =4
                             BorderShade =100.0
                             GroupTable =1
@@ -644,6 +647,7 @@ Begin Form
                             LeftPadding =0
                             TopPadding =0
                             BottomPadding =0
+
                             LayoutCachedLeft =3460
                             LayoutCachedWidth =5000
                             LayoutCachedHeight =360
@@ -653,10 +657,10 @@ Begin Form
                             NavigationTargetName ="srd_dq_risk_level"
                             NavigationTargetType =32768
                             Shape =3
-                            HoverColor =12874308
+                            HoverColor =12419407
                             HoverThemeColorIndex =4
                             HoverTint =100.0
-                            PressedColor =12874308
+                            PressedColor =12419407
                             PressedThemeColorIndex =4
                             PressedTint =100.0
                             HoverForeColor =16777215
@@ -665,10 +669,10 @@ Begin Form
                             PressedForeColor =16777215
                             PressedForeThemeColorIndex =1
                             PressedForeTint =100.0
-                            BackColor =15189940
+                            BackColor =15060409
                             BackThemeColorIndex =4
                             BackTint =40.0
-                            BorderColor =12874308
+                            BorderColor =12419407
                             BorderThemeColorIndex =4
                             BorderShade =100.0
                             GroupTable =1
@@ -690,6 +694,7 @@ Begin Form
                             LeftPadding =0
                             TopPadding =0
                             BottomPadding =0
+
                             LayoutCachedLeft =5030
                             LayoutCachedWidth =6800
                             LayoutCachedHeight =360
@@ -699,10 +704,10 @@ Begin Form
                             NavigationTargetName ="srd_dq_result_status"
                             NavigationTargetType =32768
                             Shape =3
-                            HoverColor =12874308
+                            HoverColor =12419407
                             HoverThemeColorIndex =4
                             HoverTint =100.0
-                            PressedColor =12874308
+                            PressedColor =12419407
                             PressedThemeColorIndex =4
                             PressedTint =100.0
                             HoverForeColor =16777215
@@ -711,10 +716,10 @@ Begin Form
                             PressedForeColor =16777215
                             PressedForeThemeColorIndex =1
                             PressedForeTint =100.0
-                            BackColor =15189940
+                            BackColor =15060409
                             BackThemeColorIndex =4
                             BackTint =40.0
-                            BorderColor =12874308
+                            BorderColor =12419407
                             BorderThemeColorIndex =4
                             BorderShade =100.0
                             GroupTable =1
@@ -736,6 +741,7 @@ Begin Form
                             LeftPadding =0
                             TopPadding =0
                             BottomPadding =0
+
                             LayoutCachedLeft =6830
                             LayoutCachedWidth =8700
                             LayoutCachedHeight =360
@@ -745,10 +751,10 @@ Begin Form
                             NavigationTargetName ="srd_dq_review_status"
                             NavigationTargetType =32768
                             Shape =3
-                            HoverColor =12874308
+                            HoverColor =12419407
                             HoverThemeColorIndex =4
                             HoverTint =100.0
-                            PressedColor =12874308
+                            PressedColor =12419407
                             PressedThemeColorIndex =4
                             PressedTint =100.0
                             HoverForeColor =16777215
@@ -757,10 +763,10 @@ Begin Form
                             PressedForeColor =16777215
                             PressedForeThemeColorIndex =1
                             PressedForeTint =100.0
-                            BackColor =15189940
+                            BackColor =15060409
                             BackThemeColorIndex =4
                             BackTint =40.0
-                            BorderColor =12874308
+                            BorderColor =12419407
                             BorderThemeColorIndex =4
                             BorderShade =100.0
                             GroupTable =1
@@ -783,6 +789,7 @@ Begin Form
                             LeftPadding =0
                             TopPadding =0
                             BottomPadding =0
+
                             LayoutCachedLeft =8730
                             LayoutCachedWidth =10170
                             LayoutCachedHeight =360
@@ -791,10 +798,10 @@ Begin Form
                             LayoutGroup =1
                             DefaultInsertButton =1
                             Shape =3
-                            HoverColor =12874308
+                            HoverColor =12419407
                             HoverThemeColorIndex =4
                             HoverTint =100.0
-                            PressedColor =12874308
+                            PressedColor =12419407
                             PressedThemeColorIndex =4
                             PressedTint =100.0
                             HoverForeColor =16777215
@@ -803,10 +810,10 @@ Begin Form
                             PressedForeColor =16777215
                             PressedForeThemeColorIndex =1
                             PressedForeTint =100.0
-                            BackColor =15189940
+                            BackColor =15060409
                             BackThemeColorIndex =4
                             BackTint =40.0
-                            BorderColor =12874308
+                            BorderColor =12419407
                             BorderThemeColorIndex =4
                             BorderShade =100.0
                             GroupTable =1
@@ -831,6 +838,7 @@ Begin Form
                     RightPadding =0
                     HorizontalAnchor =2
                     VerticalAnchor =2
+
                     LayoutCachedTop =420
                     LayoutCachedWidth =11730
                     LayoutCachedHeight =7620

@@ -46,7 +46,7 @@ Function agg_list(ConcatColumn As String, Tbl As String, _
              Optional Criteria As String = "", _
             Optional Delimiter As String = ", ") As String
                  
-' ?agg_list("tx_join_criteria", "tmp_transformantion_dataset_rs_select", "cd_join_type = 'JOIN' AND nm_target_schema = 'dta_generic_utilities' AND nm_target_table = 'list_1_till_10000' AND cd_alias = 'ls' ORDER BY ni_join_criteria", " ")
+' ?agg_list("tx_join_criteria", "sometable_name", "cd_join_type = 'JOIN' AND nm_target_schema = 'dta_generic_utilities' AND nm_target_table = 'list_1_till_10000' AND cd_alias = 'ls' ORDER BY ni_join_criteria", " ")
 
     Dim rs As DAO.Recordset
     Dim sql As String
@@ -168,31 +168,31 @@ Function DetectSubqueries(sqlString As String, ByRef result As SQLAnalysisResult
     
     On Error GoTo RegexError
     
-    Dim regEx As Object
+    Dim regex As Object
     Dim matches As Object
     Dim match As Object
     Dim cleanSQL As String
     Dim i As Integer
     
     ' Create regex object
-    Set regEx = CreateObject("VBScript.RegExp")
+    Set regex = CreateObject("VBScript.RegExp")
     
     ' Clean SQL: remove string literals to avoid false matches
     cleanSQL = RemoveStringLiterals(sqlString)
     
     ' Configure regex for subquery detection
-    regEx.IgnoreCase = True
-    regEx.Global = True
+    regex.IgnoreCase = True
+    regex.Global = True
     
     ' Pattern explanation:
     ' \(\s* - Opening parenthesis followed by optional whitespace
     ' SELECT\b - SELECT keyword with word boundary
     ' (?:[^()]*|\([^()]*\))* - Match content that doesn't contain unmatched parentheses
     ' \) - Closing parenthesis
-    regEx.pattern = "\(\s*SELECT\b(?:[^()]*|\([^()]*\))*\)"
+    regex.pattern = "\(\s*SELECT\b(?:[^()]*|\([^()]*\))*\)"
     
     ' Find all matches
-    Set matches = regEx.Execute(cleanSQL)
+    Set matches = regex.Execute(cleanSQL)
     
     ' Process matches
     result.SubqueryCount = matches.Count
@@ -220,20 +220,20 @@ Private Function RemoveStringLiterals(sqlString As String) As String
     
     On Error GoTo SimpleReturn
     
-    Dim regEx As Object
+    Dim regex As Object
     Dim result As String
     
-    Set regEx = CreateObject("VBScript.RegExp")
-    regEx.Global = True
-    regEx.IgnoreCase = False
+    Set regex = CreateObject("VBScript.RegExp")
+    regex.Global = True
+    regex.IgnoreCase = False
     
     ' Remove single-quoted strings
-    regEx.pattern = "'(?:[^'\\]|\\.)*'"
-    result = regEx.Replace(sqlString, "''")
+    regex.pattern = "'(?:[^'\\]|\\.)*'"
+    result = regex.Replace(sqlString, "''")
     
     ' Remove double-quoted strings
-    regEx.pattern = """(?:[^""\\]|\\.)*"""
-    result = regEx.Replace(result, """""")
+    regex.pattern = """(?:[^""\\]|\\.)*"""
+    result = regex.Replace(result, """""")
     
     RemoveStringLiterals = result
     Exit Function
@@ -284,7 +284,7 @@ Function MinifySQL(ByVal inputText As String) As String
     Dim cp As Long, np As Long, lp As Long
     Dim CC As String, nc As String
     Dim pd As Boolean
-    Dim i As Long, M As Long
+    Dim i As Long, m As Long
     Dim e As String
 
     ' Step 1: Strip comments (you must implement this separately)
@@ -299,10 +299,10 @@ Function MinifySQL(ByVal inputText As String) As String
     cp = 1
     lp = Len(txMinified)
     i = 0
-    M = 1000000
+    m = 1000000
 
     ' Step 4: Loop through characters
-    Do While cp < lp And i < M
+    Do While cp < lp And i < m
         i = i + 1
         pd = False
         np = cp + 1
@@ -342,9 +342,9 @@ Function MinifySQL(ByVal inputText As String) As String
     Loop
 
     ' Step 5: Handle max iteration warning
-    If i = M Then
+    If i = m Then
         e = "--- Warning --------------------------------------------------------------" & vbCrLf & _
-            "  Function MinifySQL reached maximum iterations (" & M & ")." & vbCrLf & _
+            "  Function MinifySQL reached maximum iterations (" & m & ")." & vbCrLf & _
             "  Please check input for irregularities." & vbCrLf & _
             "---------------------------------------------------------------------------"
         txMinified = e

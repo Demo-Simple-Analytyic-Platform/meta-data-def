@@ -71,8 +71,8 @@ Public Function build_sql_clause_select(ip_id_model As String, ip_id_transformat
     Dim rst As Recordset: Set rst = CurrentDb.OpenRecordset(sql): sql = ""
     '
     ' Build SELECT-clause
-    Do While Not rst.EOF: sql = sql & IIf(sql = "", "SELECT ", nwl & "     , ") & rst.fields("tx_mapping") & " AS " & rst.fields("nm_column"): rst.MoveNext: Loop
-    If ip_is_debugging Then Debug.Print "SQL before replacing placeholders: " & sql
+    Do While Not rst.EOF: sql = sql & IIf(sql = "", "SELECT ", "     , ") & rst.fields("tx_mapping") & " AS " & rst.fields("nm_column") & nwl: rst.MoveNext: Loop
+    If ip_is_debugging Then Debug.Print "SQL before replacing placeholders: `" & sql & "`"
     '
     ' Replace the Meta-references for the Alias and Columns
     sql = placeholder_to_source_attributes(sql, ip_id_transformation_part)
@@ -101,9 +101,9 @@ Public Function build_sql_clause_from(ip_id_model As String, ip_id_transformatio
     sql = sql & nwl & "     , tds.cd_alias"
     sql = sql & nwl & "     , tds.tx_join_criteria"
     sql = sql & nwl & "     , [tds].[cd_join_type] & ' [' & [dst].[nm_target_schema] & '].[' & [dst].[nm_target_table] & '] AS [' & [tds].[cd_alias] & ']' & IIf("
-    sql = sql & nwl & "         Len(Nz ([tds].[tx_join_criteria], '')) = 0,"
+    sql = sql & nwl & "         Len(Trim(Nz([tds].[tx_join_criteria],''))) = 0,"
     sql = sql & nwl & "         '',"
-    sql = sql & nwl & "         ' ON ' & Nz ([tds].[tx_join_criteria], '')"
+    sql = sql & nwl & "         ' ON ' & Trim(Nz([tds].[tx_join_criteria],''))"
     sql = sql & nwl & "    ) AS tx_sql"
     sql = sql & nwl & ""
     sql = sql & nwl & "FROM dta_transformation_dataset AS tds"
@@ -120,7 +120,7 @@ Public Function build_sql_clause_from(ip_id_model As String, ip_id_transformatio
     Dim rst As Recordset: Set rst = CurrentDb.OpenRecordset(sql): sql = ""
     '
     ' Build SELECT-clause
-    Do While Not rst.EOF: sql = sql & nwl & rst.fields("tx_sql"): rst.MoveNext: Loop
+    Do While Not rst.EOF: sql = sql & rst.fields("tx_sql") & nwl: rst.MoveNext: Loop
     If ip_is_debugging Then Debug.Print "SQL before replacing placeholders: " & sql
     '
     ' Replace the Meta-references for the Alias and Columns
@@ -156,9 +156,9 @@ Public Function build_sql_clause_where_group_by_having(ip_id_model As String, ip
     Set rst = CurrentDb.OpenRecordset(sql): sql = ""
     '
     ' Build WHERE/GROUP BY and HAVING-clause
-    sql = sql & IIf(rst.fields("tx_sql_where") = "", "", IIf(sql = "", "", nwl) & rst.fields("tx_sql_where"))
-    sql = sql & IIf(rst.fields("tx_sql_group_by") = "", "", IIf(sql = "", "", nwl) & rst.fields("tx_sql_group_by") & nwl)
-    sql = sql & IIf(rst.fields("tx_sql_having") = "", "", IIf(sql = "", "", nwl) & rst.fields("tx_sql_having") & nwl)
+    sql = sql & IIf(rst.fields("tx_sql_where") = "", "", rst.fields("tx_sql_where") & nwl)
+    sql = sql & IIf(rst.fields("tx_sql_group_by") = "", "", rst.fields("tx_sql_group_by") & nwl)
+    sql = sql & IIf(rst.fields("tx_sql_having") = "", "", rst.fields("tx_sql_having") & nwl)
     If ip_is_debugging Then Debug.Print "SQL before replacing placeholders: " & sql
     '
     ' Done With recordset
@@ -188,9 +188,9 @@ Public Function build_sql_transformation_part(ip_id_model As String, ip_id_trans
     Dim sql_wgbh As String: sql_wgbh = build_sql_clause_where_group_by_having(ip_id_model, ip_id_transformation_part, ip_is_debugging)
     '
     ' Combining all SQL Clauses
-    sql = sql & IIf(sql_slct = "", "", IIf(sql = "", "", nwl) & sql_slct)
-    sql = sql & IIf(sql_from = "", "", IIf(sql = "", "", nwl) & sql_from)
-    sql = sql & IIf(sql_wgbh = "", "", IIf(sql = "", "", nwl & nwl) & sql_wgbh)
+    sql = sql & IIf(sql_slct = "", "", sql_slct)
+    sql = sql & IIf(sql_from = "", "", sql_from)
+    sql = sql & IIf(sql_wgbh = "", "", sql_wgbh)
     '
     ' Return Transformation Part
     If ip_is_debugging Then Debug.Print sql

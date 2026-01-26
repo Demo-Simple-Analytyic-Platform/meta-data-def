@@ -1,7 +1,7 @@
 Version =21
 VersionRequired =20
 PublishOption =1
-Checksum =-912304979
+Checksum =-1720528699
 Begin Form
     PopUp = NotDefault
     Modal = NotDefault
@@ -14,35 +14,35 @@ Begin Form
     PictureAlignment =2
     DatasheetGridlinesBehavior =3
     GridY =10
-    Width =5745
+    Width =5750
     DatasheetFontHeight =11
     ItemSuffix =14
     Left =3612
     Top =3024
     Right =-32608
     Bottom =20304
-    DatasheetGridlinesColor =15132391
+    DatasheetGridlinesColor =14806254
     RecSrcDt = Begin
         0xfc1464925de8e540
     End
     GUID = Begin
-        0x33194fe697a7184a81b725894ee2bb29
+        0x51fd50b68f87a247b1514dcf1d24bba4
     End
     NameMap = Begin
         0x0acc0e5500000000000000000000000000000000000000000c00000005000000 ,
         0x0000000000000000000000000000
     End
     Caption ="Updating Script Progress"
-    DatasheetFontName ="Trebuchet MS"
+    DatasheetFontName ="Calibri"
     PrtMip = Begin
         0x6801000068010000680100006801000000000000201c0000e010000001000000 ,
         0x010000006801000000000000a10700000100000001000000
     End
     PrtDevMode = Begin
-        0x0000000000000000f005d4cdf30100005062f9caf3010000500115b5f3010000 ,
+        0x0089ec0a640200007b29ec3dfb7f0000208eec0a640200000000000000000000 ,
         0x010403069c005014032f0100010009009a0b3408640001000f00580202000100 ,
-        0x580203000100413400c49cd9f3010000000015b5f30100008200000000000000 ,
-        0x50c49cd9f3010000000000000000000000000000010000000000000001000000 ,
+        0x58020300010041340019877bf77f0000e0275d74a7000000f0265d74a7000000 ,
+        0xe001f47364020000000000000000000000000000010000000000000001000000 ,
         0x0200000001000000ffffffff4749533400000000000000000000000044494e55 ,
         0x2200c80024032c113f5d7b7e0000000000000000000000000000000000000000 ,
         0x0000000000000000050000000000050001000000000000000000000000000000 ,
@@ -211,7 +211,7 @@ Begin Form
     PrtDevNames = Begin
         0x08001f0036000100000000000000000000000000000000000000000000000000 ,
         0x00000000000000000000000000000000000000000000504f525450524f4d5054 ,
-        0x3a00
+        0x3a000000000000000000
     End
     OnTimer ="[Event Procedure]"
     OnLoad ="[Event Procedure]"
@@ -229,12 +229,12 @@ Begin Form
     AlternateBackThemeColorIndex =1
     AlternateBackShade =95.0
     PrtDevModeW = Begin
-        0x0000000000000000000000000000000000000000000000000000000000000000 ,
-        0x74006f0020005000440046000000000000000000000000000000000000000000 ,
+        0x0000000000000000505d5e74a70000000000000000000000c402f47364020000 ,
+        0x0000000000000000000000000000000000c0f90f640200000000000000000000 ,
         0x01040306dc005014032f0100010009009a0b3408640001000f00580202000100 ,
-        0x580203000100410034000000f30100008178cf39a20000008c7e38d2fc7f0000 ,
-        0x0100000000000000000000000000000000000000000000000000000000000000 ,
-        0x0000000000000000000000000000000000000000010000000000000001000000 ,
+        0x5802030001004100340000006402000000000000000000000000000000000000 ,
+        0xc042f47364020000ac02f47364020000000000000000000000100000fb7f0000 ,
+        0x8093f57364020000000000000000000000000000010000000000000001000000 ,
         0x0200000001000000ffffffff4749533400000000000000000000000044494e55 ,
         0x2200c80024032c113f5d7b7e0000000000000000000000000000000000000000 ,
         0x0000000000000000050000000000050001000000000000000000000000000000 ,
@@ -404,7 +404,8 @@ Begin Form
         0x04001b0032000100000000000000000000000000000000000000000000000000 ,
         0x0000000000000000000000000000000000000000000000000000000000000000 ,
         0x0000000000000000000000000000000000000000000000000000000000000000 ,
-        0x0000000050004f0052005400500052004f004d00500054003a000000
+        0x0000000050004f0052005400500052004f004d00500054003a00000000000000 ,
+        0x000000000000000000000000
     End
     NoSaveCTIWhenDisabled =1
     Begin
@@ -413,7 +414,7 @@ Begin Form
             FontSize =11
             BorderColor =8355711
             ForeColor =6710886
-            FontName ="Trebuchet MS"
+            FontName ="Calibri"
             GridlineColor =10921638
             ThemeFontIndex =1
             BackThemeColorIndex =1
@@ -431,10 +432,10 @@ Begin Form
             GridlineShade =65.0
         End
         Begin Section
-            Height =1572
+            Height =1585
             Name ="Detail"
             GUID = Begin
-                0x62adf5e276a5f848ba3bb296f00ec5e4
+                0x366959b6b3b11f43bebd6a76078687e3
             End
             AlternateBackColor =15921906
             AlternateBackThemeColorIndex =1
@@ -445,22 +446,22 @@ Begin Form
                     FontItalic = NotDefault
                     OverlapFlags =85
                     TextAlign =2
-                    Left =36
-                    Top =36
-                    Width =5676
-                    Height =576
+                    Left =40
+                    Top =40
+                    Width =5680
+                    Height =580
                     FontSize =16
                     FontWeight =700
                     Name ="lbl_progress_bar"
                     Caption ="Updating Script File"
                     GUID = Begin
-                        0xa90154b6ae214b4abe14cda3f8bbc829
+                        0x21a9e0ef619a294caadd9dc280aaa94e
                     End
                     GroupTable =1
-                    LayoutCachedLeft =36
-                    LayoutCachedTop =36
-                    LayoutCachedWidth =5712
-                    LayoutCachedHeight =612
+                    LayoutCachedLeft =40
+                    LayoutCachedTop =40
+                    LayoutCachedWidth =5720
+                    LayoutCachedHeight =620
                     ColumnEnd =1
                     LayoutGroup =1
                     GroupTable =1
@@ -468,22 +469,22 @@ Begin Form
                 Begin Label
                     OverlapFlags =85
                     TextAlign =1
-                    Left =36
-                    Top =672
-                    Width =4668
-                    Height =576
+                    Left =40
+                    Top =680
+                    Width =4670
+                    Height =580
                     FontSize =20
                     FontWeight =700
                     Name ="tx_progress_bar"
                     Caption ="||||||||||||||||||||||||"
                     GUID = Begin
-                        0xde0b31b28f71704da5771841613f24a3
+                        0xbc60e29ebefdd6408920a2dc71f638ab
                     End
                     GroupTable =1
-                    LayoutCachedLeft =36
-                    LayoutCachedTop =672
-                    LayoutCachedWidth =4704
-                    LayoutCachedHeight =1248
+                    LayoutCachedLeft =40
+                    LayoutCachedTop =680
+                    LayoutCachedWidth =4710
+                    LayoutCachedHeight =1260
                     RowStart =1
                     RowEnd =1
                     LayoutGroup =1
@@ -493,22 +494,22 @@ Begin Form
                 Begin Label
                     OverlapFlags =85
                     TextAlign =3
-                    Left =4764
-                    Top =672
-                    Width =948
-                    Height =576
+                    Left =4770
+                    Top =680
+                    Width =950
+                    Height =580
                     FontSize =18
                     FontWeight =700
                     Name ="ni_percentage"
                     Caption ="100%"
                     GUID = Begin
-                        0x00c7edc464df504ab513b9b07cdfca9f
+                        0x2be430e78f09ba4384a56dc92bf5a705
                     End
                     GroupTable =1
-                    LayoutCachedLeft =4764
-                    LayoutCachedTop =672
-                    LayoutCachedWidth =5712
-                    LayoutCachedHeight =1248
+                    LayoutCachedLeft =4770
+                    LayoutCachedTop =680
+                    LayoutCachedWidth =5720
+                    LayoutCachedHeight =1260
                     RowStart =1
                     RowEnd =1
                     ColumnStart =1
@@ -518,20 +519,20 @@ Begin Form
                 End
                 Begin Label
                     OverlapFlags =85
-                    Left =36
-                    Top =1308
-                    Width =5676
+                    Left =40
+                    Top =1320
+                    Width =5680
                     Height =240
                     Name ="tx_nm_file"
                     Caption ="Done"
                     GUID = Begin
-                        0x6ae938fdb4865b41ab5bb4d2769aa61b
+                        0x68a437e7fda6024fa8593f899f78fc22
                     End
                     GroupTable =1
-                    LayoutCachedLeft =36
-                    LayoutCachedTop =1308
-                    LayoutCachedWidth =5712
-                    LayoutCachedHeight =1548
+                    LayoutCachedLeft =40
+                    LayoutCachedTop =1320
+                    LayoutCachedWidth =5720
+                    LayoutCachedHeight =1560
                     RowStart =2
                     RowEnd =2
                     ColumnEnd =1

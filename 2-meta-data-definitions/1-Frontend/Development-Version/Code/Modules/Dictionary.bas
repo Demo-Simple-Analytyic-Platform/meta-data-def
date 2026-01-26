@@ -97,7 +97,7 @@ Attribute item.VB_UserMemId = 0
 End Property
 Public Property Let item(key As Variant, Value As Variant)
 #If Mac Or Not UseScriptingDictionaryIfAvailable Then
-    If Me.Exists(key) Then
+    If Me.exists(key) Then
         dict_ReplaceKeyValue dict_GetKeyValue(key), key, Value
     Else
         dict_AddKeyValue key, Value
@@ -108,7 +108,7 @@ Public Property Let item(key As Variant, Value As Variant)
 End Property
 Public Property Set item(key As Variant, Value As Variant)
 #If Mac Or Not UseScriptingDictionaryIfAvailable Then
-    If Me.Exists(key) Then
+    If Me.exists(key) Then
         dict_ReplaceKeyValue dict_GetKeyValue(key), key, Value
     Else
         dict_AddKeyValue key, Value
@@ -141,7 +141,7 @@ End Property
 Public Sub add(key As Variant, item As Variant)
 Attribute add.VB_Description = "Add a new key and item to the dictionary."
 #If Mac Or Not UseScriptingDictionaryIfAvailable Then
-    If Not Me.Exists(key) Then
+    If Not Me.exists(key) Then
         dict_AddKeyValue key, item
     Else
         ' This key is already associated with an element of this collection
@@ -158,12 +158,12 @@ End Sub
 ' @param {Variant} Key
 ' @return {Boolean}
 ' --------------------------------------------- '
-Public Function Exists(key As Variant) As Boolean
-Attribute Exists.VB_Description = "Determine if a given key is in the dictionary."
+Public Function exists(key As Variant) As Boolean
+Attribute exists.VB_Description = "Determine if a given key is in the dictionary."
 #If Mac Or Not UseScriptingDictionaryIfAvailable Then
-    Exists = Not IsEmpty(dict_GetKeyValue(key))
+    exists = Not IsEmpty(dict_GetKeyValue(key))
 #Else
-    Exists = dict_pDictionary.Exists(key)
+    exists = dict_pDictionary.exists(key)
 #End If
 End Function
 

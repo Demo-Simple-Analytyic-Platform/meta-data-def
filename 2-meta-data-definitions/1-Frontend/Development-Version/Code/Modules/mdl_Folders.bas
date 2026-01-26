@@ -151,3 +151,9 @@ Public Function generate_id_model(ip_nm_repository As String) As String
     generate_id_model = LCase(encrypted_value)
     '
 End Function
+'
+' Sub: Create Folder if Not Exists
+Public Sub create_folder_if_not_exists(ip_fp_folderpath As String)
+  Dim fso As FileSystemObject: Set fso = New FileSystemObject
+  If (Not fso.FolderExists(ip_fp_folderpath)) Then Call fso.CreateFolder(ip_fp_folderpath)
+End Sub

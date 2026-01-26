@@ -19,6 +19,7 @@ Public Sub parse_transformation_column_mapping_attribute( _
   Optional ip_is_debugging As Boolean = False, _
   Optional ip_is_testing As Boolean = False _
 )
+On Error GoTo ErrorHandling
     '
     ' Local Variables for Building SQL
     Dim emp As String: emp = ""
@@ -58,4 +59,16 @@ Public Sub parse_transformation_column_mapping_attribute( _
     rst.Update
     rst.Close
     '
+    ' All is Well
+    Exit Sub
+    '
+ErrorHandling:
+  '
+  ' Print Error
+  Debug.Print ("--- Error --------------------------------------------------------------")
+  Debug.Print ("Err Number      : " & CStr(Err.Number))
+  Debug.Print ("Err Description : " & Err.Description)
+  Stop
+  Resume
+  '
 End Sub

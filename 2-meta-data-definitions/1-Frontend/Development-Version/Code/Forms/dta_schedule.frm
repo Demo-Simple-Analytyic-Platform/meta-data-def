@@ -1,7 +1,7 @@
 Version =21
 VersionRequired =20
 PublishOption =1
-Checksum =-1303790469
+Checksum =-245680824
 Begin Form
     RecordSelectors = NotDefault
     NavigationButtons = NotDefault
@@ -25,25 +25,25 @@ Begin Form
         0xc00609773d53e640
     End
     GUID = Begin
-        0xc051e6a2c9e0ca4cb1d7fb2fca94b905
+        0x48bf5b27347e4a4580ab585600e14dd5
     End
     NameMap = Begin
-        0x0acc0e55000000008bd31e8969b88041b77ab5a1220d794c000000000a90a263 ,
-        0xbc6fe64000000000000000006400740061005f00730063006800650064007500 ,
-        0x6c00650000000000000000000000000000000000000000000000070000008bd3 ,
-        0x1e8969b88041b77ab5a1220d794c6e0069005f0069006e007400650072007600 ,
-        0x61006c00000000000000afcce2df8679b7419dc2168dff8d6ea0070000008bd3 ,
-        0x1e8969b88041b77ab5a1220d794c640074005f00730074006100720074000000 ,
-        0x0000000078dcd691b858a54ca6ed0e41e2831f81070000008bd31e8969b88041 ,
-        0xb77ab5a1220d794c640074005f0065006e006400000000000000cc8e9e6042ce ,
-        0xf643af659cff6739760b070000008bd31e8969b88041b77ab5a1220d794c6900 ,
-        0x64005f00640061007400610073006500740000000000000067110393ee50084a ,
-        0xaf6d8f1396d212ff000000007d1ca563bc6fe640000000000000000064006400 ,
+        0x0acc0e5500000000ecf60a28e0f6b44ea4d888b777c914bd000000006d073721 ,
+        0x3278e64000000000000000006400740061005f00730063006800650064007500 ,
+        0x6c0065000000000000000000000000000000000000000000000007000000ecf6 ,
+        0x0a28e0f6b44ea4d888b777c914bd6e0069005f0069006e007400650072007600 ,
+        0x61006c0000000000000059b0f7141d9e2249866ca522c8810a7e07000000ecf6 ,
+        0x0a28e0f6b44ea4d888b777c914bd640074005f00730074006100720074000000 ,
+        0x0000000028f3a7508541e24d82c31198994fc64c07000000ecf60a28e0f6b44e ,
+        0xa4d888b777c914bd640074005f0065006e0064000000000000000465ca8d4acd ,
+        0x9141af35c646bb62e1f507000000ecf60a28e0f6b44ea4d888b777c914bd6900 ,
+        0x64005f006400610074006100730065007400000000000000905761a088a59a41 ,
+        0x9a97425dc26f5e0e00000000670c38213278e640000000000000000064006400 ,
         0x6c005f006400740061005f006400610074006100730065007400000000000000 ,
-        0xbd375b4f1ea3844786db4b4f9e598bbf070000008bd31e8969b88041b77ab5a1 ,
-        0x220d794c630064005f006600720065007100750065006e006300790000000000 ,
-        0x0000904bd99dbda1314a9aa08cfe185c5e4a070000008bd31e8969b88041b77a ,
-        0xb5a1220d794c690064005f007300630068006500640075006c00650000000000 ,
+        0xff6e8c2cca866c448bee06828948b41907000000ecf60a28e0f6b44ea4d888b7 ,
+        0x77c914bd630064005f006600720065007100750065006e006300790000000000 ,
+        0x0000a1d8e0d65deb4e4888b03746b2f7ca3807000000ecf60a28e0f6b44ea4d8 ,
+        0x88b777c914bd690064005f007300630068006500640075006c00650000000000 ,
         0x0000000000000000000000000000000000000c00000005000000000000000000 ,
         0x0000000000000000
     End
@@ -56,9 +56,9 @@ Begin Form
         0x010000006801000000000000a10700000100000001000000
     End
     PrtDevMode = Begin
-        0x0000000000000000000000000000000000000000000000000000000000000000 ,
+        0x0000e33dfb7f0000000000000000000000000000000000000c00000000000000 ,
         0x01040a0c9c00d40e03df8103010009009a0b3408640001001401fdff02000100 ,
-        0x0000010001004134000000000000000000000000000000000000000000000000 ,
+        0x0000010001004134000000000000000001000000000000000000000000000000 ,
         0x0000000000000000000000000000000000000000000000000000000001000000 ,
         0x02000000010000000100000000000000000000000000000000000000d40e0000 ,
         0x424a444d0a0c000000000000900a0000d9000000d90000000000000000000000 ,
@@ -185,7 +185,7 @@ Begin Form
         0x08001c0030000100000000000000000000000000000000000000000000000000 ,
         0x000000000000000000000000000000005753442d64393039326433322d623735 ,
         0x622d343265372d393263642d3936306635353337346432330000000000000000 ,
-        0x0000000000000000000000000000000000
+        0x000000000000000000000000000000000000000000
     End
     AllowDatasheetView =0
     FilterOnLoad =0
@@ -201,12 +201,12 @@ Begin Form
     AlternateBackThemeColorIndex =1
     AlternateBackShade =95.0
     PrtDevModeW = Begin
-        0x00001ae3f100000078171ae3f1000000481ad133f77f000038171ae3f1000000 ,
-        0x0000000000000000000000000000000000000000000000000000000000000000 ,
+        0x00005d74a7000000b0c85d74a70000001cca437cf77f00000200000000000000 ,
+        0x10d95d74a7000000040000000000000070c05d74a70000005a1892fbfb7f0000 ,
         0x01040a0cdc00d40e03df8103010009009a0b3408640001001401fdff02000100 ,
-        0x0000010001004100340000000600000007000000f8e0ce00e0191ae3f1000000 ,
-        0x0000000000000000a0171ae3f10000000000000000000000a0171ae3f1000000 ,
-        0x01000000fe7f0000000000000000000000000000000000000000000001000000 ,
+        0x000001000100410034000000a7000000f0c9437cf77f0000f8bf5d74a7000000 ,
+        0x0000000064020000000000000000000000007900700065000000000000000000 ,
+        0x0000000000000000000000000000000000000000000000000000000001000000 ,
         0x02000000010000000100000000000000000000000000000000000000d40e0000 ,
         0x424a444d0a0c000000000000900a0000d9000000d90000000000000000000000 ,
         0x0100000008520000047400002c01000054010000604f0000e47000002c010000 ,
@@ -335,7 +335,8 @@ Begin Form
         0x640039003000390032006400330032002d0062003700350062002d0034003200 ,
         0x650037002d0039003200630064002d0039003600300066003500350033003700 ,
         0x3400640032003300000000000000000000000000000000000000000000000000 ,
-        0x0000000000000000000000000000000000000000000000000000
+        0x0000000000000000000000000000000000000000000000000000000000000000 ,
+        0x0000
     End
     NoSaveCTIWhenDisabled =1
     Begin
@@ -430,7 +431,7 @@ Begin Form
             BackColor =15849926
             Name ="FormHeader"
             GUID = Begin
-                0x6c5790c403bd2345967025d4aad1a5f7
+                0xfefc35c4eb637348947f98719dc21c13
             End
             AutoHeight =1
             AlternateBackThemeColorIndex =1
@@ -442,7 +443,7 @@ Begin Form
             Height =1810
             Name ="Detail"
             GUID = Begin
-                0x941ad63ea7afe2409f5e45824da90e31
+                0x19c96c682b3d4f4192f484af3de3fa3b
             End
             AlternateBackColor =15921906
             AlternateBackThemeColorIndex =1
@@ -466,7 +467,7 @@ Begin Form
                     ControlSource ="ni_interval"
                     DefaultValue ="5"
                     GUID = Begin
-                        0xd4ba628cd4e33049920e937702203a83
+                        0xc3bfac444c041541bb1527335d26c40c
                     End
                     GroupTable =1
 
@@ -495,7 +496,7 @@ Begin Form
                             Name ="Label6"
                             Caption ="Interval"
                             GUID = Begin
-                                0xe0acd85fbed3ca4c8039481a64ebff93
+                                0xde04df7d0846cb4a96944d6dcde18848
                             End
                             GroupTable =1
                             LayoutCachedLeft =30
@@ -525,7 +526,7 @@ Begin Form
                     Name ="dt_start"
                     ControlSource ="dt_start"
                     GUID = Begin
-                        0x3babd66ffa6f934a8e3358884985f7fe
+                        0x89072128c4035747aec33923e1b95cb4
                     End
                     GroupTable =1
 
@@ -554,7 +555,7 @@ Begin Form
                             Name ="Label9"
                             Caption ="Start"
                             GUID = Begin
-                                0x1e0c6c02eee31544b7b1a355b4c14791
+                                0xddf590ac84538244972dcb7724841f43
                             End
                             GroupTable =1
                             LayoutCachedLeft =30
@@ -584,7 +585,7 @@ Begin Form
                     Name ="dt_end"
                     ControlSource ="dt_end"
                     GUID = Begin
-                        0xa89a454bdcba7f4382d383997cd188a6
+                        0x6074de798316274e8811978affca16d5
                     End
                     GroupTable =1
 
@@ -613,7 +614,7 @@ Begin Form
                             Name ="Label12"
                             Caption ="End"
                             GUID = Begin
-                                0xb3d77e7ae1f1f648abe750c7e9ccd610
+                                0xaa3ef1a3011cd0488cdc0cac218eace2
                             End
                             GroupTable =1
                             LayoutCachedLeft =30
@@ -642,7 +643,7 @@ Begin Form
                     ForeColor =4210752
                     ColumnInfo ="\"\";\"\";\"\";\"\";\"10\";\"0\""
                     GUID = Begin
-                        0xd1267c0333288944ba8719cd5fecf1e6
+                        0xb7125b11b4ba8049aca9a3bf3563e07b
                     End
                     Name ="id_dataset"
                     ControlSource ="id_dataset"
@@ -683,7 +684,7 @@ Begin Form
                             Name ="Label0"
                             Caption ="Schedule"
                             GUID = Begin
-                                0x611e5f1d1a4aac4898a025c53b03001e
+                                0x02e3151f282ed3449cf2b685bc74a0e7
                             End
                             GroupTable =1
                             LayoutCachedLeft =30
@@ -709,7 +710,7 @@ Begin Form
                     TabIndex =2
                     ForeColor =4210752
                     GUID = Begin
-                        0x7802448065b13847a4e53d9d2e419fce
+                        0x4080afd74192764fa4bb87b1dd64d9ae
                     End
                     Name ="cd_frequency"
                     ControlSource ="cd_frequency"
@@ -751,7 +752,7 @@ Begin Form
                             Name ="Label3"
                             Caption ="Frequency"
                             GUID = Begin
-                                0xfc017ba9fa4b5044ab62da4bcd41b29c
+                                0x0b7176fdacfa6f42ba4311fc6b140abd
                             End
                             GroupTable =1
                             LayoutCachedLeft =30
@@ -781,7 +782,7 @@ Begin Form
                     Name ="id_schedule"
                     ControlSource ="id_schedule"
                     GUID = Begin
-                        0x2c59cd1c798b2445ac70916e39c83459
+                        0x150bad25b2287749b20d361e53691422
                     End
                     GroupTable =1
 
@@ -808,7 +809,7 @@ Begin Form
                             Name ="Label19"
                             Caption ="id_schedule"
                             GUID = Begin
-                                0xdb023c5fbe0f1149845d5e991c7a0f76
+                                0x4ce5d0a48136e94b9a2dfb858b86caae
                             End
                             GroupTable =1
                             LayoutCachedLeft =30
@@ -826,7 +827,7 @@ Begin Form
             Height =0
             Name ="FormFooter"
             GUID = Begin
-                0x8136d27355a1a243834d13125b93e3b4
+                0x426bd778d29517418842d1e2674ab536
             End
             AutoHeight =1
             AlternateBackThemeColorIndex =1

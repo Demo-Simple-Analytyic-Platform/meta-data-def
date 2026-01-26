@@ -1,7 +1,7 @@
 Version =21
 VersionRequired =20
 PublishOption =1
-Checksum =-89955938
+Checksum =753569647
 Begin Form
     DatasheetFontItalic = NotDefault
     DividingLines = NotDefault
@@ -23,30 +23,30 @@ Begin Form
         0x844f6017a06fe640
     End
     GUID = Begin
-        0x8a18daf161e98c45be7b4ef38e497636
+        0xafaae04a3961884fb56bfc814720ba5b
     End
     NameMap = Begin
-        0x0acc0e550000000041d9bae08d720242bf6765e806d3455700000000e9cc506f ,
-        0x1f71e64000000000000000007300720064005f00640071005f00720069007300 ,
-        0x6b005f006c006500760065006c00000000000000650510b5365f0747ab3b7c2e ,
-        0xe83e141f0700000041d9bae08d720242bf6765e806d34557690064005f006d00 ,
-        0x6f00640065006c0000000000000085b13d4f16f0e34abac6d5cd450323880700 ,
-        0x000041d9bae08d720242bf6765e806d34557690064005f00640071005f007200 ,
-        0x690073006b005f006c006500760065006c00000000000000e0ae3866ab2e0d4f ,
-        0x8dcdd0d740b37ad90700000041d9bae08d720242bf6765e806d3455766006e00 ,
+        0x0acc0e55000000002fb5c2ae174e4942b3ba20ed61702cac00000000b2bad523 ,
+        0x3278e64000000000000000007300720064005f00640071005f00720069007300 ,
+        0x6b005f006c006500760065006c00000000000000db7a854c472b4b48845a485a ,
+        0x6207b6fa070000002fb5c2ae174e4942b3ba20ed61702cac690064005f006d00 ,
+        0x6f00640065006c000000000000007ca85b14de04b34b932f9fe17b6f95cb0700 ,
+        0x00002fb5c2ae174e4942b3ba20ed61702cac690064005f00640071005f007200 ,
+        0x690073006b005f006c006500760065006c0000000000000066c6433713b8c148 ,
+        0x9ebea0f7d50a5295070000002fb5c2ae174e4942b3ba20ed61702cac66006e00 ,
         0x5f00640071005f007200690073006b005f006c006500760065006c0000000000 ,
-        0x0000ce08b1ad2519234c8aba4c1f14cacdc00700000041d9bae08d720242bf67 ,
-        0x65e806d34557660064005f00640071005f007200690073006b005f006c006500 ,
-        0x760065006c0000000000000074777c6c3a891e43bc9bb3cf72d9d94807000000 ,
-        0x41d9bae08d720242bf6765e806d34557630064005f00640071005f0073007400 ,
-        0x610074007500730000000000000024de7ff74528c14c8f7366bdd10655290700 ,
-        0x000041d9bae08d720242bf6765e806d3455766006e005f00640071005f007300 ,
-        0x74006100740075007300000000000000e5fab058cc5add4faa34dbc11559bc20 ,
-        0x0700000041d9bae08d720242bf6765e806d34557660064005f00640071005f00 ,
-        0x73007400610074007500730000000000000017c3f57f183dc04b872839addfe1 ,
-        0xc0a00700000041d9bae08d720242bf6765e806d34557630064005f0064007100 ,
-        0x5f007200690073006b005f006c006500760065006c00000000000000c9b5fbf1 ,
-        0xf505794eb8dc194d104cbb59000000004196a263bc6fe6400000000000000000 ,
+        0x0000bae418b6808db844b6bf81aca03dedc6070000002fb5c2ae174e4942b3ba ,
+        0x20ed61702cac660064005f00640071005f007200690073006b005f006c006500 ,
+        0x760065006c00000000000000c5bcaac985562343bcfec3665adf07be07000000 ,
+        0x2fb5c2ae174e4942b3ba20ed61702cac630064005f00640071005f0073007400 ,
+        0x610074007500730000000000000067313f8d3006e945ad2e09b457994c720700 ,
+        0x00002fb5c2ae174e4942b3ba20ed61702cac66006e005f00640071005f007300 ,
+        0x74006100740075007300000000000000bb69abfc42b2e545aa370f0c650d305c ,
+        0x070000002fb5c2ae174e4942b3ba20ed61702cac660064005f00640071005f00 ,
+        0x7300740061007400750073000000000000000431a4ad06782440b25d58f942b9 ,
+        0x9553070000002fb5c2ae174e4942b3ba20ed61702cac630064005f0064007100 ,
+        0x5f007200690073006b005f006c006500760065006c0000000000000083beb52d ,
+        0x21d75e4fb48c44f9f95af07500000000d51348243278e6400000000000000000 ,
         0x640064006c005f006400740061005f006d006f00640065006c00000000000000 ,
         0x000000000000000000000000000000000c000000050000000000000000000000 ,
         0x000000000000
@@ -61,9 +61,9 @@ Begin Form
         0x010000006801000000000000a10700000100000001000000
     End
     PrtDevMode = Begin
-        0x0050435e1e020000d0cf3515f40000000050435e1e020000e0cf3515f4000000 ,
+        0x008f37346402000060365d74a7000000208f37346402000070365d74a7000000 ,
         0x010403069c00400303df8103010009009a0b3408640001001401fdff02000100 ,
-        0x580201000100413400c05a78f87f00000000000000000000d0c05a78f87f0000 ,
+        0x580201000100413400ca6c46fb7f0000000000000000000070cb6c46fb7f0000 ,
         0x0000000002000000000000000000000000000000010000000000000001000000 ,
         0x0200000001000000ffffffff4749533400000000000000000000000044494e55 ,
         0x2200c80024031c00ac13d8c00000000000000000000000000000000000000000 ,
@@ -96,7 +96,7 @@ Begin Form
     PrtDevNames = Begin
         0x08002c003e000100000000000000000000000000000000000000000000000000 ,
         0x0000000000000000000000000000000000000000000000000000000000006e75 ,
-        0x6c3a0000000000
+        0x6c3a000000000000000000
     End
     AllowFormView =0
     FilterOnLoad =0
@@ -111,11 +111,11 @@ Begin Form
     ForeThemeColorIndex =0
     AlternateBackThemeColorIndex =3
     PrtDevModeW = Begin
-        0x000000000000000050014d3e1e0200008000000000000000e500000000000000 ,
-        0x7026ce551e02000028034d3e1e02000003000000000000000000000000000000 ,
+        0x000000000000000050010b746402000080000000a70000006800000000000000 ,
+        0xc03e0d0d6402000028030b746402000003000000000000000000000000000000 ,
         0x01040306dc00400303df8103010009009a0b3408640001001401fdff02000100 ,
-        0x58020100010041003400000000000000e09221401e020000a4cc5118f97f0000 ,
-        0x400400000000000000000000000000000000000000000000d0ef003f00000000 ,
+        0x580201000100410034000000000000008085b60964020000a4ccc918fc7f0000 ,
+        0x400400000000000000000000000000000000000000000000fc8f007300000000 ,
         0x0000000000000000000000000000000000000000010000000000000001000000 ,
         0x0200000001000000ffffffff4749533400000000000000000000000044494e55 ,
         0x2200c80024031c00ac13d8c00000000000000000000000000000000000000000 ,
@@ -150,7 +150,7 @@ Begin Form
         0x0000000000000000000000000000000000000000000000000000000000000000 ,
         0x0000000000000000000000000000000000000000000000000000000000000000 ,
         0x00000000000000000000000000000000000000006e0075006c003a0000000000 ,
-        0x000000000000
+        0x0000000000000000000000000000
     End
     NoSaveCTIWhenDisabled =1
     Begin
@@ -219,10 +219,10 @@ Begin Form
             GridlineShade =65.0
         End
         Begin Section
-            Height =5850
+            Height =5960
             Name ="Details"
             GUID = Begin
-                0x99283cf6393782499585d3c8014550a1
+                0x0bbab98799c8314f930af5328e179149
             End
             AutoHeight =1
             AlternateBackColor =15921906
@@ -236,10 +236,10 @@ Begin Form
                     OverlapFlags =85
                     TextAlign =1
                     IMESentenceMode =3
-                    Left =2670
-                    Top =915
-                    Width =11325
-                    Height =345
+                    Left =2690
+                    Top =930
+                    Width =11330
+                    Height =350
                     TabIndex =1
                     LeftMargin =44
                     TopMargin =22
@@ -248,15 +248,15 @@ Begin Form
                     Name ="id_dq_risk_level"
                     ControlSource ="id_dq_risk_level"
                     GUID = Begin
-                        0xc43bd9d1978be24894711b0e440acabb
+                        0xfc76f8d77ae6f44b9c316eed63168b77
                     End
                     GroupTable =1
                     BottomPadding =150
 
-                    LayoutCachedLeft =2670
-                    LayoutCachedTop =915
-                    LayoutCachedWidth =13995
-                    LayoutCachedHeight =1260
+                    LayoutCachedLeft =2690
+                    LayoutCachedTop =930
+                    LayoutCachedWidth =14020
+                    LayoutCachedHeight =1280
                     RowStart =1
                     RowEnd =1
                     ColumnStart =1
@@ -267,10 +267,10 @@ Begin Form
                         Begin Label
                             OverlapFlags =85
                             TextAlign =1
-                            Left =345
-                            Top =915
-                            Width =2265
-                            Height =345
+                            Left =350
+                            Top =930
+                            Width =2270
+                            Height =350
                             LeftMargin =44
                             TopMargin =22
                             RightMargin =44
@@ -278,14 +278,14 @@ Begin Form
                             Name ="Bijschrift0"
                             Caption ="ID"
                             GUID = Begin
-                                0x5077b120d4495c4783884a2b68557c58
+                                0x707b27a323f14a4f87e15f6d83063fd0
                             End
                             GroupTable =1
                             BottomPadding =150
-                            LayoutCachedLeft =345
-                            LayoutCachedTop =915
-                            LayoutCachedWidth =2610
-                            LayoutCachedHeight =1260
+                            LayoutCachedLeft =350
+                            LayoutCachedTop =930
+                            LayoutCachedWidth =2620
+                            LayoutCachedHeight =1280
                             RowStart =1
                             RowEnd =1
                             LayoutGroup =1
@@ -297,10 +297,10 @@ Begin Form
                     OverlapFlags =85
                     TextAlign =1
                     IMESentenceMode =3
-                    Left =2670
-                    Top =1995
-                    Width =11325
-                    Height =345
+                    Left =2690
+                    Top =2040
+                    Width =11330
+                    Height =350
                     ColumnWidth =2610
                     TabIndex =3
                     LeftMargin =44
@@ -310,15 +310,15 @@ Begin Form
                     Name ="fn_dq_risk_level"
                     ControlSource ="fn_dq_risk_level"
                     GUID = Begin
-                        0x6b6a9eb82b992547a6353afea86c56a5
+                        0xb7e575fc91b0fd4fab55b6dacca9f411
                     End
                     GroupTable =1
                     BottomPadding =150
 
-                    LayoutCachedLeft =2670
-                    LayoutCachedTop =1995
-                    LayoutCachedWidth =13995
-                    LayoutCachedHeight =2340
+                    LayoutCachedLeft =2690
+                    LayoutCachedTop =2040
+                    LayoutCachedWidth =14020
+                    LayoutCachedHeight =2390
                     RowStart =3
                     RowEnd =3
                     ColumnStart =1
@@ -329,10 +329,10 @@ Begin Form
                         Begin Label
                             OverlapFlags =85
                             TextAlign =1
-                            Left =345
-                            Top =1995
-                            Width =2265
-                            Height =345
+                            Left =350
+                            Top =2040
+                            Width =2270
+                            Height =350
                             LeftMargin =44
                             TopMargin =22
                             RightMargin =44
@@ -340,14 +340,14 @@ Begin Form
                             Name ="Bijschrift3"
                             Caption ="DQ Risk Level (Name)"
                             GUID = Begin
-                                0x3d12b401fc6653409591a37c909b1756
+                                0xa6084851d97b9040b01b60235876ddb8
                             End
                             GroupTable =1
                             BottomPadding =150
-                            LayoutCachedLeft =345
-                            LayoutCachedTop =1995
-                            LayoutCachedWidth =2610
-                            LayoutCachedHeight =2340
+                            LayoutCachedLeft =350
+                            LayoutCachedTop =2040
+                            LayoutCachedWidth =2620
+                            LayoutCachedHeight =2390
                             RowStart =3
                             RowEnd =3
                             LayoutGroup =1
@@ -361,10 +361,10 @@ Begin Form
                     OverlapFlags =85
                     TextAlign =1
                     IMESentenceMode =3
-                    Left =2670
-                    Top =2520
-                    Width =11325
-                    Height =975
+                    Left =2690
+                    Top =2580
+                    Width =11330
+                    Height =980
                     ColumnWidth =3876
                     TabIndex =4
                     LeftMargin =44
@@ -374,16 +374,16 @@ Begin Form
                     Name ="fd_dq_risk_level"
                     ControlSource ="fd_dq_risk_level"
                     GUID = Begin
-                        0xa695f4e320084f41aff26b7f78a72547
+                        0x2ff2b20fd88e1443a12b10e70b2bdac7
                     End
                     GroupTable =1
                     BottomPadding =150
                     TextFormat =1
 
-                    LayoutCachedLeft =2670
-                    LayoutCachedTop =2520
-                    LayoutCachedWidth =13995
-                    LayoutCachedHeight =3495
+                    LayoutCachedLeft =2690
+                    LayoutCachedTop =2580
+                    LayoutCachedWidth =14020
+                    LayoutCachedHeight =3560
                     RowStart =4
                     RowEnd =4
                     ColumnStart =1
@@ -394,10 +394,10 @@ Begin Form
                         Begin Label
                             OverlapFlags =85
                             TextAlign =1
-                            Left =345
-                            Top =2520
-                            Width =2265
-                            Height =975
+                            Left =350
+                            Top =2580
+                            Width =2270
+                            Height =980
                             LeftMargin =44
                             TopMargin =22
                             RightMargin =44
@@ -405,14 +405,14 @@ Begin Form
                             Name ="Bijschrift6"
                             Caption ="DQ Risk Level (Description)"
                             GUID = Begin
-                                0x2161454c8e41d547975e57d05a4717aa
+                                0x72a7d04f44045045b4cb8ef3cd1e00ea
                             End
                             GroupTable =1
                             BottomPadding =150
-                            LayoutCachedLeft =345
-                            LayoutCachedTop =2520
-                            LayoutCachedWidth =2610
-                            LayoutCachedHeight =3495
+                            LayoutCachedLeft =350
+                            LayoutCachedTop =2580
+                            LayoutCachedWidth =2620
+                            LayoutCachedHeight =3560
                             RowStart =4
                             RowEnd =4
                             LayoutGroup =1
@@ -424,10 +424,10 @@ Begin Form
                     OverlapFlags =85
                     TextAlign =1
                     IMESentenceMode =3
-                    Left =2670
-                    Top =3675
-                    Width =11325
-                    Height =345
+                    Left =2690
+                    Top =3750
+                    Width =11330
+                    Height =350
                     ColumnWidth =2145
                     TabIndex =5
                     LeftMargin =44
@@ -437,15 +437,15 @@ Begin Form
                     Name ="cd_dq_status"
                     ControlSource ="cd_dq_status"
                     GUID = Begin
-                        0x9ae7aedc950b824a95ea6084eb8bc9a3
+                        0x6413a4e6cab4e641b6dd28c334c8e306
                     End
                     GroupTable =1
                     BottomPadding =150
 
-                    LayoutCachedLeft =2670
-                    LayoutCachedTop =3675
-                    LayoutCachedWidth =13995
-                    LayoutCachedHeight =4020
+                    LayoutCachedLeft =2690
+                    LayoutCachedTop =3750
+                    LayoutCachedWidth =14020
+                    LayoutCachedHeight =4100
                     RowStart =5
                     RowEnd =5
                     ColumnStart =1
@@ -456,10 +456,10 @@ Begin Form
                         Begin Label
                             OverlapFlags =85
                             TextAlign =1
-                            Left =345
-                            Top =3675
-                            Width =2265
-                            Height =345
+                            Left =350
+                            Top =3750
+                            Width =2270
+                            Height =350
                             LeftMargin =44
                             TopMargin =22
                             RightMargin =44
@@ -467,14 +467,14 @@ Begin Form
                             Name ="Bijschrift9"
                             Caption ="DQ Status (Code)"
                             GUID = Begin
-                                0xf513509c74342646811ba3f16e572d23
+                                0xde94c9df38a84244b1cfc8183ed994bd
                             End
                             GroupTable =1
                             BottomPadding =150
-                            LayoutCachedLeft =345
-                            LayoutCachedTop =3675
-                            LayoutCachedWidth =2610
-                            LayoutCachedHeight =4020
+                            LayoutCachedLeft =350
+                            LayoutCachedTop =3750
+                            LayoutCachedWidth =2620
+                            LayoutCachedHeight =4100
                             RowStart =5
                             RowEnd =5
                             LayoutGroup =1
@@ -486,10 +486,10 @@ Begin Form
                     OverlapFlags =85
                     TextAlign =1
                     IMESentenceMode =3
-                    Left =2670
-                    Top =4200
-                    Width =11325
-                    Height =345
+                    Left =2690
+                    Top =4290
+                    Width =11330
+                    Height =350
                     ColumnWidth =2235
                     TabIndex =6
                     LeftMargin =44
@@ -499,15 +499,15 @@ Begin Form
                     Name ="fn_dq_status"
                     ControlSource ="fn_dq_status"
                     GUID = Begin
-                        0xab1b62d9efffa146a710acf2ac7a1dc0
+                        0xbbf71d4f2495b24298485ce2b0ed9f11
                     End
                     GroupTable =1
                     BottomPadding =150
 
-                    LayoutCachedLeft =2670
-                    LayoutCachedTop =4200
-                    LayoutCachedWidth =13995
-                    LayoutCachedHeight =4545
+                    LayoutCachedLeft =2690
+                    LayoutCachedTop =4290
+                    LayoutCachedWidth =14020
+                    LayoutCachedHeight =4640
                     RowStart =6
                     RowEnd =6
                     ColumnStart =1
@@ -518,10 +518,10 @@ Begin Form
                         Begin Label
                             OverlapFlags =85
                             TextAlign =1
-                            Left =345
-                            Top =4200
-                            Width =2265
-                            Height =345
+                            Left =350
+                            Top =4290
+                            Width =2270
+                            Height =350
                             LeftMargin =44
                             TopMargin =22
                             RightMargin =44
@@ -529,14 +529,14 @@ Begin Form
                             Name ="Bijschrift12"
                             Caption ="DQ Status (Name)"
                             GUID = Begin
-                                0x145c9be5698bb64dae3c06cf1bf84db0
+                                0x5451d52f4767864a9f43b8d9257a81b6
                             End
                             GroupTable =1
                             BottomPadding =150
-                            LayoutCachedLeft =345
-                            LayoutCachedTop =4200
-                            LayoutCachedWidth =2610
-                            LayoutCachedHeight =4545
+                            LayoutCachedLeft =350
+                            LayoutCachedTop =4290
+                            LayoutCachedWidth =2620
+                            LayoutCachedHeight =4640
                             RowStart =6
                             RowEnd =6
                             LayoutGroup =1
@@ -550,10 +550,10 @@ Begin Form
                     OverlapFlags =85
                     TextAlign =1
                     IMESentenceMode =3
-                    Left =2670
-                    Top =4725
-                    Width =11325
-                    Height =975
+                    Left =2690
+                    Top =4830
+                    Width =11330
+                    Height =980
                     ColumnWidth =5628
                     TabIndex =7
                     LeftMargin =44
@@ -563,16 +563,16 @@ Begin Form
                     Name ="fd_dq_status"
                     ControlSource ="fd_dq_status"
                     GUID = Begin
-                        0x0c65d592cc0c1441b11f83f21349fd16
+                        0xdd1de7ed23862946bf247adb63a20350
                     End
                     GroupTable =1
                     BottomPadding =150
                     TextFormat =1
 
-                    LayoutCachedLeft =2670
-                    LayoutCachedTop =4725
-                    LayoutCachedWidth =13995
-                    LayoutCachedHeight =5700
+                    LayoutCachedLeft =2690
+                    LayoutCachedTop =4830
+                    LayoutCachedWidth =14020
+                    LayoutCachedHeight =5810
                     RowStart =7
                     RowEnd =7
                     ColumnStart =1
@@ -583,10 +583,10 @@ Begin Form
                         Begin Label
                             OverlapFlags =85
                             TextAlign =1
-                            Left =345
-                            Top =4725
-                            Width =2265
-                            Height =975
+                            Left =350
+                            Top =4830
+                            Width =2270
+                            Height =980
                             LeftMargin =44
                             TopMargin =22
                             RightMargin =44
@@ -594,14 +594,14 @@ Begin Form
                             Name ="Bijschrift15"
                             Caption ="DQ Status (Description)"
                             GUID = Begin
-                                0xf22972539c2bbe47bb5bff4a3df34bad
+                                0x6fd501fe2fe17f41b1b7eb1e0d5b0d5a
                             End
                             GroupTable =1
                             BottomPadding =150
-                            LayoutCachedLeft =345
-                            LayoutCachedTop =4725
-                            LayoutCachedWidth =2610
-                            LayoutCachedHeight =5700
+                            LayoutCachedLeft =350
+                            LayoutCachedTop =4830
+                            LayoutCachedWidth =2620
+                            LayoutCachedHeight =5810
                             RowStart =7
                             RowEnd =7
                             LayoutGroup =1
@@ -613,10 +613,10 @@ Begin Form
                     OverlapFlags =85
                     TextAlign =1
                     IMESentenceMode =3
-                    Left =2670
-                    Top =1440
-                    Width =11325
-                    Height =375
+                    Left =2690
+                    Top =1470
+                    Width =11330
+                    Height =380
                     ColumnWidth =2520
                     TabIndex =2
                     LeftMargin =44
@@ -626,15 +626,15 @@ Begin Form
                     Name ="cd_dq_risk_level"
                     ControlSource ="cd_dq_risk_level"
                     GUID = Begin
-                        0x582f6f0a409b7644ab26461c31c289f2
+                        0x09645bf6c00cf947b9026c2821a7d675
                     End
                     GroupTable =1
                     BottomPadding =150
 
-                    LayoutCachedLeft =2670
-                    LayoutCachedTop =1440
-                    LayoutCachedWidth =13995
-                    LayoutCachedHeight =1815
+                    LayoutCachedLeft =2690
+                    LayoutCachedTop =1470
+                    LayoutCachedWidth =14020
+                    LayoutCachedHeight =1850
                     RowStart =2
                     RowEnd =2
                     ColumnStart =1
@@ -645,10 +645,10 @@ Begin Form
                         Begin Label
                             OverlapFlags =85
                             TextAlign =1
-                            Left =345
-                            Top =1440
-                            Width =2265
-                            Height =375
+                            Left =350
+                            Top =1470
+                            Width =2270
+                            Height =380
                             LeftMargin =44
                             TopMargin =22
                             RightMargin =44
@@ -656,14 +656,14 @@ Begin Form
                             Name ="Bijschrift18"
                             Caption ="DQ Risk Level (Code)"
                             GUID = Begin
-                                0xb7843d90e563a14383053b457775bb4a
+                                0x774ebd31b42dd4458598dab9ee60592d
                             End
                             GroupTable =1
                             BottomPadding =150
-                            LayoutCachedLeft =345
-                            LayoutCachedTop =1440
-                            LayoutCachedWidth =2610
-                            LayoutCachedHeight =1815
+                            LayoutCachedLeft =350
+                            LayoutCachedTop =1470
+                            LayoutCachedWidth =2620
+                            LayoutCachedHeight =1850
                             RowStart =2
                             RowEnd =2
                             LayoutGroup =1
@@ -678,14 +678,14 @@ Begin Form
                     TextAlign =1
                     IMESentenceMode =3
                     ColumnCount =2
-                    Left =2670
-                    Top =345
-                    Width =11325
+                    Left =2690
+                    Top =350
+                    Width =11330
                     Height =390
                     ForeColor =4210752
                     ColumnInfo ="\"\";\"\";\"\";\"\";\"10\";\"32\""
                     GUID = Begin
-                        0xd616609f5eb65e4085becb6367a25a22
+                        0x30fad6887a12cc4da809272d6279f438
                     End
                     Name ="id_model"
                     ControlSource ="id_model"
@@ -700,10 +700,10 @@ Begin Form
                     RightMargin =44
                     BottomMargin =22
 
-                    LayoutCachedLeft =2670
-                    LayoutCachedTop =345
-                    LayoutCachedWidth =13995
-                    LayoutCachedHeight =735
+                    LayoutCachedLeft =2690
+                    LayoutCachedTop =350
+                    LayoutCachedWidth =14020
+                    LayoutCachedHeight =740
                     ColumnStart =1
                     ColumnEnd =1
                     LayoutGroup =1
@@ -715,9 +715,9 @@ Begin Form
                         Begin Label
                             OverlapFlags =85
                             TextAlign =1
-                            Left =345
-                            Top =345
-                            Width =2265
+                            Left =350
+                            Top =350
+                            Width =2270
                             Height =390
                             LeftMargin =44
                             TopMargin =22
@@ -726,14 +726,14 @@ Begin Form
                             Name ="Label9"
                             Caption ="id_model"
                             GUID = Begin
-                                0x42c6f608b8239046b023d203717b2e90
+                                0x49b5bd8b92be644b842ebcee45893f4a
                             End
                             GroupTable =1
                             BottomPadding =150
-                            LayoutCachedLeft =345
-                            LayoutCachedTop =345
-                            LayoutCachedWidth =2610
-                            LayoutCachedHeight =735
+                            LayoutCachedLeft =350
+                            LayoutCachedTop =350
+                            LayoutCachedWidth =2620
+                            LayoutCachedHeight =740
                             LayoutGroup =1
                             GroupTable =1
                         End

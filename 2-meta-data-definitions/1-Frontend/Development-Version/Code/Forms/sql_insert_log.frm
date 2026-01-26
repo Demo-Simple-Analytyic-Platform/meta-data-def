@@ -1,13 +1,12 @@
 Version =21
 VersionRequired =20
 PublishOption =1
-Checksum =1669583480
+Checksum =-1576808762
 Begin Form
     AllowFilters = NotDefault
     AllowDeletions = NotDefault
     DividingLines = NotDefault
     AllowAdditions = NotDefault
-    FilterOn = NotDefault
     AllowEdits = NotDefault
     AllowDesignChanges = NotDefault
     DefaultView =0
@@ -19,46 +18,46 @@ Begin Form
     ItemSuffix =49
     Right =15380
     Bottom =17220
-    DatasheetGridlinesColor =15132391
+    DatasheetGridlinesColor =14806254
     Filter ="id_log= 5"
     RecSrcDt = Begin
         0x4692820b2d4de640
     End
     GUID = Begin
-        0x4d7102ef38798f478b282630a31dee84
+        0x3003221dcadc4845b8a6250ebde4fa20
     End
     NameMap = Begin
-        0x0acc0e5500000000a75abf302f5710418c7ca92c0e2ac76200000000de8571c0 ,
-        0x2d4de6400000000000000000730071006c005f0069006e007300650072007400 ,
-        0x5f006c006f006700000000000000180612778a173348962eb0228f3651af0600 ,
-        0x00004d7102ef38798f478b282630a31dee84690064005f006c006f0067000000 ,
-        0x0000000051351eff0b7b77468e4371d846a59c4101000000794ab9feac4ee640 ,
+        0x0acc0e55000000001098091bc74b1d44b35b152f10cd680900000000efb1cd23 ,
+        0x3278e6400000000000000000730071006c005f0069006e007300650072007400 ,
+        0x5f006c006f006700000000000000c7107464f00ed3459ebba43f47fa17000600 ,
+        0x00003003221dcadc4845b8a6250ebde4fa20690064005f006c006f0067000000 ,
+        0x0000000051351eff0b7b77468e4371d846a59c4101000000674033243278e640 ,
         0x0000000000000000730071006c005f0069006e0073006500720074005f006c00 ,
-        0x6f006700200073007500620066006f0072006d0000000000000030166bcd648d ,
-        0x2041924333dd7f3748e707000000a75abf302f5710418c7ca92c0e2ac7626900 ,
-        0x64005f006c006f00670000000000000042f8b5f5d8129a4dadf03d50dce256bc ,
-        0x07000000a75abf302f5710418c7ca92c0e2ac7626e006d005f00730063006800 ,
-        0x65006d00610000000000000068c0dc6b23f53b4394e2d72cfcf06a3c07000000 ,
-        0xa75abf302f5710418c7ca92c0e2ac7626e006d005f007400610062006c006500 ,
-        0x000000000000154fa26f34332f42a417835ffe51d0e807000000a75abf302f57 ,
-        0x10418c7ca92c0e2ac762740078005f00730071006c00000000000000b2d4bb0f ,
-        0x92be2748a6e35a59b590b5bb07000000a75abf302f5710418c7ca92c0e2ac762 ,
+        0x6f006700200073007500620066006f0072006d00000000000000bb9a2124d1c8 ,
+        0x454383430acf6fff5d12070000001098091bc74b1d44b35b152f10cd68096900 ,
+        0x64005f006c006f006700000000000000ac8918bfb6d2dd4198625c8f9279ba5a ,
+        0x070000001098091bc74b1d44b35b152f10cd68096e006d005f00730063006800 ,
+        0x65006d006100000000000000cc55b735ef6c4a418a46a06670be5b0c07000000 ,
+        0x1098091bc74b1d44b35b152f10cd68096e006d005f007400610062006c006500 ,
+        0x00000000000034bf1c7e27680d4988157b9fdb330ae6070000001098091bc74b ,
+        0x1d44b35b152f10cd6809740078005f00730071006c00000000000000ea6b2560 ,
+        0x1268ed4a83630bb3df70631a070000001098091bc74b1d44b35b152f10cd6809 ,
         0x640074005f006c006f0067000000000000000000000000000000000000000000 ,
         0x00000c000000050000000000000000000000000000000000
     End
     RecordSource ="sql_insert_log"
     Caption ="sql_insert_log"
     OnClose ="[Event Procedure]"
-    DatasheetFontName ="Trebuchet MS"
+    DatasheetFontName ="Calibri"
     PrtMip = Begin
         0x6801000068010000680100006801000000000000201c0000e010000001000000 ,
         0x010000006801000000000000a10700000100000001000000
     End
     PrtDevMode = Begin
-        0x00000000000000000200000000000000a07e7b03f67f0000d0649c9afc7f0000 ,
+        0x00ac117664020000000000000000000000000000000000005099373464020000 ,
         0x010403069c005014032f0100010009009a0b3408640001000f00580202000100 ,
-        0x58020300010041340000000000000000f89ba3dff9010000989ca3dff9010000 ,
-        0x01000000f9010000000000000000000000000000010000000000000001000000 ,
+        0x580203000100413400baef3dfb7f000000000000000000005099373464020000 ,
+        0xf897373464020000000000000000000000000000010000000000000001000000 ,
         0x0200000001000000ffffffff4749533400000000000000000000000044494e55 ,
         0x2200c80024032c113f5d7b7e0000000000000000000000000000000000000000 ,
         0x0000000000000000050000000000050001000000000000000000000000000000 ,
@@ -227,7 +226,7 @@ Begin Form
     PrtDevNames = Begin
         0x08001f0036000100000000000000000000000000000000000000000000000000 ,
         0x00000000000000000000000000000000000000000000504f525450524f4d5054 ,
-        0x3a0000000000000000000000000000000000
+        0x3a00000000000000000000000000000000000000000000000000
     End
     AllowDatasheetView =0
     FilterOnLoad =0
@@ -243,11 +242,11 @@ Begin Form
     AlternateBackThemeColorIndex =1
     AlternateBackShade =95.0
     PrtDevModeW = Begin
-        0x0000313d4d000000f03c313d4d0000002100000000000000b02e313d4d000000 ,
-        0x0600000000000000e74a7d05fc7f000088104203f67f0000d301000000000000 ,
+        0x0000000000000000505f5e74a7000000a95d5e74a70000002c182fbafb7f0000 ,
+        0xe05d5e74a70000006602000000000000505f5e74a70000000000000000000000 ,
         0x01040306dc005014032f0100010009009a0b3408640001000f00580202000100 ,
-        0x580203000100410034000000ccf20000184a99cdf9010000d84a99cdf9010000 ,
-        0xc20503000100000011000000f67f0000d84a99cdf90100000000000000000000 ,
+        0x580203000100410034000000a7000000705e5e74a70000000000000000000000 ,
+        0xc042f47364020000ac02f4736402000000000000000000000c00000000000000 ,
         0x0000000000000000000000000000000000000000010000000000000001000000 ,
         0x0200000001000000ffffffff4749533400000000000000000000000044494e55 ,
         0x2200c80024032c113f5d7b7e0000000000000000000000000000000000000000 ,
@@ -419,7 +418,8 @@ Begin Form
         0x0000000000000000000000000000000000000000000000000000000000000000 ,
         0x0000000000000000000000000000000000000000000000000000000000000000 ,
         0x0000000050004f0052005400500052004f004d00500054003a00000000000000 ,
-        0x00000000000000000000000000000000000000000000000000000000
+        0x0000000000000000000000000000000000000000000000000000000000000000 ,
+        0x000000000000000000000000
     End
     NoSaveCTIWhenDisabled =1
     Begin
@@ -428,7 +428,7 @@ Begin Form
             FontSize =11
             BorderColor =8355711
             ForeColor =6710886
-            FontName ="Trebuchet MS"
+            FontName ="Calibri"
             GridlineColor =10921638
             ThemeFontIndex =1
             BackThemeColorIndex =1
@@ -461,7 +461,7 @@ Begin Form
             FontSize =11
             FontWeight =400
             ForeColor =4210752
-            FontName ="Trebuchet MS"
+            FontName ="Calibri"
             GridlineColor =10921638
             ForeThemeColorIndex =0
             ForeTint =75.0
@@ -470,18 +470,18 @@ Begin Form
             UseTheme =1
             Shape =1
             Gradient =12
-            BackColor =14461583
+            BackColor =14136213
             BackThemeColorIndex =4
             BackTint =60.0
             BorderLineStyle =0
-            BorderColor =14461583
+            BorderColor =14136213
             BorderThemeColorIndex =4
             BorderTint =60.0
             ThemeFontIndex =1
-            HoverColor =15189940
+            HoverColor =15060409
             HoverThemeColorIndex =4
             HoverTint =40.0
-            PressedColor =9917743
+            PressedColor =9592887
             PressedThemeColorIndex =4
             PressedShade =75.0
             HoverForeColor =4210752
@@ -500,7 +500,7 @@ Begin Form
             FontSize =11
             BorderColor =10921638
             ForeColor =4210752
-            FontName ="Trebuchet MS"
+            FontName ="Calibri"
             AsianLineBreak =1
             GridlineColor =10921638
             BackThemeColorIndex =1
@@ -532,10 +532,10 @@ Begin Form
         End
         Begin FormHeader
             Height =576
-            BackColor =15064278
+            BackColor =15849926
             Name ="FormHeader"
             GUID = Begin
-                0xe2ed842f841fba449d4b2cd3db5bf071
+                0xa58dc449b1cb3c42b47b1defa73c3340
             End
             AlternateBackThemeColorIndex =1
             AlternateBackShade =95.0
@@ -545,17 +545,19 @@ Begin Form
                 Begin Label
                     OverlapFlags =85
                     TextAlign =1
+                    TextFontFamily =18
                     Left =30
                     Top =30
                     Width =4690
                     Height =480
                     FontSize =18
-                    BorderColor =6968388
-                    ForeColor =6968388
+                    BorderColor =8210719
+                    ForeColor =8210719
                     Name ="Auto_Header0"
                     Caption ="Failed Import SQL statement"
+                    FontName ="Cambria"
                     GUID = Begin
-                        0x1656d262e67598459a14853eddcb545f
+                        0x3ee3fa58ea668749bb6b93571e2dccdc
                     End
                     GroupTable =2
                     HorizontalAnchor =2
@@ -581,7 +583,7 @@ Begin Form
                     OnClick ="[Event Procedure]"
                     ControlTipText ="Delete Record"
                     GUID = Begin
-                        0x2b41c6df1d975842b6004f06c0b15c6f
+                        0x83d69e5a44aeda429238e79b48d41360
                     End
                     ImageData = Begin
                         0x2800000010000000100000000100200000000000000000000000000000000000 ,
@@ -619,6 +621,7 @@ Begin Form
                         0x0000000000000000000000000000000000000000000000000000000000000000 ,
                         0x0000000000000000
                     End
+
                     LayoutCachedLeft =13041
                     LayoutCachedWidth =13608
                     LayoutCachedHeight =567
@@ -634,7 +637,7 @@ Begin Form
             Height =9585
             Name ="Detail"
             GUID = Begin
-                0x292692e3b7df494ba871d7da3dddb70e
+                0xa0e44969bd5dbd43913d13f02f2d217e
             End
             AlternateBackColor =15921906
             AlternateBackThemeColorIndex =1
@@ -656,13 +659,14 @@ Begin Form
                     Name ="id_log"
                     ControlSource ="id_log"
                     GUID = Begin
-                        0x180612778a173348962eb0228f3651af
+                        0xc7107464f00ed3459ebba43f47fa1700
                     End
                     GroupTable =1
                     LeftPadding =0
                     TopPadding =0
                     RightPadding =0
                     BottomPadding =0
+
                     LayoutCachedLeft =1310
                     LayoutCachedWidth =7263
                     LayoutCachedHeight =350
@@ -685,7 +689,7 @@ Begin Form
                             Name ="Label0"
                             Caption ="ID"
                             GUID = Begin
-                                0x144236e0e35bab4c9cffc7aa2b1f2e26
+                                0x013870aeaebec14b8d8dd9719bec8ac0
                             End
                             GroupTable =1
                             LeftPadding =0
@@ -716,13 +720,14 @@ Begin Form
                     Name ="nm_schema"
                     ControlSource ="nm_schema"
                     GUID = Begin
-                        0xdde27a96516ceb41b8336210ca4ebda1
+                        0xd7e5e8225535b243b183682a81af696d
                     End
                     GroupTable =1
                     LeftPadding =0
                     TopPadding =0
                     RightPadding =0
                     BottomPadding =0
+
                     LayoutCachedLeft =1310
                     LayoutCachedTop =360
                     LayoutCachedWidth =7263
@@ -749,7 +754,7 @@ Begin Form
                             Name ="Label3"
                             Caption ="Table"
                             GUID = Begin
-                                0x33be5344fc76924eba01a48f47ec9ca2
+                                0xd1eb71e7ee6921498b34e7f76c0cefb4
                             End
                             GroupTable =1
                             LeftPadding =0
@@ -783,13 +788,14 @@ Begin Form
                     Name ="nm_table"
                     ControlSource ="nm_table"
                     GUID = Begin
-                        0x7d79e49eb4a77c47ac66898da9f6a354
+                        0x557e19a028ec214b80e5bd4f57675651
                     End
                     GroupTable =1
                     LeftPadding =0
                     TopPadding =0
                     RightPadding =0
                     BottomPadding =0
+
                     LayoutCachedLeft =7270
                     LayoutCachedTop =360
                     LayoutCachedWidth =13608
@@ -824,13 +830,14 @@ Begin Form
                     ControlSource ="tx_sql"
                     FontName ="Consolas"
                     GUID = Begin
-                        0x3848fcc73a9a8c4a82b1fb08a60cc9d0
+                        0x8aba420afa488b4d9e25bdbd569f1c8d
                     End
                     GroupTable =1
                     LeftPadding =0
                     TopPadding =0
                     RightPadding =0
                     BottomPadding =0
+
                     LayoutCachedTop =720
                     LayoutCachedWidth =13608
                     LayoutCachedHeight =6390
@@ -857,13 +864,14 @@ Begin Form
                     Name ="dt_log"
                     ControlSource ="dt_log"
                     GUID = Begin
-                        0xa69aa31bdeb4064cad3365fb789ff229
+                        0x7a597f0ab06b5d4ea5edd46e0616f99b
                     End
                     GroupTable =1
                     LeftPadding =0
                     TopPadding =0
                     RightPadding =0
                     BottomPadding =0
+
                     LayoutCachedLeft =7270
                     LayoutCachedWidth =13608
                     LayoutCachedHeight =350
@@ -882,13 +890,14 @@ Begin Form
                     SourceObject ="Form.sql_insert_log subform"
                     EventProcPrefix ="sql_insert_log_subform"
                     GUID = Begin
-                        0xd6a85f0dc0fcb4448f05fc168c814c78
+                        0x26a34f67297b104b960d03800eefe374
                     End
                     GroupTable =1
                     LeftPadding =0
                     TopPadding =0
                     RightPadding =0
                     BottomPadding =0
+
                     LayoutCachedTop =6750
                     LayoutCachedWidth =13608
                     LayoutCachedHeight =9585
@@ -908,7 +917,7 @@ Begin Form
                     Name ="Label47"
                     Caption ="Other failed SQL Insert Statements"
                     GUID = Begin
-                        0x9004170261e8714aa8a6397d5bd6f384
+                        0x7de0b44bda064a43928efb29fbd4f33b
                     End
                     GroupTable =1
                     LeftPadding =0
@@ -931,7 +940,7 @@ Begin Form
             Height =0
             Name ="FormFooter"
             GUID = Begin
-                0x263e63d201d532468365b0e7c0567dff
+                0xadaa0f19d8a8d340aaed9ed16c801c10
             End
             AutoHeight =1
             AlternateBackThemeColorIndex =1

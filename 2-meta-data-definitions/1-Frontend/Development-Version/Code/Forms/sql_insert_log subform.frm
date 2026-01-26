@@ -1,13 +1,12 @@
 Version =21
 VersionRequired =20
 PublishOption =1
-Checksum =-843959360
+Checksum =473154654
 Begin Form
     AutoCenter = NotDefault
     AllowDeletions = NotDefault
     DividingLines = NotDefault
     AllowAdditions = NotDefault
-    FilterOn = NotDefault
     AllowEdits = NotDefault
     AllowDesignChanges = NotDefault
     DefaultView =2
@@ -21,7 +20,7 @@ Begin Form
     Top =7330
     Right =13880
     Bottom =9900
-    DatasheetGridlinesColor =15132391
+    DatasheetGridlinesColor =14806254
     RecSrcDt = Begin
         0x126601e52d4de640
     End
@@ -29,23 +28,23 @@ Begin Form
         0x51351eff0b7b77468e4371d846a59c41
     End
     NameMap = Begin
-        0x0acc0e5500000000a75abf302f5710418c7ca92c0e2ac76200000000de8571c0 ,
-        0x2d4de6400000000000000000730071006c005f0069006e007300650072007400 ,
-        0x5f006c006f00670000000000000030166bcd648d2041924333dd7f3748e70700 ,
-        0x0000a75abf302f5710418c7ca92c0e2ac762690064005f006c006f0067000000 ,
-        0x0000000042f8b5f5d8129a4dadf03d50dce256bc07000000a75abf302f571041 ,
-        0x8c7ca92c0e2ac7626e006d005f0073006300680065006d006100000000000000 ,
-        0x68c0dc6b23f53b4394e2d72cfcf06a3c07000000a75abf302f5710418c7ca92c ,
-        0x0e2ac7626e006d005f007400610062006c006500000000000000154fa26f3433 ,
-        0x2f42a417835ffe51d0e807000000a75abf302f5710418c7ca92c0e2ac7627400 ,
-        0x78005f00730071006c00000000000000b2d4bb0f92be2748a6e35a59b590b5bb ,
-        0x07000000a75abf302f5710418c7ca92c0e2ac762640074005f006c006f006700 ,
+        0x0acc0e55000000001098091bc74b1d44b35b152f10cd680900000000efb1cd23 ,
+        0x3278e6400000000000000000730071006c005f0069006e007300650072007400 ,
+        0x5f006c006f006700000000000000bb9a2124d1c8454383430acf6fff5d120700 ,
+        0x00001098091bc74b1d44b35b152f10cd6809690064005f006c006f0067000000 ,
+        0x00000000ac8918bfb6d2dd4198625c8f9279ba5a070000001098091bc74b1d44 ,
+        0xb35b152f10cd68096e006d005f0073006300680065006d006100000000000000 ,
+        0xcc55b735ef6c4a418a46a06670be5b0c070000001098091bc74b1d44b35b152f ,
+        0x10cd68096e006d005f007400610062006c00650000000000000034bf1c7e2768 ,
+        0x0d4988157b9fdb330ae6070000001098091bc74b1d44b35b152f10cd68097400 ,
+        0x78005f00730071006c00000000000000ea6b25601268ed4a83630bb3df70631a ,
+        0x070000001098091bc74b1d44b35b152f10cd6809640074005f006c006f006700 ,
         0x000000000000000000000000000000000000000000000c000000050000000000 ,
         0x000000000000000000000000
     End
     RecordSource ="sql_insert_log"
     Caption ="sql_insert_log subform"
-    DatasheetFontName ="Trebuchet MS"
+    DatasheetFontName ="Calibri"
     FilterOnLoad =0
     ShowPageMargins =0
     DisplayOnSharePointSite =1
@@ -65,7 +64,7 @@ Begin Form
             FontSize =11
             BorderColor =8355711
             ForeColor =6710886
-            FontName ="Trebuchet MS"
+            FontName ="Calibri"
             GridlineColor =10921638
             ThemeFontIndex =1
             BackThemeColorIndex =1
@@ -85,7 +84,7 @@ Begin Form
             FontSize =11
             BorderColor =10921638
             ForeColor =4210752
-            FontName ="Trebuchet MS"
+            FontName ="Calibri"
             AsianLineBreak =1
             GridlineColor =10921638
             BackThemeColorIndex =1
@@ -99,7 +98,7 @@ Begin Form
         End
         Begin FormHeader
             Height =0
-            BackColor =15064278
+            BackColor =15849926
             Name ="FormHeader"
             GUID = Begin
                 0x6673f9ac69dffc429427d88e610e0a1a
@@ -134,6 +133,7 @@ Begin Form
                     GUID = Begin
                         0xe5857b61ded06a4cb48c0ebf1e271b90
                     End
+
                     LayoutCachedLeft =2472
                     LayoutCachedTop =342
                     LayoutCachedWidth =4173
@@ -173,6 +173,7 @@ Begin Form
                     GUID = Begin
                         0x3541036b3192524cb7d27c16b5f224e5
                     End
+
                     LayoutCachedLeft =2472
                     LayoutCachedTop =741
                     LayoutCachedWidth =8512
@@ -212,6 +213,7 @@ Begin Form
                     GUID = Begin
                         0x3712cd8453411041ab9001c54b9abe4b
                     End
+
                     LayoutCachedLeft =2472
                     LayoutCachedTop =1425
                     LayoutCachedWidth =8512
@@ -251,6 +253,7 @@ Begin Form
                     GUID = Begin
                         0x301e980ce4962b4ebfdb412c956497dc
                     End
+
                     LayoutCachedLeft =2472
                     LayoutCachedTop =2109
                     LayoutCachedWidth =8512
@@ -288,6 +291,7 @@ Begin Form
                     GUID = Begin
                         0x25701df64c6db943b17ad8c4408d4e4b
                     End
+
                     LayoutCachedLeft =2472
                     LayoutCachedTop =3306
                     LayoutCachedWidth =3812

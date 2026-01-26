@@ -1,7 +1,7 @@
 Version =21
 VersionRequired =20
 PublishOption =1
-Checksum =1053122308
+Checksum =1609428492
 Begin Form
     RecordSelectors = NotDefault
     NavigationButtons = NotDefault
@@ -14,11 +14,11 @@ Begin Form
     Width =8145
     DatasheetFontHeight =11
     ItemSuffix =21
-    Left =345
+    Left =350
     Top =1920
-    Right =10035
+    Right =10040
     Bottom =8850
-    DatasheetGridlinesColor =15132391
+    DatasheetGridlinesColor =14806254
     RecSrcDt = Begin
         0x7411910d124ce640
     End
@@ -26,25 +26,26 @@ Begin Form
         0x0cb4ed28fb4275488b35e065dbf6a1fd
     End
     NameMap = Begin
-        0x0acc0e55000000001dfee4380408ed41994d8270cc9aa99d01000000f32f8366 ,
-        0x3c58e64000000000000000006400740061005f00640061007400610073006500 ,
-        0x74005f006c00690073007400000000000000577fd17dd35d114bbe1ea43321eb ,
-        0xd38501000000a88d604f4f4de64000000000000000007300720064005f006400 ,
-        0x6100740061007400790070006500000000000000f25daf6c9be16044b231ff47 ,
-        0x5d60c9df01000000dd9059c07f58e64000000000000000006400740061005f00 ,
-        0x6d006f00640065006c0000000000000000000000000000000000000000000000 ,
-        0x0c000000050000000000000000000000000000000000
+        0x0acc0e5500000000766e280818de97428112bf8e6bf3c1c4010000004b90d646 ,
+        0x9678e64000000000000000006400740061005f00640061007400610073006500 ,
+        0x74005f006c006900730074005f0077006900740068005f00660069006c007400 ,
+        0x65007200000000000000e9084d25b0795e4fa5643588d5b7821f0100000058ef ,
+        0x5d509678e64000000000000000007300720064005f0064006100740061007400 ,
+        0x790070006500000000000000e9329a048548ec4a8a12c520028cb9d301000000 ,
+        0x4243d8469678e64000000000000000006400740061005f006d006f0064006500 ,
+        0x6c00000000000000000000000000000000000000000000000c00000005000000 ,
+        0x0000000000000000000000000000
     End
-    DatasheetFontName ="Trebuchet MS"
+    DatasheetFontName ="Calibri"
     PrtMip = Begin
         0x6801000068010000680100006801000000000000201c0000e010000001000000 ,
         0x010000006801000000000000a10700000100000001000000
     End
     PrtDevMode = Begin
-        0x0063e8fcc6010000090000000000000050236e5f610000007694174bf77f0000 ,
+        0x007615b6950100007b29ab43fb7f0000907b15b6950100000000000000000000 ,
         0x010403069c005014032f0100010009009a0b3408640001000f00580202000100 ,
-        0x58020300010041340004f7ecf87f0000000000000000000000000000f87f0000 ,
-        0x204c4a94c6010000000000000000000000000000010000000000000001000000 ,
+        0x580203000100413400190ca6f67f000070309d9f7f000000802f9d9f7f000000 ,
+        0x0000000000000000000000000000000000000000010000000000000001000000 ,
         0x0200000001000000ffffffff4749533400000000000000000000000044494e55 ,
         0x2200c80024032c113f5d7b7e0000000000000000000000000000000000000000 ,
         0x0000000000000000050000000000050001000000000000000000000000000000 ,
@@ -213,7 +214,8 @@ Begin Form
     PrtDevNames = Begin
         0x08001f0036000100000000000000000000000000000000000000000000000000 ,
         0x00000000000000000000000000000000000000000000504f525450524f4d5054 ,
-        0x3a00000000000000000000000000000000000000000000000000
+        0x3a00000000000000000000000000000000000000000000000000000000000000 ,
+        0x000000000000
     End
     AllowDatasheetView =0
     FilterOnLoad =0
@@ -229,12 +231,12 @@ Begin Form
     AlternateBackThemeColorIndex =1
     AlternateBackShade =95.0
     PrtDevModeW = Begin
-        0x000000003cefcb001155c876f97f0000010000006100000047efd84bf77f0000 ,
-        0x3defd84bf77f000019e252ff4000000000000000000000005010a200f97f0000 ,
+        0x0000ccd895010000f137cd18fc7f0000c05fccd895010000d05fccd895010000 ,
+        0x0000ccd8950100000000ccd8950100000400000000000000c414cd18fc7f0000 ,
         0x01040306dc005014032f0100010009009a0b3408640001000f00580202000100 ,
-        0x580203000100410034000000f97f000080916f5f6100000080916f5f61000000 ,
-        0x70896f5f61000000c046ef4bf77f000045935a4bf77f000040896f5f61000000 ,
-        0x80b46f5f61000000000000000000000000000000010000000000000001000000 ,
+        0x580203000100410034000000fc7f00005001ccd895010000a05b9e9f7f000000 ,
+        0x2501ccd82501000025010000000000000000ccd8950100002500000000000000 ,
+        0x5001ccd895010000000000000000000000000000010000000000000001000000 ,
         0x0200000001000000ffffffff4749533400000000000000000000000044494e55 ,
         0x2200c80024032c113f5d7b7e0000000000000000000000000000000000000000 ,
         0x0000000000000000050000000000050001000000000000000000000000000000 ,
@@ -406,7 +408,8 @@ Begin Form
         0x0000000000000000000000000000000000000000000000000000000000000000 ,
         0x0000000050004f0052005400500052004f004d00500054003a00000000000000 ,
         0x0000000000000000000000000000000000000000000000000000000000000000 ,
-        0x000000000000000000000000
+        0x0000000000000000000000000000000000000000000000000000000000000000 ,
+        0x00000000
     End
     NoSaveCTIWhenDisabled =1
     Begin
@@ -415,7 +418,7 @@ Begin Form
             FontSize =11
             BorderColor =8355711
             ForeColor =6710886
-            FontName ="Trebuchet MS"
+            FontName ="Calibri"
             GridlineColor =10921638
             ThemeFontIndex =1
             BackThemeColorIndex =1
@@ -478,10 +481,10 @@ Begin Form
             GridlineColor =10921638
             GridlineThemeColorIndex =1
             GridlineShade =65.0
-            HoverColor =15064278
+            HoverColor =15849926
             HoverThemeColorIndex =2
             HoverTint =20.0
-            PressedColor =11573124
+            PressedColor =13995605
             PressedThemeColorIndex =2
             PressedTint =60.0
             HoverForeColor =4210752
@@ -493,19 +496,18 @@ Begin Form
             BackThemeColorIndex =1
             OldBorderStyle =0
             BorderLineStyle =0
-            BorderColor =13553360
+            BorderColor =12835293
             BorderThemeColorIndex =3
             BorderShade =90.0
             ThemeFontIndex =1
-            TextFontFamily =0
-            FontName ="Trebuchet MS"
+            FontName ="Calibri"
             FontWeight =400
             FontSize =11
             ForeThemeColorIndex =0
             ForeTint =75.0
         End
         Begin Section
-            Height =7725
+            Height =7730
             Name ="Detail"
             GUID = Begin
                 0x4f476fe3bed5fa4ab871ae7620f4cb87
@@ -531,11 +533,12 @@ Begin Form
                     GridlineStyleBottom =1
                     GridlineWidthBottom =4
                     HorizontalAnchor =2
+
                     LayoutCachedWidth =8115
                     LayoutCachedHeight =435
                     LayoutGroup =2
                     NavigationSubform ="NavigationSubform"
-                    GridlineColor =12874308
+                    GridlineColor =12419407
                     GridlineThemeColorIndex =4
                     GridlineShade =100.0
                     GroupTable =2
@@ -553,16 +556,17 @@ Begin Form
                             LeftPadding =0
                             TopPadding =0
                             BottomPadding =0
+
                             LayoutCachedWidth =1030
                             LayoutCachedHeight =435
                             LayoutGroup =1
-                            NavigationTargetName ="dta_dataset_list"
+                            NavigationTargetName ="dta_dataset_list_with_filter"
                             NavigationTargetType =32768
                             Shape =3
-                            HoverColor =12874308
+                            HoverColor =12419407
                             HoverThemeColorIndex =4
                             HoverTint =100.0
-                            PressedColor =12874308
+                            PressedColor =12419407
                             PressedThemeColorIndex =4
                             PressedTint =100.0
                             HoverForeColor =16777215
@@ -571,21 +575,21 @@ Begin Form
                             PressedForeColor =16777215
                             PressedForeThemeColorIndex =1
                             PressedForeTint =100.0
-                            BackColor =15189940
+                            BackColor =15060409
                             BackThemeColorIndex =4
                             BackTint =40.0
-                            BorderColor =12874308
+                            BorderColor =12419407
                             BorderThemeColorIndex =4
                             BorderShade =100.0
                             GroupTable =1
                             FontItalic =255
                             FontWeight =700
-                            WebImagePaddingRight =2
+                            WebImagePaddingRight =3
                             Overlaps =1
                         End
                         Begin NavigationButton
                             OverlapFlags =87
-                            Left =1065
+                            Left =1060
                             Width =1440
                             Height =435
                             TabIndex =2
@@ -598,8 +602,9 @@ Begin Form
                             LeftPadding =0
                             TopPadding =0
                             BottomPadding =0
-                            LayoutCachedLeft =1065
-                            LayoutCachedWidth =2505
+
+                            LayoutCachedLeft =1060
+                            LayoutCachedWidth =2500
                             LayoutCachedHeight =435
                             ColumnStart =1
                             ColumnEnd =1
@@ -607,10 +612,10 @@ Begin Form
                             NavigationTargetName ="srd_datatype"
                             NavigationTargetType =32768
                             Shape =3
-                            HoverColor =12874308
+                            HoverColor =12419407
                             HoverThemeColorIndex =4
                             HoverTint =100.0
-                            PressedColor =12874308
+                            PressedColor =12419407
                             PressedThemeColorIndex =4
                             PressedTint =100.0
                             HoverForeColor =16777215
@@ -619,21 +624,21 @@ Begin Form
                             PressedForeColor =16777215
                             PressedForeThemeColorIndex =1
                             PressedForeTint =100.0
-                            BackColor =15189940
+                            BackColor =15060409
                             BackThemeColorIndex =4
                             BackTint =40.0
-                            BorderColor =12874308
+                            BorderColor =12419407
                             BorderThemeColorIndex =4
                             BorderShade =100.0
                             GroupTable =1
                             FontItalic =255
                             FontWeight =700
-                            WebImagePaddingRight =2
+                            WebImagePaddingRight =3
                             Overlaps =1
                         End
                         Begin NavigationButton
                             OverlapFlags =87
-                            Left =2535
+                            Left =2530
                             Width =1440
                             Height =435
                             Name ="NavigationButton19"
@@ -645,8 +650,9 @@ Begin Form
                             LeftPadding =0
                             TopPadding =0
                             BottomPadding =0
-                            LayoutCachedLeft =2535
-                            LayoutCachedWidth =3975
+
+                            LayoutCachedLeft =2530
+                            LayoutCachedWidth =3970
                             LayoutCachedHeight =435
                             ColumnStart =2
                             ColumnEnd =2
@@ -654,10 +660,10 @@ Begin Form
                             NavigationTargetName ="dta_model"
                             NavigationTargetType =32768
                             Shape =3
-                            HoverColor =12874308
+                            HoverColor =12419407
                             HoverThemeColorIndex =4
                             HoverTint =100.0
-                            PressedColor =12874308
+                            PressedColor =12419407
                             PressedThemeColorIndex =4
                             PressedTint =100.0
                             HoverForeColor =16777215
@@ -666,22 +672,21 @@ Begin Form
                             PressedForeColor =16777215
                             PressedForeThemeColorIndex =1
                             PressedForeTint =100.0
-                            BackColor =15189940
+                            BackColor =15060409
                             BackThemeColorIndex =4
                             BackTint =40.0
-                            BorderColor =12874308
+                            BorderColor =12419407
                             BorderThemeColorIndex =4
                             BorderShade =100.0
                             GroupTable =1
-                            TextFontFamily =34
                             FontItalic =255
                             FontWeight =700
-                            WebImagePaddingRight =2
+                            WebImagePaddingRight =3
                             Overlaps =1
                         End
                         Begin NavigationButton
                             OverlapFlags =87
-                            Left =4005
+                            Left =4000
                             Width =1440
                             Height =435
                             TabIndex =3
@@ -695,18 +700,19 @@ Begin Form
                             LeftPadding =0
                             TopPadding =0
                             BottomPadding =0
-                            LayoutCachedLeft =4005
-                            LayoutCachedWidth =5445
+
+                            LayoutCachedLeft =4000
+                            LayoutCachedWidth =5440
                             LayoutCachedHeight =435
                             ColumnStart =3
                             ColumnEnd =3
                             LayoutGroup =1
                             DefaultInsertButton =1
                             Shape =3
-                            HoverColor =12874308
+                            HoverColor =12419407
                             HoverThemeColorIndex =4
                             HoverTint =100.0
-                            PressedColor =12874308
+                            PressedColor =12419407
                             PressedThemeColorIndex =4
                             PressedTint =100.0
                             HoverForeColor =16777215
@@ -715,21 +721,21 @@ Begin Form
                             PressedForeColor =16777215
                             PressedForeThemeColorIndex =1
                             PressedForeTint =100.0
-                            BackColor =15189940
+                            BackColor =15060409
                             BackThemeColorIndex =4
                             BackTint =40.0
-                            BorderColor =12874308
+                            BorderColor =12419407
                             BorderThemeColorIndex =4
                             BorderShade =100.0
                             GroupTable =1
-                            WebImagePaddingRight =2
+                            WebImagePaddingRight =3
                             Overlaps =1
                         End
                     End
                 End
                 Begin Subform
                     OverlapFlags =85
-                    Top =495
+                    Top =500
                     Width =8115
                     Height =7200
                     TabIndex =1
@@ -743,9 +749,10 @@ Begin Form
                     RightPadding =0
                     HorizontalAnchor =2
                     VerticalAnchor =2
-                    LayoutCachedTop =495
+
+                    LayoutCachedTop =500
                     LayoutCachedWidth =8115
-                    LayoutCachedHeight =7695
+                    LayoutCachedHeight =7700
                     RowStart =1
                     RowEnd =1
                     LayoutGroup =2
